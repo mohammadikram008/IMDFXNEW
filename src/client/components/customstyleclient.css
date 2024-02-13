@@ -1,0 +1,937 @@
+.owl-carousel .owl-nav.disabled,
+.owl-carousel .owl-dots.disabled {
+    display: block;
+}
+
+.best-packages-section .slick-prev,
+.best-packages-section .slick-next {
+    display: none !important;
+}
+
+.test-slider-card .slick-prev {
+    display: none;
+}
+
+.popular-test-section .slick-list .slick-track .slick-slide div {
+    margin-right: 20px;
+}
+
+.about-us-section-fifteen.client-review-twelve .slick-slider {
+    position: static;
+}
+
+.slick-slider.best-package-slider.owl-carousel.slick-initialized .slick-dots li.slick-active button {
+    background: #0092E4;
+    border-radius: 10px !important;
+
+}
+
+.best-package-slider .slick-list .slick-track .slick-slide div {
+    margin-right: 20px;
+}
+
+.slick-slider.best-package-slider.owl-carousel.slick-initialized .slick-dots li button {
+    width: 32px;
+    height: 6px;
+}
+
+.banner-sec-twelve .css-13cymwt-control {
+    border-width: 0px !important;
+    padding-left: 10px
+}
+
+.popular-test-section .slick-prev,
+.popular-test-section .slick-next {
+    display: none !important;
+}
+
+.banner-sec-twelve .input-box-twelve .input-block:nth-child(2):before {
+    left: 2px;
+    top: 7px;
+}
+
+.css-1u9des2-indicatorSeparator {
+    display: none !important;
+}
+
+.home-pg-twelve.main-wrapper {
+    font-family: "Inter", sans-serif;
+}
+
+.swiper.swiper-slider-banner {
+    overflow: visible;
+}
+
+.has-submenu {
+    color: white;
+    /* background: #0092E4; */
+    text-decoration: #0092E4;
+}
+
+
+
+.doctor-card {
+    position: relative;
+    width: 100%;
+    height: 15rem;
+    padding: 1rem;
+}
+
+.doctor-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+
+
+
+}
+
+.badge {
+    /* padding: .5rem; */
+    height: 1.5rem;
+    border-bottom-left-radius: 40px;
+    background: rgb(219, 163, 7);
+    color: white;
+    display: flex;
+    align-items: center;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 12px;
+
+
+}
+
+.doctor-slider-one-own .owl-carousel .owl-item img {
+    height: 12rem;
+    width: 12rem;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.doctor-body {
+
+    padding: 1rem;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.btn-start-consultent {
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
+    /* border: 1px solid transparent; */
+    border: none;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.app-bg {
+    margin-top: 5rem;
+    background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
+    /* background-image: url( ../assets//images/app-bg.png); */
+    background-position: right top;
+    background-repeat: no-repeat;
+    border-radius: 25px;
+    padding: 40px 0 0 50px;
+}
+
+.footer-logo img {
+    width: 15rem;
+
+}
+
+.login-btn-login {
+    width: 100%;
+    background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
+    border: none;
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
+    padding: 0.7rem;
+    text-align: center;
+    color: white;
+}
+
+.btn-booking-card {
+    width: 100%;
+    height: 2.5rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+    padding: 1rem;
+    border-radius: 10px;
+
+}
+
+.pay-btn {
+    width: 35%;
+    /* background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%); */
+    background: rgb(219, 163, 7);
+    border: none;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    text-align: center;
+    color: white;
+}
+
+.pay-btn-dis {
+    width: 35%;
+    /* background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%); */
+    background: rgb(158, 155, 148);
+    border: none;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    text-align: center;
+    color: white;
+}
+
+.input-fld {
+    border: 1px solid #C0C0C0;
+    border-radius: 50px;
+    /* text-align: center; */
+    padding: .3rem;
+}
+
+.custom-facebook-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    /* Adjust the value as needed */
+    padding: 6px;
+    /* margin-left: 4.5rem; */
+    /* margin-top: 1rem; */
+    background: #064de6;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+
+}
+
+.heading-text-logins {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-resgister {
+    background: #c3c5c7;
+    border: 1px solid black;
+    border-radius: 1rem;
+    color: black;
+    margin-bottom: 1rem;
+}
+
+.header-bg {
+    background-color: #212121;
+}
+
+/* .login-right{
+    background-color: #afadad;
+  border: 1px solid ;
+    
+}
+.with-shadow {
+    box-shadow: 10px 14px 0px rgba(0.5, 0, 0.5, 0); 
+  } */
+.content-login-page {
+    background-color: #212121;
+    opacity: 99%;
+}
+
+.doctor-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+    margin-top: 1rem;
+    height: 18rem;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.doctor-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.view-pro-btn {
+    border: 1px solid rgb(94, 239, 143);
+    border-radius: 10px;
+}
+
+.innner-card {
+    height: 8rem;
+    border: 1px solid #1D4ED8;
+    border-radius: 6px;
+    position: relative;
+    margin-left: 5rem;
+    margin-top: 1rem;
+}
+
+.text-card-bottom {
+    position: absolute;
+    bottom: 0;
+    background: #1D4ED8;
+    width: 100%;
+}
+
+.badge-bg {
+    border-bottom-left-radius: 40px;
+    height: 1.5rem;
+    width: 10rem;
+    display: flex;
+    font-size: 8px;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    text-align: center;
+    color: white;
+}
+
+/* .badge-bg p{
+    
+    font-size: 10px;
+    text-align: center;
+} */
+
+.gold-gradient {
+    background: linear-gradient(to bottom, #ffcc00 0%, #ff9900 98%);
+}
+
+.premium-div {
+    width: 23rem;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.premium-div h2 {
+    font-style: normal;
+    font-size: medium;
+
+}
+
+.text-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-div p {
+    font-size: 12px;
+    text-align: center;
+    margin: 0px;
+}
+
+.view-proflie-btn {
+    width: 40%;
+    border: none;
+    padding: .5rem;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin-top: 2rem;
+    /* height: 2rem; */
+}
+
+.border-right {
+    /* padding: .5rem; */
+    border-right: 1px solid rgba(34, 33, 33, 0.5);
+    line-height: 2px;
+}
+
+.dashboard-widget {
+    margin-top: 2rem;
+}
+
+.cover-image {
+    height: 15rem;
+    width: 100%;
+    overflow: hidden;
+}
+
+.cover-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+}
+
+.heading-book {
+    position: relative;
+}
+
+.card-doc-img {
+    position: absolute;
+
+    width: 30%;
+    bottom: 0;
+}
+
+.doctor-image {
+    height: 15rem;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.booking-doc-info {
+    /* background-color: #C0C0C0; */
+    padding: 1rem;
+    color: black;
+}
+
+.booking-doc-info img {
+    width: 5rem;
+    height: 5rem;
+}
+
+.booking-info h4 {
+    color: black;
+}
+
+.booking-info p {
+    color: black;
+}
+
+.btn-slot-select {
+    width: 100%;
+    /* background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%); */
+    border: 1px solid black;
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
+    padding: 0.7rem;
+    text-align: center;
+    color: black;
+    width: 10rem;
+}
+
+.btn-slot-click {
+    width: 100%;
+    /* background: linear-gradient(180deg, rgb(45, 82, 57) 0%, rgb(40, 185, 178) 100%); */
+    background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
+    border: none;
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
+    padding: 0.7rem;
+    text-align: center;
+    color: white;
+    width: 10rem;
+    /* transform: scale(.9); */
+}
+
+.slot-main-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* width: 50%; */
+}
+
+.view-profile {
+
+    background: #b88a17;
+    border: none;
+    border-radius: 10px;
+    margin-top: 3rem;
+    padding: .5rem;
+    color: white;
+    width: 9rem;
+    cursor: pointer;
+}
+
+.slot-inner-div {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.slot-heading-imgtext {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.slot-heading-imgtext h2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 1px;
+}
+
+.color-gradient {
+
+    color: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
+}
+
+.slot-headinf-imgtext {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slot-icon {
+    display: flex;
+    transform: rotate(-10deg);
+}
+
+/* Add this CSS to your styles or stylesheet file */
+.button-container {
+    display: flex;
+    align-items: center;
+}
+
+.decrementYear,
+.decrementMonth,
+.incrementMonth,
+.incrementYear {
+    /* background-color: #3498db; Example color */
+    color: black;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.decrementYear:hover,
+.decrementMonth:hover,
+.incrementMonth:hover,
+.incrementYear:hover {
+    background-color: #2980b9;
+    /* Example color on hover */
+}
+
+.text-white {
+    color: #fff;
+    /* Example text color */
+}
+
+.date-container {
+    height: 7rem;
+    width: 3.5rem;
+    border: 1px solid black;
+    /* background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%); */
+    border-radius: 40px;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* .doc-info-right {
+    border: 1px solid black;
+    padding: 1rem;
+    width: 10rem;
+} */
+
+.rainbow {
+    width: 6rem;
+    /* height: 4rem; */
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
+    text-align: center;
+    font-size: 12px;
+
+    &::before {
+        content: '';
+        position: absolute;
+        z-index: -2;
+        left: -50%;
+        top: -50%;
+        width: 200%;
+        height: 200%;
+        background-color: white;
+        background-repeat: no-repeat;
+        background-size: 50% 50% 50% 50%;
+        /* background-position: 0 0, 100% 0, 100% 100%, 0 100%; */
+        background-image: linear-gradient(#fbb300, #b88a17), linear-gradient(white, white), linear-gradient(#d53e33, #d53e33), linear-gradient(white, white);
+        animation: rotate 1s linear infinite;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        left: 4px;
+        top: 4px;
+        width: calc(100% - 8px);
+        height: calc(100% - 8px);
+        background: white;
+        border-radius: 5px;
+        animation: opacityChange 3s infinite alternate;
+    }
+}
+
+.rainbow2 {
+    width: 8rem;
+    /* height: 4rem; */
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: .5rem;
+    text-align: center;
+    font-size: 12px;
+
+    &::before {
+        content: '';
+        position: absolute;
+        z-index: -2;
+        left: -50%;
+        top: -50%;
+        width: 200%;
+        height: 200%;
+        background-color: white;
+        background-repeat: no-repeat;
+        background-size: 50% 50% 50% 50%;
+        background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+        background-image: linear-gradient(#fbb300, #b88a17), linear-gradient(white, white), linear-gradient(#d53e33, #d53e33), linear-gradient(white, white);
+        animation: rotate 4s linear infinite;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        left: 6px;
+        top: 6px;
+        width: calc(100% - 12px);
+        height: calc(100% - 12px);
+        background: white;
+        border-radius: 5px;
+        animation: opacityChange 3s infinite alternate;
+    }
+}
+
+.booking-card-body-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.booking-cards {
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    border: none;
+    width: 26rem;
+    border-radius: 10px;
+    margin-top: -2rem;
+    background-color: #dad6d6;
+    /* box-shadow: 0 14px 16px rgba(0, 0, 0, 0.3);  */
+
+}
+
+
+.booking-card-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.booking-card-body-inner-div {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content-div {
+    width: 50%;
+}
+
+/* .date-container-selected{
+    height: 7rem;
+    width: 3.5rem;
+    background-color: #2980b9;
+    border-radius: 40px;
+    border: none;
+
+  } */
+.model-time-slot {
+    margin-top: 5rem;
+}
+
+.date-btn-icon {
+    height: 5rem;
+}
+
+
+.modal-overlay {
+
+    filter: blur(1rem);
+    pointer-events: none;
+
+}
+
+.date-container-hovered {
+    background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
+    /* Change this to the desired hover background color */
+    cursor: pointer;
+}
+
+.slick-prev,
+.slick-next {
+    display: none !important;
+}
+
+.background-gradient {
+    background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
+    color: white;
+    font-size: small;
+    border: none;
+}
+
+.review-heading {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-top: 4rem;
+
+}
+
+.circle-container {
+    position: relative;
+    width: 5rem;
+    height: 5rem;
+}
+
+.circle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    height: 5rem;
+    background: linear-gradient(to bottom, #ffcc00 0%, #ff9900 98%);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #78c2ad;
+        /* Adjust the hover background color */
+    }
+}
+
+.view-pro-btn {
+    width: 100%;
+    padding: .5rem;
+    margin-bottom: 1rem;
+}
+
+.percentage {
+    font-size: small;
+    /* Adjust the font size */
+    font-weight: bold;
+    color: #ffffff;
+    /* Adjust the text color */
+}
+
+.review-body {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+
+}
+
+.progressbar-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.review-div-col-1 {
+    display: flex;
+    justify-content: end;
+    align-items: start;
+}
+
+.review-div-col-2 {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.progressbar-div p {
+    width: 40%;
+}
+
+.progess {
+    width: 60%;
+}
+
+.doctor-profile-overview {
+    width: 50rem;
+}
+
+.booking-cards.booking-fixed {
+    position: fixed;
+    top: 10rem;
+    right: 19rem;
+    /* width: 100%; */
+    z-index: 1000;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: end;
+    align-items: center;
+    padding: 1rem;
+    border: none;
+    width: 26rem;
+    border-radius: 10px;
+    margin-top: -2rem;
+    background-color: #dad6d6;
+    /* Add any additional styles for the fixed position */
+}
+
+/* Adjust the styles as needed */
+
+@media (max-width: 767.98px) {
+    .header .header-nav .logo img {
+        height: 30px;
+    }
+
+    .innner-card {
+        display: none;
+    }
+
+    .doctor-card {
+        height: auto;
+    }
+
+    .review-div-col-1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .review-div-col-2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+}
+
+.doctor-information-inner-div h1 {
+    font-size: large;
+    padding: 1rem;
+
+}
+
+.doctor-information-inner-div h5 {
+    padding: 1rem;
+}
+
+@media (max-width: 575.98px) {
+    .header .header-nav .logo img {
+        height: 30px;
+    }
+
+    .innner-card {
+        display: none;
+    }
+
+    .star {
+        display: none;
+    }
+
+    .basic-data {
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+    }
+
+    .review-div-col-1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .review-div-col-2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .premium-div {
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        width: 15rem;
+    }
+
+    .pagecontent-2nd-col {
+        margin-top: 4rem;
+        position: relative;
+        /* z-index: 10; */
+
+    }
+
+    .cards-div {
+        width: 100%;
+
+    }
+
+    .doctor-profile-overview {
+        width: auto;
+    }
+
+    .doctor-information {
+        width: 20%;
+
+
+    }
+
+    .doctor-information-inner-div h1 {
+        padding: 1rem;
+        font-size: 12px;
+    }
+
+    .doctor-information-inner-div h5 {
+        font-size: 12px;
+        padding: 1rem;
+    }
+}
