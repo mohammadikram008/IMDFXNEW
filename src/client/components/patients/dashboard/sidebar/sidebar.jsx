@@ -18,7 +18,7 @@ export const DashboardSidebar = ({props}) => {
             <img src={nawazp} alt="User" />
           </Link>
           <div className="profile-det-info">
-            <h3>{props.username}</h3>
+            <h3>{ props && props.username}</h3>
             <div className="patient-details">
               <h5 className="text-success">
                  active
@@ -39,6 +39,9 @@ export const DashboardSidebar = ({props}) => {
                 <span>Dashboard</span>
               </Link>
             </li>
+            {
+              /*
+              
             <li className={pathname.includes("/favourites") ? "active" : ""}>
               <Link to="/patient/favourites">
                 <i className="fas fa-bookmark"></i>
@@ -51,6 +54,8 @@ export const DashboardSidebar = ({props}) => {
                 <span>Dependent</span>
               </Link>
             </li>
+            */
+          }
             <li className={pathname.includes("/chat-doctor") ? "active" : ""}>
               <Link to="/patient/patient-chat">
                 <i className="fas fa-comments"></i>
@@ -58,17 +63,13 @@ export const DashboardSidebar = ({props}) => {
                 <small className="unread-msg">23</small>
               </Link>
             </li>
+            {
+              /*
+              
             <li className={pathname.includes("/accounts") ? "active" : ""}>
               <Link to="/patient/accounts">
                 <i className="fas fa-file-invoice-dollar"></i>
                 <span>Accounts</span>
-              </Link>
-            </li>
-            <li className={pathname.includes("/orders") ? "active" : ""}>
-              <Link to="/patient/orders">
-                <i className="fas fa-list-alt"></i>
-                <span>Orders</span>
-                <small className="unread-msg">7</small>
               </Link>
             </li>
             <li
@@ -79,10 +80,23 @@ export const DashboardSidebar = ({props}) => {
                 <span>Add Medical Records</span>
               </Link>
             </li>
+            */
+          }
+            <li className={pathname.includes("/orders") ? "active" : ""}>
+              <Link 
+              // to="/patient/orders"
+              >
+                <i className="fas fa-list-alt"></i>
+                <span>Booking</span>
+                <small className="unread-msg">7</small>
+              </Link>
+            </li>
             <li
               className={pathname.includes("/medicaldetails") ? "active" : ""}
             >
-              <Link to="/patient/medicaldetails">
+              <Link
+              //  to="/patient/medicaldetails"
+               >
                 <i className="fas fa-file-medical-alt"></i>
                 <span>Medical Details</span>
               </Link>
@@ -102,7 +116,7 @@ export const DashboardSidebar = ({props}) => {
               </Link>
             </li>
             <li>
-              <Link to="/index">
+              <Link to="/login">
                 <i className="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
               </Link>

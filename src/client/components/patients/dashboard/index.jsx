@@ -185,7 +185,7 @@ const Dashboard = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="row patient-graph-col">
+    {  /*  <div className="row patient-graph-col">
                   <div className="col-12">
                     <div className="card">
                       <div className="card-header">
@@ -274,6 +274,7 @@ const Dashboard = (props) => {
                     </div>
                   </div>
                 </div>
+    */}
               </div>
               <div className="card">
                 <div className="card-body pt-0">
