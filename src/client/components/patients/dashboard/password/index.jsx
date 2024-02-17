@@ -9,7 +9,7 @@ const Password = (props) => {
   return (
     <div>
       <Header {...props} />
-      <div className="breadcrumb-bar-two">
+      {/* <div className="breadcrumb-bar-two">
         <div className="container">
           <div className="row align-items-center inner-banner">
             <div className="col-md-12 col-12 text-center">
@@ -27,17 +27,18 @@ const Password = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="content">
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+          <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
               <StickyBox offsetTop={20} offsetBottom={20}>
                 <DashboardSidebar />
               </StickyBox>
             </div>
 
-            <div className="col-md-7 col-lg-8 col-xl-9">
+            <div className="col-md-6 col-lg-6 col-xl-6 mt-5">
               <div className="card">
                 <div className="card-body">
                   <form>
@@ -65,6 +66,7 @@ const Password = (props) => {
                 </div>
               </div>
             </div>
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
           </div>
         </div>
       </div>

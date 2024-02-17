@@ -14,7 +14,7 @@ const DoctorSidebar = ({ props }) => {
               <img src={doc1} alt="User Image" />
             </Link>
             <div className="profile-det-info">
-            <h3>{props.name}</h3>
+            <h3>{props && props.name}</h3>
             {/* John Creister */}
             <div className="patient-details">
               <h5 className="text-success">
@@ -80,7 +80,7 @@ const DoctorSidebar = ({ props }) => {
                   <span>Available Timings</span>
                 </Link>
               </li>
-              <li
+              {/* <li
                 className={pathnames.includes("/pages/invoice") ? "active" : ""}
               >
                 <Link to="/pages/invoice">
@@ -97,15 +97,15 @@ const DoctorSidebar = ({ props }) => {
                   <i className="fas fa-file-invoice-dollar" />
                   <span>Accounts</span>
                 </Link>
-              </li>
-              <li
+              </li> */}
+              {/* <li
                 className={pathnames.includes("/doctor/review") ? "active" : ""}
               >
                 <Link to="/doctor/review">
                   <i className="fas fa-star" />
                   <span>Reviews</span>
                 </Link>
-              </li>
+              </li> */}
               <li
                 className={
                   pathnames.includes("/doctor/chat-doctor") ? "active" : ""
@@ -127,7 +127,7 @@ const DoctorSidebar = ({ props }) => {
                   <span>Profile Settings</span>
                 </Link>
               </li>
-              <li
+              {/* <li
                 className={
                   pathnames.includes("/doctor/social-media") ? "active" : ""
                 }
@@ -148,9 +148,9 @@ const DoctorSidebar = ({ props }) => {
                   <i className="fas fa-lock" />
                   <span>Change Password</span>
                 </Link>
-              </li>
+              </li> */}
               <li className={pathnames.includes("/index-2") ? "active" : ""}>
-                <Link to="/index-2">
+                <Link to="/login">
                   <i className="fas fa-sign-out-alt" />
                   <span>Logout</span>
                 </Link>

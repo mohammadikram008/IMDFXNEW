@@ -42,7 +42,7 @@ const Accounts = (props) => {
     <div>
       <Header {...props} />
       {/* Breadcrumb */}
-      <div className="breadcrumb-bar-two">
+      {/* <div className="breadcrumb-bar-two">
         <div className="container">
           <div className="row align-items-center inner-banner">
             <div className="col-md-12 col-12 text-center">
@@ -60,19 +60,19 @@ const Accounts = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* /Breadcrumb */}
       <>
         {/* Page Content */}
         <div className="content">
           <div className="container">
             <div className="row">
-              <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+              <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar mt-5">
                 {/* Profile Sidebar */}
                 <DoctorSidebar />
                 {/* /Profile Sidebar */}
               </div>
-              <div className="col-md-7 col-lg-8 col-xl-9">
+              <div className="col-md-7 col-lg-8 col-xl-9 mt-5">
                 <div className="row">
                   <div className="col-lg-5 d-flex">
                     <div className="card flex-fill">

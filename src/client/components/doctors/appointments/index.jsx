@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import StickyBox from "react-sticky-box";
+import axios from "axios";
 import {
   IMG01,
   IMG02,
@@ -20,12 +21,28 @@ import Header from "../../header";
 
 const Appointments = (props) => {
   const [show, setshow] = useState();
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const docId = localStorage.getItem('token');
+  const fetchAppointments = async () => {
+    try {
 
-  // const constructor = (props) => {
-  //   show = {
-  //     show: false,
-  //   };
-  // };
+
+      const response = await axios.get(`http://localhost:3005/api/doc_appointments/${docId}`);
+      setAppointments(response.data);
+      console.log("DOappp", response.data)
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+
+
+    fetchAppointments();
+    // fetchpatientdata();
+  }, []);
 
   const handleClose = () => {
     setshow(false);
@@ -34,12 +51,38 @@ const Appointments = (props) => {
   const handleShow = () => {
     setshow(true);
   };
+const handleAcceptChange= async(appoimentdetail)=>{
+  
+  // console.log("userId",userId);
+  try {
 
+
+    const response = await axios.post(`http://localhost:3005/api/conformappointment/${docId}`,{appoimentdetail});
+    // setAppointments(response.data);
+    console.log("booking", response)
+    setLoading(false);
+  } catch (error) {
+    console.error('Error fetching appointments:', error);
+    setLoading(false);
+  }
+}
+const handleCencelChange= async(id)=>{
+  
+  try {
+    const response = await axios.post(`http://localhost:3005/api/cancelappointment/${id}`);
+   
+    console.log("cancel", response)
+    setLoading(false);
+  } catch (error) {
+    console.error('Error fetching appointments:', error);
+    setLoading(false);
+  }
+}
   return (
     <div>
       <Header {...props} />
       {/* Breadcrumb */}
-      <div className="breadcrumb-bar-two">
+      {/* <div className="breadcrumb-bar-two">
         <div className="container">
           <div className="row align-items-center inner-banner">
             <div className="col-md-12 col-12 text-center">
@@ -57,11 +100,12 @@ const Appointments = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* /Breadcrumb */}
-      <div className="content">
-        <div className="container">
-          <div className="row">
+      <div className="content ">
+        <div className="container ">
+          <div className="row mt-5">
+          {/* <div className="col-md-1 col-lg-1 col-xl-1 theiaStickySidebar "></div> */}
             <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
               <StickyBox offsetTop={50} offsetBottom={20}>
                 <div className="appointments">
@@ -71,100 +115,61 @@ const Appointments = (props) => {
             </div>
             <div className="col-md-7 col-lg-8 col-xl-9">
               <div className="appointments">
-                <div className="appointment-list">
-                  <div className="profile-info-widget">
-                    <Link
-                      to="/doctor/patient-profile"
-                      className="booking-doc-img"
-                    >
-                      <img src={IMG01} alt="User" />
-                    </Link>
-                    <div className="profile-det-info">
-                      <h3>
-                        <Link to="/doctor/patient-profile">Richard Wilson</Link>
-                      </h3>
-                      <div className="patient-details">
-                        <h5>
-                          <i className="far fa-clock"></i> 14 Nov 2019, 10.00 AM
-                        </h5>
-                        <h5>
-                          <i className="fas fa-map-marker-alt"></i> Newyork,
-                          United States
-                        </h5>
-                        <h5>
-                          <i className="fas fa-envelope"></i>{" "}
-                          richard@example.com
-                        </h5>
-                        <h5 className="mb-0">
-                          <i className="fas fa-phone"></i> +1 923 782 4575
-                        </h5>
+                {
+                  appointments.map((item, index) => (
+                    <div className="appointment-list">
+                      <div className="profile-info-widget">
+                        <Link
+                          to="/doctor/patient-profile"
+                          className="booking-doc-img"
+                        >
+                          <img src={IMG01} alt="User" />
+                        </Link>
+                        <div className="profile-det-info">
+                          <h3>
+                            {item.PatietnDetails.username}
+                            {/* <Link to="/doctor/patient-profile">{item.username}</Link> */}
+                          </h3>
+                          <div className="patient-details">
+                            <h5>
+                              <i className="far fa-clock"></i> {item.appointmentDetails.bookingDate}
+                            </h5>
+                            <h5>
+                              <i className="fas fa-map-marker-alt"></i> Newyork,
+                              United States
+                            </h5>
+                            <h5>
+                              <i className="fas fa-envelope"></i>{" "}
+                              richard@example.com
+                            </h5>
+                            <h5 className="mb-0">
+                              <i className="fas fa-phone"></i> +1 923 782 4575
+                            </h5>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="appointment-action">
+                        <Link
+                          to="#0"
+                          className="btn btn-sm bg-info-light"
+                          onClick={handleShow}
+                        >
+                          <i className="far fa-eye"></i> View
+                        </Link>
+                        <button className="btn btn-sm bg-success-light" onClick={()=>handleAcceptChange(item.appointmentDetails)}>
+                          <i className="fas fa-check"></i> Accept
+                        </button>
+                        <button to="#0" className="btn btn-sm bg-danger-light" onClick={()=>handleCencelChange(item.appointmentDetails._id)}>
+                          <i className="fas fa-times"></i> Cancel
+                        </button>
                       </div>
                     </div>
-                  </div>
-                  <div className="appointment-action">
-                    <Link
-                      to="#0"
-                      className="btn btn-sm bg-info-light"
-                      onClick={handleShow}
-                    >
-                      <i className="far fa-eye"></i> View
-                    </Link>
-                    <Link to="#0" className="btn btn-sm bg-success-light">
-                      <i className="fas fa-check"></i> Accept
-                    </Link>
-                    <Link to="#0" className="btn btn-sm bg-danger-light">
-                      <i className="fas fa-times"></i> Cancel
-                    </Link>
-                  </div>
-                </div>
-                <div className="appointment-list">
-                  <div className="profile-info-widget">
-                    <Link
-                      to="/doctor/patient-profile"
-                      className="booking-doc-img"
-                    >
-                      <img src={IMG02} alt="User" />
-                    </Link>
-                    <div className="profile-det-info">
-                      <h3>
-                        <Link to="/doctor/patient-profile">Charlene Reed </Link>
-                      </h3>
-                      <div className="patient-details">
-                        <h5>
-                          <i className="far fa-clock"></i> 12 Nov 2019, 5.00 PM
-                        </h5>
-                        <h5>
-                          <i className="fas fa-map-marker-alt"></i> North
-                          Carolina, United States
-                        </h5>
-                        <h5>
-                          <i className="fas fa-envelope"></i>{" "}
-                          charlenereed@example.com
-                        </h5>
-                        <h5 className="mb-0">
-                          <i className="fas fa-phone"></i> +1 828 632 9170
-                        </h5>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="appointment-action">
-                    <Link
-                      to="#0"
-                      className="btn btn-sm bg-info-light"
-                      onClick={handleShow}
-                    >
-                      <i className="far fa-eye"></i> View
-                    </Link>
-                    <Link to="#0" className="btn btn-sm bg-success-light">
-                      <i className="fas fa-check"></i> Accept
-                    </Link>
-                    <Link to="#0" className="btn btn-sm bg-danger-light">
-                      <i className="fas fa-times"></i> Cancel
-                    </Link>
-                  </div>
-                </div>
+                  ))
+                }
 
-                <div className="appointment-list">
+
+
+                {/* <div className="appointment-list">
                   <div className="profile-info-widget">
                     <Link
                       to="/doctor/patient-profile"
@@ -639,9 +644,10 @@ const Appointments = (props) => {
                       <i className="fas fa-times"></i> Cancel
                     </Link>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
+            {/* <div className="col-md-1 col-lg-1 col-xl-1 theiaStickySidebar "></div> */}
           </div>
         </div>
       </div>

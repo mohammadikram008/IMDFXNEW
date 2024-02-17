@@ -12,8 +12,35 @@ import UpcomingTab from "./upcomimgtab";
 import AppointmentTab from "./appoitmenttab";
 const DoctorDashboard = (props) => {
   const [Doctor, setDoctor] = useState([]);
+
+  const [appointments, setAppointments] = useState([]);
+  const [mypatient, setMyPatient] = useState([]);
   const [loading, setLoading] = useState(true);
   const docId = localStorage.getItem('token');
+  const fetchAppointments = async () => {
+    try {
+
+
+      const response = await axios.get(`http://localhost:3005/api/doc_appointments/${docId}`);
+      setAppointments(response.data);
+   
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      setLoading(false);
+    }
+  };
+  const fetchmypatient = async () => {
+    try {
+
+
+      const response = await axios.get(`http://localhost:3005/api/mypatient/${docId}`);
+      setMyPatient(response.data);
+   
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      setLoading(false);
+    }
+  };
   const fetchpatientdata = async () => {
 
     try {
@@ -26,12 +53,15 @@ const DoctorDashboard = (props) => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
 
 
-    // fetchAppointments();
+    fetchAppointments();
     fetchpatientdata();
+    fetchmypatient();
   }, []);
+
   return (
     <div>
       <Header {...props} />
@@ -87,7 +117,7 @@ const DoctorDashboard = (props) => {
                               style={{ position: "relative", top: "-18px" }}
                             >
                               <h6>Total Patient</h6>
-                              <h3>1500</h3>
+                              <h3>{mypatient && mypatient.length}</h3>
                               <p className="text-muted">Till Today</p>
                             </div>
                           </div>
@@ -169,7 +199,7 @@ const DoctorDashboard = (props) => {
                               style={{ position: "relative", top: "-18px" }}
                             >
                               <h6>Appoinments</h6>
-                              <h3>85</h3>
+                              <h3>{appointments && appointments.length}</h3>
                               <p className="text-muted">06, Apr 2019</p>
                             </div>
                           </div>
@@ -215,7 +245,7 @@ const DoctorDashboard = (props) => {
                 </div>
               </div>
             </div>
-            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
           </div>
         </div>
       </div>

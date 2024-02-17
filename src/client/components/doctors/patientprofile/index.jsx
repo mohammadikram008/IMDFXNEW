@@ -48,7 +48,7 @@ const PatientProfile = (props) => {
     <div>
       <Header {...props} />
       {/* Breadcrumb */}
-      <div className="breadcrumb-bar-two">
+      {/* <div className="breadcrumb-bar-two">
         <div className="container">
           <div className="row align-items-center inner-banner">
             <div className="col-md-12 col-12 text-center">
@@ -66,7 +66,7 @@ const PatientProfile = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* /Breadcrumb */}
       <div className="content">
         <div className="container">

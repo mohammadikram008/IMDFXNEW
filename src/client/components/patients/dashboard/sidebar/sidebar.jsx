@@ -6,9 +6,9 @@ import patient from "../../../../assets/images/patients.jpg";
 import nawazp from "../../../../assets/images/nazwazp.jpg";
 
 
-export const DashboardSidebar = ({props}) => {
+export const DashboardSidebar = ({ props }) => {
   // const {patient}=props.patient;
-  console.log("patient",props);
+  console.log("patient", props);
   const pathname = window.location.pathname;
   return (
     <div className="profile-sidebar">
@@ -18,10 +18,10 @@ export const DashboardSidebar = ({props}) => {
             <img src={nawazp} alt="User" />
           </Link>
           <div className="profile-det-info">
-            <h3>{ props && props.username}</h3>
+            <h3>{props && props.username}</h3>
             <div className="patient-details">
               <h5 className="text-success">
-                 active
+                active
               </h5>
               {/* <h5 className="mb-0">
                 <i className="fas fa-map-marker-alt"></i> Newyork, USA
@@ -55,7 +55,7 @@ export const DashboardSidebar = ({props}) => {
               </Link>
             </li>
             */
-          }
+            }
             <li className={pathname.includes("/chat-doctor") ? "active" : ""}>
               <Link to="/patient/patient-chat">
                 <i className="fas fa-comments"></i>
@@ -81,10 +81,10 @@ export const DashboardSidebar = ({props}) => {
               </Link>
             </li>
             */
-          }
+            }
             <li className={pathname.includes("/orders") ? "active" : ""}>
-              <Link 
-              // to="/patient/orders"
+              <Link
+                to="/patient/orders"
               >
                 <i className="fas fa-list-alt"></i>
                 <span>Booking</span>
@@ -92,11 +92,23 @@ export const DashboardSidebar = ({props}) => {
               </Link>
             </li>
             <li
+                className={pathname.includes("/schedule-timing") ? "active" : ""
+                }
+              >
+                <Link
+                to="#"
+                //  to="/doctor/schedule-timing"
+                 >
+                  <i className="fas fa-hourglass-start" />
+                  <span>Schedule Timings</span>
+                </Link>
+              </li>
+            <li
               className={pathname.includes("/medicaldetails") ? "active" : ""}
             >
               <Link
-              //  to="/patient/medicaldetails"
-               >
+                to="/patient/medicaldetails"
+              >
                 <i className="fas fa-file-medical-alt"></i>
                 <span>Medical Details</span>
               </Link>
@@ -107,14 +119,14 @@ export const DashboardSidebar = ({props}) => {
                 <span>Profile Settings</span>
               </Link>
             </li>
-            <li
+            {/* <li
               className={pathname.includes("/change-password") ? "active" : ""}
             >
               <Link to="/patient/change-password">
                 <i className="fas fa-lock"></i>
                 <span>Change Password</span>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link to="/login">
                 <i className="fas fa-sign-out-alt"></i>

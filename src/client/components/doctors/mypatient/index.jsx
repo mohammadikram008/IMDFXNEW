@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import { Link } from "react-router-dom";
 import {
   IMG01,
@@ -15,14 +15,36 @@ import DoctorSidebar from "../sidebar";
 import Footer from "../../footer";
 import StickyBox from "react-sticky-box";
 import Header from "../../header";
+import axios from "axios";
 
 const MypPatient = (props) => {
+
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const docId = localStorage.getItem('token');
+  const fetchAppointments = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3005/api/mypatient/${docId}`);
+      setAppointments(response.data);
+      console.log("mypatient", response.data)
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+
+
+    fetchAppointments();
+    // fetchpatientdata();
+  }, []);
   return (
     <div>
       <Header {...props} />
       <>
         {/* Breadcrumb */}
-        <div className="breadcrumb-bar-two">
+        {/* <div className="breadcrumb-bar-two">
           <div className="container">
             <div className="row align-items-center inner-banner">
               <div className="col-md-12 col-12 text-center">
@@ -40,13 +62,14 @@ const MypPatient = (props) => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* /Breadcrumb */}
       </>
 
       <div className="content">
         <div className="container">
-          <div className="row">
+          <div className="row mt-5">
+          {/* <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div> */}
             <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
               <StickyBox offsetTop={20} offsetBottom={20}>
                 <DoctorSidebar />
@@ -54,53 +77,61 @@ const MypPatient = (props) => {
             </div>
             <div className="col-md-7 col-lg-8 col-xl-9">
               <div className="row row-grid">
-                <div className="col-md-6 col-lg-4 col-xl-3">
-                  <div className="card widget-profile pat-widget-profile">
-                    <div className="card-body">
-                      <div className="pro-widget-content">
-                        <div className="profile-info-widget">
-                          <Link
-                            to="/doctor/patient-profile"
-                            className="booking-doc-img"
-                          >
-                            <img src={IMG01} alt="User" />
-                          </Link>
-                          <div className="profile-det-info">
-                            <h3>
-                              <Link to="/doctor/patient-profile">
-                                Richard Wilson
-                              </Link>
-                            </h3>
-
-                            <div className="patient-details">
-                              <h5>
-                                <b>Patient ID :</b> P0016
-                              </h5>
-                              <h5 className="mb-0">
-                                <i className="fas fa-map-marker-alt"></i>{" "}
-                                Alabama, USA
-                              </h5>
+                {
+                  appointments.map((item, index) => (
+                    <div className="col-md-6 col-lg-4 col-xl-3">
+                    <div className="card widget-profile pat-widget-profile">
+                      <div className="card-body">
+                        <div className="pro-widget-content">
+                          <div className="profile-info-widget">
+                            <Link
+                              to="/doctor/patient-profile"
+                              className="booking-doc-img"
+                            >
+                              <img src={IMG01} alt="User" />
+                            </Link>
+                            <div className="profile-det-info">
+                              <h3>
+                                {/* <Link to="/doctor/patient-profile">
+                                  Richard Wilson
+                                </Link> */}
+                                  {
+                                    item.PatietnDetails.username
+                                  }
+                              </h3>
+  
+                              <div className="patient-details">
+                                <h5>
+                                  <b>Patient ID :</b> P0016
+                                </h5>
+                                <h5 className="mb-0">
+                                  <i className="fas fa-map-marker-alt"></i>{" "}
+                                  Alabama, USA
+                                </h5>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="patient-info">
-                        <ul>
-                          <li>
-                            Phone <span>+1 952 001 8563</span>
-                          </li>
-                          <li>
-                            Age <span>38 Years, Male</span>
-                          </li>
-                          <li>
-                            Blood Group <span>AB+</span>
-                          </li>
-                        </ul>
+                        <div className="patient-info">
+                          <ul>
+                            <li>
+                              Phone <span>+1 952 001 8563</span>
+                            </li>
+                            <li>
+                              Age <span>38 Years, Male</span>
+                            </li>
+                            <li>
+                              Blood Group <span>AB+</span>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-
+                  ))
+                }
+               
+{/* 
                 <div className="col-md-6 col-lg-4 col-xl-3">
                   <div className="card widget-profile pat-widget-profile">
                     <div className="card-body">
@@ -469,9 +500,10 @@ const MypPatient = (props) => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
+            {/* <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div> */}
           </div>
         </div>
       </div>

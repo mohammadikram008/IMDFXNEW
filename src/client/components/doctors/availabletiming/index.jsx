@@ -1,7 +1,8 @@
 import React from "react";
 // import { IMG01 } from "./img";
 import { Link } from "react-router-dom";
-import Header from "../../patients/dashboard/header";
+// import Header from "../../patients/dashboard/header";
+import Header from "../../header";
 import Footer from "../../footer";
 import DoctorSidebar from "../sidebar";
 
@@ -10,7 +11,7 @@ const AvailableTiming = (props) => {
     <>
       <Header {...props} />
       {/* Breadcrumb */}
-      <div className="breadcrumb-bar-two">
+      {/* <div className="breadcrumb-bar-two">
         <div className="container">
           <div className="row align-items-center inner-banner">
             <div className="col-md-12 col-12 text-center">
@@ -28,18 +29,19 @@ const AvailableTiming = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* /Breadcrumb */}
       {/* Page Content */}
       <div className="content">
         <div className="container">
-          <div className="row">
-            <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+          <div className="row mt-5">
+          {/* <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div> */}
+            <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar ">
               {/* Profile Sidebar */}
               <DoctorSidebar />
               {/* /Profile Sidebar */}
             </div>
-            <div className="col-md-7 col-lg-8 col-xl-9">
+            <div className="col-md-7 col-lg-8 col-xl-9 ">
               <div className="row">
                 <div className="col-sm-12">
                   <div className="card">
@@ -579,6 +581,7 @@ const AvailableTiming = (props) => {
                 </div>
               </div>
             </div>
+            {/* <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div> */}
           </div>
         </div>
       </div>
