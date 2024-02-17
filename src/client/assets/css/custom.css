@@ -7334,7 +7334,7 @@ html.menu-opened body {
 
 .noti-nav .dropdown-menu {
   min-width: 420px;
-  padding: 0;
+  padding: 2rem;
 }
 
 .main-nav li.megamenu>ul {
@@ -15893,6 +15893,11 @@ i svg {
 
 .appointments .appointment-list:last-child {
   margin-bottom: 30px;
+  border: 1px solid;
+}
+.mypatient-card{
+  border: 1px solid;
+  border-radius: 10px;
 }
 
 @media (max-width: 991.98px) {

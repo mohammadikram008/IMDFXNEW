@@ -116,6 +116,7 @@ const handleCencelChange= async(id)=>{
             <div className="col-md-7 col-lg-8 col-xl-9">
               <div className="appointments">
                 {
+                  appointments && appointments.length>0?
                   appointments.map((item, index) => (
                     <div className="appointment-list">
                       <div className="profile-info-widget">
@@ -165,6 +166,7 @@ const handleCencelChange= async(id)=>{
                       </div>
                     </div>
                   ))
+                  :'No Appointment Yet!'
                 }
 
 

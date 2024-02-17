@@ -458,9 +458,12 @@
     width: 9rem;
     cursor: pointer;
 }
+
 .slick-slide {
-    margin-right: 1rem; /* Adjust the value as needed */
-  }
+    margin-right: 1rem;
+    /* Adjust the value as needed */
+}
+
 .slot-inner-div {
     display: flex;
     width: 100%;
@@ -468,6 +471,34 @@
     align-items: center;
 }
 
+.noti-content {
+    margin-top: 10px;
+}
+
+.notifications {
+
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Dark color with 70% opacity */
+    color: white;
+
+}
+
+.topnav-dropdown-header {
+    border-bottom: 1px solid black;
+
+}
+
+.notification-message {
+    border-bottom: 1px solid black;
+}
+
+.media-body {
+    color: white;
+    padding: 1rem;
+}
+.media-body h6 {
+    color: white;
+} 
 .slot-heading-imgtext {
     display: flex;
     justify-content: center;

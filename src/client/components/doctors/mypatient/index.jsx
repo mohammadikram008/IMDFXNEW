@@ -1,7 +1,7 @@
-import React,{useEffect,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  IMG01,
+
   IMG02,
   IMG03,
   IMG04,
@@ -11,6 +11,8 @@ import {
   IMG08,
   IMG012,
 } from "./img";
+import IMG01 from "../../../assets/images/profileavatr.png";
+
 import DoctorSidebar from "../sidebar";
 import Footer from "../../footer";
 import StickyBox from "react-sticky-box";
@@ -69,7 +71,7 @@ const MypPatient = (props) => {
       <div className="content">
         <div className="container">
           <div className="row mt-5">
-          {/* <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div> */}
+            {/* <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div> */}
             <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
               <StickyBox offsetTop={20} offsetBottom={20}>
                 <DoctorSidebar />
@@ -80,58 +82,56 @@ const MypPatient = (props) => {
                 {
                   appointments.map((item, index) => (
                     <div className="col-md-6 col-lg-4 col-xl-3">
-                    <div className="card widget-profile pat-widget-profile">
-                      <div className="card-body">
-                        <div className="pro-widget-content">
-                          <div className="profile-info-widget">
-                            <Link
-                              to="/doctor/patient-profile"
-                              className="booking-doc-img"
-                            >
-                              <img src={IMG01} alt="User" />
-                            </Link>
-                            <div className="profile-det-info">
-                              <h3>
-                                {/* <Link to="/doctor/patient-profile">
-                                  Richard Wilson
-                                </Link> */}
+                      <div className="card widget-profile pat-widget-profile">
+                        <div className="card-body mypatient-card">
+                          <div className="pro-widget-content">
+                            <div className="profile-info-widget">
+                              <Link
+                                to="/doctor/patient-profile"
+                                className="booking-doc-img"
+                              >
+                                <img src={IMG01} alt="User" />
+                              </Link>
+                              <div className="profile-det-info">
+                                <h3>
+                               
                                   {
                                     item.PatietnDetails.username
                                   }
-                              </h3>
-  
-                              <div className="patient-details">
-                                <h5>
-                                  <b>Patient ID :</b> P0016
-                                </h5>
-                                <h5 className="mb-0">
-                                  <i className="fas fa-map-marker-alt"></i>{" "}
-                                  Alabama, USA
-                                </h5>
+                                </h3>
+
+                                {/* <div className="patient-details">
+                                  <h5>
+                                    <b>Patient ID :</b> P0016
+                                  </h5>
+                                  <h5 className="mb-0">
+                                    <i className="fas fa-map-marker-alt"></i>{" "}
+                                    Alabama, USA
+                                  </h5>
+                                </div> */}
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div className="patient-info">
-                          <ul>
-                            <li>
-                              Phone <span>+1 952 001 8563</span>
-                            </li>
-                            <li>
-                              Age <span>38 Years, Male</span>
-                            </li>
-                            <li>
-                              Blood Group <span>AB+</span>
-                            </li>
-                          </ul>
+                          <div className="patient-info">
+                            <ul>
+                              <li>
+                                Phone <span>+1 952 001 8563</span>
+                              </li>
+                              <li>
+                                Age <span>38 Years, Male</span>
+                              </li>
+                              <li>
+                                Blood Group <span>AB+</span>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
                   ))
                 }
-               
-{/* 
+
+                {/* 
                 <div className="col-md-6 col-lg-4 col-xl-3">
                   <div className="card widget-profile pat-widget-profile">
                     <div className="card-body">

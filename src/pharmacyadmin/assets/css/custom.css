@@ -3669,7 +3669,7 @@ table.table-inbox tbody tr.checked {
 }
 
 .topnav-dropdown-header {
-  border-bottom: 1px solid #eeeeee;
+    border-bottom: 1px solid black;
   text-align: center;
 }
 .topnav-dropdown-header .notification-title {
@@ -3715,6 +3715,7 @@ table.table-inbox tbody tr.checked {
   list-style: none;
   margin: 0;
   padding: 0;
+  margin-top: 10px;
 }
 
 .noti-time {

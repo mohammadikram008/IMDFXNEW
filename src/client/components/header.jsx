@@ -2018,7 +2018,7 @@ const Header = () => {
                           //   }}
                           // >
                           <>
-                         
+                          <Notification />
                             <li className="register-btn">
                               <Link to={`${token? doctorlogin?"/doctor/doctor-dashboard":"/patient/dashboard":"/register"}`} className="btn reg-btn">
                                 <i>
@@ -2168,6 +2168,7 @@ const Header = () => {
                   </li>
                 </ul>
               ) : null}
+               
               {/* {(!pathnames.includes("/patient/search-doctor1") &&
                 pathnames.includes("patient")) ||
                 (pathnames.includes("Pharmacy") &&

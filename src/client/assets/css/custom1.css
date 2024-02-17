@@ -7154,7 +7154,7 @@ html.menu-opened body {
 
 .noti-nav .dropdown-menu {
   min-width: 420px;
-  padding: 0;
+  padding: 2rem;
 }
 
 .nav-tabs {

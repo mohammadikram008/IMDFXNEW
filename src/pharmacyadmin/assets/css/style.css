@@ -3723,6 +3723,7 @@ table.table-inbox tbody tr.checked {
   list-style: none;
   margin: 0;
   padding: 0;
+  margin-top: 10px;
 }
 
 .noti-time {

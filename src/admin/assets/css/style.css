@@ -2847,7 +2847,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
 .notifications {
-  padding: 0;
+  padding: 10px;
 }
 .notifications .notification-time {
   font-size: 12px;
@@ -2908,7 +2908,7 @@ a.bg-danger:focus, a.bg-danger:hover, button.bg-danger:focus, button.bg-danger:h
 }
 
 .topnav-dropdown-header {
-  border-bottom: 1px solid #eeeeee;
+v
   text-align: center;
 }
 .topnav-dropdown-header .notification-title {
