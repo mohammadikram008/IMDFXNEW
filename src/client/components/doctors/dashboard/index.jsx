@@ -55,8 +55,6 @@ const DoctorDashboard = (props) => {
   };
 
   useEffect(() => {
-
-
     fetchAppointments();
     fetchpatientdata();
     fetchmypatient();
