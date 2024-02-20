@@ -216,17 +216,17 @@ const Checkout = (props) => {
                       <div className="booking-info">
                         <h4>
 
-                          {doctorDetail.name}
+                          {doctorDetail && doctorDetail.name}
 
                         </h4>
                         <span>
 
-                          {doctorDetail.education}
+                          {doctorDetail && doctorDetail.education}
 
                         </span>
                         <span>
 
-                          ,  {doctorDetail.conditionstreated}
+                          ,  {doctorDetail && doctorDetail.conditionstreated}
 
                         </span>
                       </div>

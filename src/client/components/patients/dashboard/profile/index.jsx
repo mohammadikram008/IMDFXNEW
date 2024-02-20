@@ -1,12 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import DashboardSidebar from "../sidebar/sidebar.jsx";
 import IMG01 from "../../../../assets/images/patient.jpg";
 import StickyBox from "react-sticky-box";
 import { Link } from "react-router-dom";
 import Footer from "../../../footer.jsx";
 import Header from "../../../header.jsx";
-
+import axios from "axios";
 const Profile = (props) => {
+  const userId = localStorage.getItem('token');
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    dateOfBirth: "",
+    email: "",
+    mobile: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
+    image: null, // Add an image field to the form data
+  });
+
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleImageChange = (e) => {
+    console.log(e.target.files[0]);
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.files[0],
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+console.log("fom",formData);
+    // Create FormData object
+    const data = new FormData();
+    for (const key in formData) {
+      data.append(key, formData[key]);
+    }
+
+    try {
+      // Make API request using axios
+      const response = await axios.post(
+        `http://localhost:3005/api/update-patient-profile/${userId}`, data,
+       
+      );
+
+      console.log("API response:", response.data);
+      alert("updated")
+      // Handle success, e.g., show a success message
+    } catch (error) {
+      alert(error)
+      console.error("Error making API request:", error);
+      // Handle error, e.g., show an error message
+    }
+  };
   return (
     <div>
       <Header {...props} />
@@ -42,7 +97,7 @@ const Profile = (props) => {
             <div className="col-md-6 col-lg-6 col-xl-6 mt-3">
               <div className="card">
                 <div className="card-body">
-                  <form>
+                  <form onSubmit={handleSubmit}>
                     <div className="row form-row">
                       <div className="col-12 col-md-12">
                         <div className="form-group">
@@ -55,7 +110,7 @@ const Profile = (props) => {
                                 <span>
                                   <i className="fa fa-upload"></i> Upload Photo
                                 </span>
-                                <input type="file" className="upload" />
+                                <input type="file" className="upload" name="image" onChange={handleImageChange} />
                               </div>
                               <small className="form-text text-muted">
                                 Allowed JPG, GIF or PNG. Max size of 2MB
@@ -71,6 +126,7 @@ const Profile = (props) => {
                             type="text"
                             className="form-control"
                             defaultValue="Richard"
+                            name="firstName" onChange={handleInputChange}
                           />
                         </div>
                       </div>
@@ -81,6 +137,7 @@ const Profile = (props) => {
                             type="text"
                             className="form-control"
                             defaultValue="Wilson"
+                            name="lastName" onChange={handleInputChange}
                           />
                         </div>
                       </div>
@@ -92,11 +149,12 @@ const Profile = (props) => {
                               type="text"
                               className="form-control datetimepicker"
                               defaultValue="24-07-1983"
+                              name="dateOfBirth" onChange={handleInputChange}
                             />
                           </div>
                         </div>
                       </div>
-                      <div className="col-12 col-md-6">
+                     {/* <div className="col-12 col-md-6">
                         <div className="form-group">
                           <label>Blood Group</label>
                           <select className="form-select form-control">
@@ -111,6 +169,7 @@ const Profile = (props) => {
                           </select>
                         </div>
                       </div>
+    */}
                       <div className="col-12 col-md-6">
                         <div className="form-group">
                           <label>Email ID</label>
@@ -118,6 +177,7 @@ const Profile = (props) => {
                             type="email"
                             className="form-control"
                             defaultValue="richard@example.com"
+                            name="email" onChange={handleInputChange}
                           />
                         </div>
                       </div>
@@ -128,6 +188,7 @@ const Profile = (props) => {
                             type="text"
                             defaultValue="+1 202-555-0125"
                             className="form-control"
+                            name="mobile" onChange={handleInputChange}
                           />
                         </div>
                       </div>
@@ -138,6 +199,7 @@ const Profile = (props) => {
                             type="text"
                             className="form-control"
                             defaultValue="806 Twin Willow Lane"
+                            name="address" onChange={handleInputChange}
                           />
                         </div>
                       </div>
@@ -148,6 +210,7 @@ const Profile = (props) => {
                             type="text"
                             className="form-control"
                             defaultValue="Old Forge"
+                            name="city" onChange={handleInputChange}
                           />
                         </div>
                       </div>
@@ -158,6 +221,7 @@ const Profile = (props) => {
                             type="text"
                             className="form-control"
                             defaultValue="Newyork"
+                            name="state" onChange={handleInputChange}
                           />
                         </div>
                       </div>
@@ -168,6 +232,7 @@ const Profile = (props) => {
                             type="text"
                             className="form-control"
                             defaultValue="13420"
+                            name="zipCode" onChange={handleInputChange}
                           />
                         </div>
                       </div>
@@ -178,10 +243,13 @@ const Profile = (props) => {
                             type="text"
                             className="form-control"
                             defaultValue="United States"
+                            name="country" onChange={handleInputChange}
                           />
                         </div>
                       </div>
                     </div>
+                    <div className="d-flex">
+                    
                     <div className="submit-section">
                       <button
                         type="submit"
@@ -190,6 +258,15 @@ const Profile = (props) => {
                         Save Changes
                       </button>
                     </div>
+                    <div className="submit-section mx-3">
+                    <Link
+                      to="/patient/change-password"
+                      className="btn btn-primary submit-btn"
+                    >
+                       Change Password
+                    </Link>
+                  </div>
+                  </div>
                   </form>
                 </div>
               </div>

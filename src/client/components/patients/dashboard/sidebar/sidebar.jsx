@@ -80,8 +80,8 @@ export const DashboardSidebar = ({ props }) => {
                 <span>Add Medical Records</span>
               </Link>
             </li>
-            */
-            }
+          
+            
             <li className={pathname.includes("/orders") ? "active" : ""}>
               <Link
                 to="/patient/orders"
@@ -91,6 +91,7 @@ export const DashboardSidebar = ({ props }) => {
                 <small className="unread-msg">7</small>
               </Link>
             </li>
+          */}
             <li
                 className={pathname.includes("/schedule-timing") ? "active" : ""
                 }
