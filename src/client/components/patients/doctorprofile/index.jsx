@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { Fragment, useState,useEffect } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../../header";
 import axios from "axios";
@@ -11,8 +11,8 @@ import IMG01 from "../../../assets/images/doc1.jpg";
 import doc_cover from '../../../assets/images/doccover.png'
 import TimeModel from "../Model/TimeModel";
 const DoctorProfile = (props) => {
-  const {  id} = props.location.state;
-  console.log("iddd",id);
+  const { id } = props.location.state;
+  console.log("iddd", id);
   const [show, setShow] = useState(false);
   const [videocall, setvideocall] = useState(false);
   const [isOpen, setisOpen] = useState(false);
@@ -22,9 +22,9 @@ const DoctorProfile = (props) => {
   const [TimePop, setTimePop] = useState(false);
   const doctorlogin = localStorage.getItem("doctorlogin")
   const handleToggleModal = () => {
-    if(doctorlogin){
-alert("Login as a patient");
-    }else{
+    if (doctorlogin) {
+      alert("Login as a patient");
+    } else {
 
       setTimePop(!TimePop);
     }
@@ -39,7 +39,7 @@ alert("Login as a patient");
       try {
         const response = await axios.get(`http://localhost:3005/api/getDoctorDetail/${id}`);
         setDoctorDetail(response.data);
-       
+
       } catch (error) {
         console.error('Error fetching doctor details:', error);
       }
@@ -47,10 +47,10 @@ alert("Login as a patient");
 
     fetchDoctorDetail();
   }, [id]);
-  
+
   return (
     <Fragment>
- 
+
 
       <Header {...props} />
 
@@ -96,7 +96,7 @@ alert("Login as a patient");
           doctorDetail={doctorDetail}
         />
       )} */}
-      <TimeModel TimePop={TimePop} setTimePop={setTimePop}/>
+      <TimeModel doctorDetail={doctorDetail} TimePop={TimePop} setTimePop={setTimePop} />
       <Footer {...props} />
     </Fragment>
   );

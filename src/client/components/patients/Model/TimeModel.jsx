@@ -191,6 +191,7 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail }) => {
       // window.location.href = "/patient/checkout";
       // console.log("selectedDate", selectedDate);
       // console.log("selectedTimeSlot", selectedTimeSlot);
+      // console.log(doctorDetail)
       history.push({
         pathname: "/patient/checkout",
         state: { selectedDateData, selectedTimeSlot, doctorDetail },
@@ -306,6 +307,9 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail }) => {
                 </button> */}
                 <button
                   type="button"
+                  style={{
+                    background: !isProceedBtnEnabled ? "gray" : "linear-gradient(to bottom, #ffcc00 0%, #ff9900 98%)"
+                  }}
                   // className="btn btn-primary"
                   onClick={() => handleChangePay()}
                   className={` ${isProceedBtnEnabled ? "pay-btn" : "pay-btn-dis"}`}

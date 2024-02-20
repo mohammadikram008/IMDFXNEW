@@ -11,23 +11,18 @@ export const DashboardSidebar = ({ props }) => {
   console.log("patient", props);
   const pathname = window.location.pathname;
   return (
-    <div className="profile-sidebar">
-      <div className="widget-profile pro-widget-content">
+    <div style={{
+    }} className="profile-sidebar h-100 ">
+      <div className="widget-profile">
         <div className="profile-info-widget">
-          <Link to="#0" className="booking-doc-img">
-            <img src={nawazp} alt="User" />
+          <Link to="#0" className="booking-doc-img ">
+            <img style={{
+              border:"2px solid gray"
+            }} src={nawazp} alt="User" className="object-fit-cover " />
           </Link>
-          <div className="profile-det-info">
-            <h3>{props && props.username}</h3>
-            <div className="patient-details">
-              <h5 className="text-success">
-                active
-              </h5>
-              {/* <h5 className="mb-0">
-                <i className="fas fa-map-marker-alt"></i> Newyork, USA
-              </h5> */}
-            </div>
-          </div>
+          <h3 style={{
+            fontSize:"20px"
+          }} className="fw-bold text-center w-100 text-black ">Nawaz Sharif</h3>
         </div>
       </div>
       <div className="dashboard-widget">
@@ -93,17 +88,17 @@ export const DashboardSidebar = ({ props }) => {
             </li>
           */}
             <li
-                className={pathname.includes("/schedule-timing") ? "active" : ""
-                }
-              >
-                <Link
+              className={pathname.includes("/schedule-timing") ? "active" : ""
+              }
+            >
+              <Link
                 to="#"
-                //  to="/doctor/schedule-timing"
-                 >
-                  <i className="fas fa-hourglass-start" />
-                  <span>Schedule Timings</span>
-                </Link>
-              </li>
+              //  to="/doctor/schedule-timing"
+              >
+                <i className="fas fa-hourglass-start" />
+                <span>Schedule Timings</span>
+              </Link>
+            </li>
             <li
               className={pathname.includes("/medicaldetails") ? "active" : ""}
             >
