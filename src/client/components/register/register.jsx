@@ -6,7 +6,16 @@ import axios from 'axios';
 import { Link, useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaFacebook } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { TypeAnimation } from "react-type-animation";
+import { IoEye } from "react-icons/io5";
+import { IoIosEyeOff } from "react-icons/io";
 const Register = (props) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
   const history = useHistory();
   useEffect(() => {
     document.body.classList.add("account-page");
@@ -27,7 +36,7 @@ const Register = (props) => {
 
   const handlePatientRegistration = async (e) => {
     e.preventDefault();
-console.log("formData",formData)
+    console.log("formData", formData)
     try {
       const response = await axios.post("http://localhost:3005/api/signup", formData);
 
@@ -48,81 +57,160 @@ console.log("formData",formData)
 
   return (
     <>
-      <Header {...props} />
+      <>
+        <Header {...props} />
 
-      <div className="content content-login-page top-space ">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-md-8 offset-md-2">
-              <div className="account-content">
-                <div className="row align-items-center justify-content-center">
-                  <div className="col-md-12 col-lg-6 login-right">
-                    <div className="login-header heading-text-logins">
-                      <h3>Patient Register</h3>
+        <>
+          {/* Page Content */}
+          <div
+            style={{
+              height:"100vh"
+            }}
+          className="content content-login-page fixed-top  top-space  ">
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-md-8 offset-md-2  ">
+                  {/* Login Tab Content */}
+                  <div className="account-content ">
+                    <div className="row align-items-center justify-content-center">
+                      <div style={{
+                        padding: "60px 80px",
+                        borderRadius: "40px"
+                      }} className="col-md-12 col-lg-6 login-right with-shadow">
+                        <div className="login-header flex-column gap-2   justify-content-start align-items-start heading-text-logins">
+                          <span className="fs-5 fw-medium ">Welcome Back</span>
+                          <h3 className="fs-2 fw-bold ">
+                            Patient Register
+                          </h3>
+                        </div>
+                        <form onSubmit={handlePatientRegistration}>
+                          <div className="d-flex flex-column gap-2 my-1 ">
+                            <label className="focus-label">Username</label>
+                            <input
+                              type="text"
+                              style={{
+                                outline: "none"
+                              }}
+                              placeholder="John Smith"
+                              name="username"
+                              className="border-bottom border-0  border-secondary  w-100 py-3 px-2 "
+                              value={formData.username}
+                              onChange={handleInputChange}
+                              required
+
+                            />
+                          </div>
+                          <div className="d-flex flex-column gap-2 my-1 ">
+                            <label className="focus-label">Email</label>
+                            <input
+                              type="email"
+                              style={{
+                                outline: "none"
+                              }}
+                              placeholder="infoabc@gmail.com"
+                              name="email"
+                              className="border-bottom border-0  border-secondary  w-100 py-3 px-2 "
+                              value={formData.email}
+                              onChange={handleInputChange}
+                              required
+
+                            />
+                          </div>
+                          <div className="d-flex flex-column position-relative  gap-2 my-1 ">
+                            <label className="focus-label">Password</label>
+                            <input
+                              type={showPassword ? "text" : "password"}
+                              style={{
+                                outline: "none"
+                              }}
+                              className="border-bottom border-0  border-secondary  w-100 py-3 px-2 "
+                              placeholder="******"
+                              name="password"
+                              value={formData.password}
+                              onChange={handleInputChange}
+                              required
+                            />
+                            <span
+                                style={{
+                                  bottom:"10px",
+                                  right:"5px"
+                                }}
+                                  className="field-icon position-absolute toggle-password"
+                              onClick={handleTogglePassword}
+                            >
+                              {showPassword ? <IoEye /> : <IoIosEyeOff />}
+                            </span>
+                          </div>
+                          <div className="text-end my-1">
+                            <Link
+                              className="forgot-link text-black "
+                              to="/login"
+                            >
+                              Already have an account?
+                            </Link>
+                          </div>
+                          <div className="d-flex justify-content-center my-1  align-items-center ">
+                            <button
+                              style={{
+                                borderRadius: "10px"
+                              }}
+                              className="login-btn-login w-100"
+                              type="submit"
+                            >
+                              Signup
+                            </button>
+                          </div>
+                          <div className="login-or">
+                            <span className="span-or text-black ">or</span>
+                          </div>
+
+                          <div className="social-login mb-4 my-1 d-flex justify-content-center align-items-center gap-2 ">
+                            <button className="facebook px-4 py-2 bg-white  d-flex justify-content-center align-items-center border gap-3 ">
+                              <FaFacebook size={20} color="#0E82FD" />
+                              <span>Facebook</span>
+                            </button>
+                            <button className="google px-4 py-2 bg-white  d-flex justify-content-center align-items-center border gap-3">
+                              <FcGoogle size={20} />
+                              <span>Google</span>
+                            </button>
+                          </div>
+                     
+                        </form>
+                      </div>
+                      <div style={{
+                        padding: "80px",
+                        borderRadius: "40px"
+                      }} className="col-md-12 col-lg-6 bg-transparent  border-0 login-right with-shadow">
+                        <TypeAnimation
+                          sequence={[
+                            // Same substring at the start will only be typed out once, initially
+                            'Find the best Doctors',
+                            1000, // wait 1s before replacing "Mice" with "Hamsters"
+                            'Find the best Cardiology',
+                            1000,
+                            'Find the best Dentist',
+                            1000,
+                            'Find the best Neurologist',
+                            1000
+                          ]}
+                          wrapper="span"
+                          speed={10}
+                          style={{ fontSize: '5em', display: 'inline-block', color: "white" }}
+                          repeat={Infinity}
+                        />
+                      </div>
                     </div>
-
-                    <form onSubmit={handlePatientRegistration}>
-                      <div className="form-group form-focus">
-                        <input
-                          type="text"
-                          className="form-control input-fld floating"
-                          placeholder="Username"
-                          name="username"
-                          value={formData.username}
-                          onChange={handleInputChange}
-                          required
-                        />
-                        <label className="focus-label">Username</label>
-                      </div>
-                      <div className="form-group form-focus">
-                        <input
-                          type="email"
-                          className="form-control input-fld floating"
-                          placeholder="Email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleInputChange}
-                          required
-                        />
-                        <label className="focus-label">Email</label>
-                      </div>
-                      <div className="form-group form-focus">
-                        <input
-                          type="password"
-                          className="form-control input-fld floating"
-                          placeholder="Password"
-                          name="password"
-                          value={formData.password}
-                          onChange={handleInputChange}
-                          required
-                        />
-                        <label className="focus-label">Password</label>
-                      </div>
-                      <div className="text-end">
-                        <Link className="forgot-link" to="/login">
-                          Already have an account?
-                        </Link>
-                      </div>
-                      <button
-                        className="login-btn-login"
-                        type="submit"
-                      >
-                        Signup
-                      </button>
-                      <div className="login-or">
-                        <span className="or-line" />
-                        <span className="span-or">or</span>
-                      </div>
-                    </form>
                   </div>
+                  {/* /Login Tab Content */}
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
+          {/* /Page Content */}
+        </>
 
-      <Footer {...props} />
+        <ToastContainer />
+      </>
     </>
   );
 };

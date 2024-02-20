@@ -187,7 +187,7 @@ const Header = () => {
                       ? { background: "rgb(43, 108, 203)" }
                       : { background: "" } && pathnames.includes("/index-2") && navbar
                         ? { background: "rgb(255, 255, 255)" }
-                        : { background: "#212121" }
+                        : { background: "#212121",zIndex:'10' }
           }
         >
           <div className="container ">

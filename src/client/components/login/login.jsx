@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Header from "../header";
 import Footer from "../footer";
@@ -9,7 +9,9 @@ import { IoEye } from "react-icons/io5";
 import { IoIosEyeOff } from "react-icons/io";
 import { GoogleLogin } from "@react-oauth/google";
 import FacebookLogin from "react-facebook-login";
-
+import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from "react-icons/fa";
+import { TypeAnimation } from 'react-type-animation';
 const LoginContainer = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,10 +23,10 @@ const LoginContainer = (props) => {
   const responseMessage = (response) => {
     console.log(response.credential);
     localStorage.setItem('token', response.credential);
-};
-const errorMessage = (error) => {
+  };
+  const errorMessage = (error) => {
     console.log(error);
-};
+  };
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
@@ -69,42 +71,42 @@ const errorMessage = (error) => {
   useEffect(() => {
     // Initialize Facebook SDK after component mounts
     window.fbAsyncInit = function () {
-        window.FB.init({
-            appId: '862482638894435', // Replace with your Facebook App ID
-            cookie: true,
-            xfbml: true,
-            version: 'v10.0',
-        });
+      window.FB.init({
+        appId: '862482638894435', // Replace with your Facebook App ID
+        cookie: true,
+        xfbml: true,
+        version: 'v10.0',
+      });
     };
 
     // Load Facebook SDK script
     (function (d, s, id) {
-        var js,
-            fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = 'https://connect.facebook.net/en_US/sdk.js';
-        fjs.parentNode.insertBefore(js, fjs);
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk.js';
+      fjs.parentNode.insertBefore(js, fjs);
     })(document, 'script', 'facebook-jssdk');
-}, []);
-const responseFacebook = (response) => {
-  console.log(response);
+  }, []);
+  const responseFacebook = (response) => {
+    console.log(response);
 
-  // setData({
-  //     name: response.name,
-  //     email: response.email,
-  //     picture: response.picture.data.url,
-  // });
-  // setPicture(response.picture.data.url);
-  // if (response.accessToken) {
-  //     setLogins(true);
-  //     alert(response.accessToken)
-  // } else {
-  //     setLogins(false);
-  //     alert(response)
-  // }
-}
+    // setData({
+    //     name: response.name,
+    //     email: response.email,
+    //     picture: response.picture.data.url,
+    // });
+    // setPicture(response.picture.data.url);
+    // if (response.accessToken) {
+    //     setLogins(true);
+    //     alert(response.accessToken)
+    // } else {
+    //     setLogins(false);
+    //     alert(response)
+    // }
+  }
 
   return (
     <>
@@ -112,64 +114,86 @@ const responseFacebook = (response) => {
 
       <>
         {/* Page Content */}
-        <div className="content content-login-page top-space  ">
+        <div
+        style={{
+          height:"100vh"
+        }}
+        className="content content-login-page fixed-top top-space  ">
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-8 offset-md-2  ">
                 {/* Login Tab Content */}
                 <div className="account-content ">
                   <div className="row align-items-center justify-content-center">
-                    <div className="col-md-12 col-lg-6 login-right with-shadow">
-                      <div className="login-header heading-text-logins">
-                        <h3>
+                    <div style={{
+                      padding: "60px 80px",
+                      borderRadius: "40px"
+                    }} className="col-md-12 col-lg-6 login-right with-shadow">
+                      <div className="login-header flex-column gap-2   justify-content-start align-items-start heading-text-logins">
+                        <span className="fs-5 fw-medium ">Welcome Back</span>
+                        <h3 className="fs-2 fw-bold ">
                           Login <span>IMDFX</span>
                         </h3>
                       </div>
                       <form onSubmit={handleLogin}>
-                        <div className="form-group form-focus">
+                        <div className="d-flex flex-column gap-2 my-1 ">
+                          <label className="focus-label">Email</label>
                           <input
                             type="email"
-                            className="form-control floating input-fld"
+                            style={{
+                              outline: "none"
+                            }}
+                            className="border-bottom border-0  border-secondary  w-100 py-3 px-2 "
                             value={email}
                             onChange={handleEmailChange}
                           />
-                          <label className="focus-label">Email</label>
                         </div>
-                        <div className="form-group form-focus">
+                        <div className="d-flex flex-column position-relative  gap-2 my-1 ">
+                          <label className="focus-label">Password</label>
                           <input
                             type={showPassword ? "text" : "password"}
-                            className="form-control floating input-fld"
+                            style={{
+                              outline: "none"
+                            }}
+                            className="border-bottom border-0  border-secondary  w-100 py-3 px-2 "
                             value={password}
                             onChange={handlePasswordChange}
                           />
-                          <label className="focus-label">Password</label>
-                          {/* <span
-                            className="field-icon toggle-password"
+                          <span
+                          style={{
+                            bottom:"10px",
+                            right:"5px"
+                          }}
+                            className="field-icon position-absolute toggle-password"
                             onClick={handleTogglePassword}
                           >
                             {showPassword ? <IoEye /> : <IoIosEyeOff />}
-                          </span> */}
+                          </span>
                         </div>
-                        <div className="text-end">
+                        <div className="text-end my-1">
                           <Link
-                            className="forgot-link"
+                            className="forgot-link text-black "
                             to="/pages/forgot-password"
                           >
                             Forgot Password ?
                           </Link>
                         </div>
 
-                        <button
-                          className="w-100 login-btn-login"
-                          type="submit"
-                        >
-                          Login
-                        </button>
-                        <div className="login-or">
-                          <span className="or-line" />
-                          <span className="span-or">or</span>
+                        <div className="d-flex justify-content-center my-1  align-items-center ">
+                          <button
+                            style={{
+                              borderRadius: "10px"
+                            }}
+                            className="login-btn-login w-100"
+                            type="submit"
+                          >
+                            Login
+                          </button>
                         </div>
-                        <div className="row form-row social-login">
+                        <div className="login-or">
+                          <span className="span-or text-black ">or</span>
+                        </div>
+                        {/* <div className="row form-row social-login">
                           <div className="col-6">
                             <FacebookLogin
                               appId="1083617942780130"
@@ -179,7 +203,7 @@ const responseFacebook = (response) => {
                               callback={responseFacebook}
                               // callback={(response) => handleFacebookResponse(response)}
                               icon="fa-facebook"
-                              textButton="Sign in with Facebook"
+                              // textButton="Sign in with Facebook"
                               cssClass="custom-facebook-button"
                             />
                           </div>
@@ -189,16 +213,48 @@ const responseFacebook = (response) => {
                               onError={(error) => errorMessage(error)}
                             />
                           </div>
+                        </div> */}
+                        <div className="social-login mb-4 my-1 d-flex justify-content-center align-items-center gap-2 ">
+                          <button className="facebook px-4 py-2 bg-white  d-flex justify-content-center align-items-center border gap-3 ">
+                            <FaFacebook size={20} color="#0E82FD" />
+                            <span>Facebook</span>
+                          </button>
+                          <button className="google px-4 py-2 bg-white  d-flex justify-content-center align-items-center border gap-3">
+                            <FcGoogle size={20} />
+                            <span>Google</span>
+                          </button>
                         </div>
                         <div className="text-center dont-have">
                           Don’t have an account?{" "}
                           <Link to="/register">Register</Link>
                         </div>
                         <div className="text-center dont-have">
-                        Don’t have an account?{" "}
-                        <Link to="/doctor/doctor-register"> Doctor</Link>
-                      </div>
+                          Don’t have an account?{" "}
+                          <Link to="/doctor/doctor-register"> Doctor</Link>
+                        </div>
                       </form>
+                    </div>
+                    <div style={{
+                      padding: "80px",
+                      borderRadius: "40px"
+                    }} className="col-md-12 col-lg-6 bg-transparent  border-0 login-right with-shadow">
+                      <TypeAnimation
+                        sequence={[
+                          // Same substring at the start will only be typed out once, initially
+                          'Find the best Doctors',
+                          1000, // wait 1s before replacing "Mice" with "Hamsters"
+                          'Find the best Cardiology',
+                          1000,
+                          'Find the best Dentist',
+                          1000,
+                          'Find the best Neurologist',
+                          1000
+                        ]}
+                        wrapper="span"
+                        speed={10}
+                        style={{ fontSize: '5em', display: 'inline-block',color:"white" }}
+                        repeat={Infinity}
+                      />
                     </div>
                   </div>
                 </div>
@@ -210,7 +266,6 @@ const responseFacebook = (response) => {
         {/* /Page Content */}
       </>
 
-      <Footer {...props} />
       <ToastContainer />
     </>
   );

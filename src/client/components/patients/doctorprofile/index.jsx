@@ -9,6 +9,7 @@ import Pagecontent from "./pagecontent";
 import BookingModal from "../Model/TimeModel";
 import IMG01 from "../../../assets/images/doc1.jpg";
 import doc_cover from '../../../assets/images/doccover.png'
+import TimeModel from "../Model/TimeModel";
 const DoctorProfile = (props) => {
   const {  id} = props.location.state;
   console.log("iddd",id);
@@ -18,18 +19,18 @@ const DoctorProfile = (props) => {
   const [state, setState] = useState(false);
   const [photoIndex, setphotoIndex] = useState(false);
 
-  const [showModal, setShowModal] = useState(false);
+  const [TimePop, setTimePop] = useState(false);
   const doctorlogin = localStorage.getItem("doctorlogin")
   const handleToggleModal = () => {
     if(doctorlogin){
 alert("Login as a patient");
     }else{
 
-      setShowModal(!showModal);
+      setTimePop(!TimePop);
     }
   };
   const handleModalClose = () => {
-    setShowModal(false);
+    setTimePop(false);
   };
   const [doctorDetail, setDoctorDetail] = useState(null);
 
@@ -53,7 +54,7 @@ alert("Login as a patient");
 
       <Header {...props} />
 
-      <div className={`col-md-12 col-12 ${showModal ? 'modal-overlay' : ''}`}>
+      <div className={`col-md-12 col-12 ${TimePop ? 'modal-overlay' : ''}`}>
 
         {/* <div className="breadcrumb-bar-two">
           <div className="container">
@@ -76,7 +77,7 @@ alert("Login as a patient");
         </div> */}
         <div className="content">
           <div className="container mt-5">
-            <Pagecontent toggleModal={handleToggleModal} showModal={showModal} doctorDetail={doctorDetail} />
+            <Pagecontent toggleModal={handleToggleModal} TimePop={TimePop} doctorDetail={doctorDetail} />
             {/* <div className="content-div">
 
               <Content />
@@ -88,13 +89,14 @@ alert("Login as a patient");
 
 
       </div>
-      {showModal && (
+      {/* {TimePop && (
         <BookingModal
-          showModal={showModal}
+          TimePop={TimePop}
           handleModalClose={handleModalClose}
           doctorDetail={doctorDetail}
         />
-      )}
+      )} */}
+      <TimeModel TimePop={TimePop} setTimePop={setTimePop}/>
       <Footer {...props} />
     </Fragment>
   );
