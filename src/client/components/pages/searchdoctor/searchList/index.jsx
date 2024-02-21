@@ -15,6 +15,7 @@ const SearchList = () => {
   ];
   const [doctorsApiData, setDoctorsApiData] = useState([]);
   const [TimePop, setTimePop] = useState(false);
+  const [docDetail, setDocDetail] = useState()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +41,10 @@ const SearchList = () => {
     });
 
   }
-
+  const handleTimePop = (id) => {
+    setDocDetail(doctorsApiData.filter((item) => item._id === id)[0])
+    setTimePop(!TimePop)
+  }
 
   return (
     <div className="d-flex justify-content-center align-items-center flex-column ">
@@ -192,8 +196,8 @@ const SearchList = () => {
                     View Profile
                   </Link> */}
                   <button style={{
-                    borderRadius:"10px"
-                  }} onClick={() => setTimePop(!TimePop)} className="login-btn-login">
+                    borderRadius: "10px"
+                  }} onClick={() => handleTimePop(doctor._id)} className="login-btn-login">
                     Book Appointment
                   </button>
                 </div>
@@ -262,7 +266,8 @@ const SearchList = () => {
           </div>
         </div>
       ))}
-      <TimeModel TimePop={TimePop} setTimePop={setTimePop} />
+      <TimeModel doctorDetail={docDetail} TimePop={TimePop} setTimePop={setTimePop} />
+
     </div>
   );
 };

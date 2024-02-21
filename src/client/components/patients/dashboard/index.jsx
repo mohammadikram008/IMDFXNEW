@@ -126,7 +126,11 @@ const Dashboard = (props) => {
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
 
             </div>
-            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
+            <div style={{
+              height: "100vh",
+              borderRight: "0.1px solid gray",
+
+            }} className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar pt-5">
               <StickyBox offsetTop={20} offsetBottom={20}>
                 <DashboardSidebar props={patient} />
               </StickyBox>
@@ -185,7 +189,7 @@ const Dashboard = (props) => {
                     </div>
                   </div>
                 </div>
-    {  /*  <div className="row patient-graph-col">
+                {  /*  <div className="row patient-graph-col">
                   <div className="col-12">
                     <div className="card">
                       <div className="card-header">
@@ -299,7 +303,7 @@ const Dashboard = (props) => {
                           My Appointments
                         </Link>
                       </li>
-                    
+
                     </ul>
                   </nav>
 
@@ -622,7 +626,7 @@ const Dashboard = (props) => {
                                       </td>
                                       <td>{appointment.appointmentDetails.bookingDate}</td>
                                       <td>$108</td>
-                                     {/* <td>
+                                      {/* <td>
                                         <span className={`badge rounded-pill ${appointment.status === 'Confirm' ? 'bg-success-light' : 'bg-danger-light'}`}>
                                         
                                          {
@@ -669,67 +673,67 @@ const Dashboard = (props) => {
                             <table className="table table-hover table-center mb-0">
                               <thead>
                                 <tr>
-                                 
+
                                   <th>Name</th>
                                   <th>Specialization</th>
                                   <th></th>
                                 </tr>
                               </thead>
                               <tbody>
-                              {
-                                docAppointment && docAppointment.map((item,index)=>(
-                                  <tr>
-                                
-                                
-                                  <td>
-                                    <h2 className="table-avatar">
-                                      <Link
-                                        to="/patient/doctor-profile"
-                                        className="avatar avatar-sm me-2"
-                                      >
-                                        <img
-                                          className="avatar-img rounded-circle"
-                                          src={IMG06}
-                                          alt="User "
-                                        />
-                                      </Link>
-                                      <Link to="/patient/doctor-profile">
-                                        Dr. {item.doctorDetails.name}{" "}
-                                        <span>{item.doctorDetails.specialization}</span>
-                                      </Link>
-                                    </h2>
-                                  </td>
-                                  <td>{
-                                    item.doctorDetails.specialization}</td>
-                                  <td className="text-end">
-                                    <div className="table-action">
-                                      <Link
-                                        to="#"
-                                        className="btn btn-sm bg-primary-light"
-                                      >
-                                        <i className="fas fa-print"></i> Print
-                                      </Link>
-                                      &nbsp;
-                                      <Link
-                                        to="#"
-                                        className="btn btn-sm bg-info-light"
-                                      >
-                                        <i className="far fa-eye"></i> View
-                                      </Link>
-                                    </div>
-                                  </td>
-                                </tr>
-                                ))
+                                {
+                                  docAppointment && docAppointment.map((item, index) => (
+                                    <tr>
 
-                              }
-                                
+
+                                      <td>
+                                        <h2 className="table-avatar">
+                                          <Link
+                                            to="/patient/doctor-profile"
+                                            className="avatar avatar-sm me-2"
+                                          >
+                                            <img
+                                              className="avatar-img rounded-circle"
+                                              src={IMG06}
+                                              alt="User "
+                                            />
+                                          </Link>
+                                          <Link to="/patient/doctor-profile">
+                                            Dr. {item.doctorDetails.name}{" "}
+                                            <span>{item.doctorDetails.specialization}</span>
+                                          </Link>
+                                        </h2>
+                                      </td>
+                                      <td>{
+                                        item.doctorDetails.specialization}</td>
+                                      <td className="text-end">
+                                        <div className="table-action">
+                                          <Link
+                                            to="#"
+                                            className="btn btn-sm bg-primary-light"
+                                          >
+                                            <i className="fas fa-print"></i> Print
+                                          </Link>
+                                          &nbsp;
+                                          <Link
+                                            to="#"
+                                            className="btn btn-sm bg-info-light"
+                                          >
+                                            <i className="far fa-eye"></i> View
+                                          </Link>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  ))
+
+                                }
+
                               </tbody>
                             </table>
                           </div>
                         </div>
                       </div>
                     </div>
-                   
+
                   </div>
                 </div>
               </div>

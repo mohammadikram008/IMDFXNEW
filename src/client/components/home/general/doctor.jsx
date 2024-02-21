@@ -13,7 +13,10 @@ import { faL } from "@fortawesome/free-solid-svg-icons";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 function Doctor() {
+
+  const history=useHistory()
   const [doctordata, setDoctorData] = useState([]);
   //Aos
   useEffect(() => {
@@ -44,7 +47,7 @@ function Doctor() {
     autoplaySpeed: 3000,
     slidesToShow: 3,
     slidesToScroll: 3,
-    
+
     // initialSlide: 4,
     responsive: [
       {
@@ -239,7 +242,7 @@ function Doctor() {
             {/* Doctor Item */}
             <Slider {...settings} className="slick-lists " >
               {doctordata.map((doctor) => (
-                 
+
                 <div className="doctor-card bg-gradient-card  " key={doctor._id} >
                   <div className="doctor-header">
                     <div className="doctor-info">
@@ -261,10 +264,15 @@ function Doctor() {
                   <img src={imageUrl} className="doctor-image " />
 
                   <div>
-                    <button className=" view-profile">View Profile</button>
+                    <button onClick={() => {
+                      history.push({
+                        pathname: "/patient/doctor-profile",
+                        state: { id: doctor._id }
+                      });
+                    }} className=" view-profile">View Profile</button>
                   </div>
                 </div>
-            
+
               ))}
             </Slider>
             {/* <OwlCarousel {...doctersettings}>

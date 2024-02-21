@@ -78,7 +78,7 @@ function Speacialities() {
             data-aos="fade-up"
           >
             <OwlCarousel {...specialitysettings}>
-              <div className="item">
+              <Link to={'patient/search-doctor1'} className="item">
                 <div className="specialities-item">
                   <div className="specialities-img">
                     <span>
@@ -87,8 +87,8 @@ function Speacialities() {
                   </div>
                   <p>Cardiology</p>
                 </div>
-              </div>
-              <div className="item">
+              </Link>
+              <Link to={'patient/search-doctor1'} className="item">
                 <div className="specialities-item">
                   <div className="specialities-img">
                     <span>
@@ -97,8 +97,8 @@ function Speacialities() {
                   </div>
                   <p>Neurology</p>
                 </div>
-              </div>
-              <div className="item">
+              </Link>
+              <Link to={'patient/search-doctor1'} className="item">
                 <div className="specialities-item">
                   <div className="specialities-img">
                     <span>
@@ -107,8 +107,8 @@ function Speacialities() {
                   </div>
                   <p>Urology</p>
                 </div>
-              </div>
-              <div className="item">
+              </Link>
+              <Link to={'patient/search-doctor1'} className="item">
                 <div className="specialities-item">
                   <div className="specialities-img">
                     <span>
@@ -117,8 +117,8 @@ function Speacialities() {
                   </div>
                   <p>Orthopedic</p>
                 </div>
-              </div>
-              <div className="item">
+              </Link>
+              <Link to={'patient/search-doctor1'} className="item">
                 <div className="specialities-item">
                   <div className="specialities-img">
                     <span>
@@ -127,8 +127,8 @@ function Speacialities() {
                   </div>
                   <p>Dentist</p>
                 </div>
-              </div>
-              <div className="item">
+              </Link>
+              <Link to={'patient/search-doctor1'} className="item">
                 <div className="specialities-item">
                   <div className="specialities-img">
                     <span>
@@ -137,8 +137,8 @@ function Speacialities() {
                   </div>
                   <p>Ophthalmology</p>
                 </div>
-              </div>
-              <div className="item">
+              </Link>
+              <Link to={'patient/search-doctor1'} className="item">
                 <div className="specialities-item">
                   <div className="specialities-img">
                     <span>
@@ -147,7 +147,7 @@ function Speacialities() {
                   </div>
                   <p>Neurology</p>
                 </div>
-              </div>
+              </Link>
             </OwlCarousel>
           </div>
           <div className="specialities-btn aos" data-aos="fade-up">
