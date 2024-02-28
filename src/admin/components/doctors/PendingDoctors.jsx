@@ -5,6 +5,7 @@ import "bootstrap-daterangepicker/daterangepicker.css";
 import { itemRender, onShowSizeChange } from "../paginationfunction";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import SidebarNav from "../sidebar";
+
 import {
   doctor_thumb_01,
   doctor_thumb_02,
@@ -19,14 +20,15 @@ import {
 } from "../imagepath";
 import { Link } from "react-router-dom";
 import axios from "axios";
-const Doctors = () => {
+
+const PendingDoctors = () => {
   const location = useLocation();
   // console.log("Dloc",location.state.key);
-  // const doctor= location ?location.state.key:'';
+//   const doctor= location ?location.state.key:'';
   const [doctor, setDoctor] = useState([]);
   const fetchdoctor = async () => {
     try {
-      const response = await axios.get(`http://localhost:3005/api/doctorpersnoldetails`);
+      const response = await axios.get(`http://localhost:3005/api/pendingdoctordetail`);
       setDoctor(response.data);
       // console.log("setDoctor", response.data);
       // setLoading(false);
@@ -178,7 +180,7 @@ const Doctors = () => {
     //   sorter: (a, b) => a.Earned.length - b.Earned.length,
     // },
     {
-      title: "Account Status",
+      title: "Approved Acounts",
       dataIndex: "AccountStatus",
       render: (text, record) => {
         return (
@@ -252,4 +254,4 @@ const Doctors = () => {
   );
 };
 
-export default Doctors;
+export default PendingDoctors;

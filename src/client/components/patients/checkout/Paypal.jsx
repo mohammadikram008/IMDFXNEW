@@ -9,6 +9,10 @@ import React, { useEffect, useState } from "react";
 import { generateAccessToken } from "./generateAccessToken";
 import Modal from "./Modal";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+<<<<<<< Updated upstream
+=======
+import GooglePayButton from '@google-pay/button-react';
+>>>>>>> Stashed changes
 // This value is from the props in the UI
 const style = { layout: "vertical" };
 // Custom component to wrap the PayPalButtons and show loading spinner
@@ -103,6 +107,49 @@ export default function Paypal() {
                 maxWidth: "1000px",
                 zIndex: "1"
             }} className="w-100 p-5 ">
+<<<<<<< Updated upstream
+=======
+           
+                    <GooglePayButton
+                   
+                        environment="TEST"
+                        paymentRequest={{
+                            apiVersion: 2,
+                            apiVersionMinor: 0,
+                            allowedPaymentMethods: [
+                                {
+                                    type: 'CARD',
+                                    parameters: {
+                                        allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                                        allowedCardNetworks: ['MASTERCARD', 'VISA'],
+                                    },
+                                    tokenizationSpecification: {
+                                        type: 'PAYMENT_GATEWAY',
+                                        parameters: {
+                                            gateway: 'example',
+                                            gatewayMerchantId: 'exampleGatewayMerchantId',
+                                        },
+                                    },
+                                },
+                            ],
+                            merchantInfo: {
+                                merchantId: '12345678901234567890',
+                                merchantName: 'Demo Merchant',
+                            },
+                            transactionInfo: {
+                                totalPriceStatus: 'FINAL',
+                                totalPriceLabel: 'Total',
+                                totalPrice: '100.00',
+                                currencyCode: 'USD',
+                                countryCode: 'US',
+                            },
+                        }}
+                        onLoadPaymentData={paymentRequest => {
+                            console.log('load payment data', paymentRequest);
+                        }}
+                    />
+            
+>>>>>>> Stashed changes
                 <PayPalScriptProvider
                     options={{
                         clientId: "test",
@@ -112,7 +159,13 @@ export default function Paypal() {
                     }}
                 >
                     <ButtonWrapper showSpinner={true} setIsModalOpen={setIsModalOpen} />
+<<<<<<< Updated upstream
                 </PayPalScriptProvider >
+=======
+
+                </PayPalScriptProvider >
+               
+>>>>>>> Stashed changes
             </div>
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <div className="d-flex justify-content-center align-items-center gap-3 py-5 flex-column w-100">

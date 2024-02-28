@@ -8,6 +8,7 @@ import Dashboard from "./components/dashboard";
 import Appointments from "./components/appointments";
 import Specialities from "./components/specialities";
 import Doctors from "./components/doctors";
+import PendindDoctors from "./components/doctors/PendingDoctors";
 import Patients from "./components/patients";
 import Reviews from "./components/reviews";
 import Transaction from "./components/transaction";
@@ -95,6 +96,7 @@ const AppUniversal = function (props) {
           />
           <Route path="/admin/specialities" exact component={Specialities} />
           <Route path="/admin/doctor-list" exact component={Doctors} />
+          <Route path="/admin/pending-doctor-list" exact component={PendindDoctors} />
           <Route path="/admin/patient-list" exact component={Patients} />
           <Route path="/admin/reviews" exact component={Reviews} />
           <Route

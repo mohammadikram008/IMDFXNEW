@@ -72,7 +72,11 @@ const DoctorSidebar = ({ props }) => {
               </li>
               <li
                 className={
+<<<<<<< Updated upstream
                   pathnames.includes("/doctor/account") ? "active bg" : ""
+=======
+                  pathnames.includes("/doctor/account") ? "active" : ""
+>>>>>>> Stashed changes
                 }
               >
                 <Link to="/doctor/account">
@@ -82,7 +86,11 @@ const DoctorSidebar = ({ props }) => {
               </li>
               <li
                 className={
+<<<<<<< Updated upstream
                   pathnames.includes("/doctor/schedule-timing") ? "active bg" : ""
+=======
+                  pathnames.includes("/doctor/schedule-timing") ? "active" : ""
+>>>>>>> Stashed changes
                 }
               >
                 <Link to="/doctor/schedule-timing">
@@ -90,7 +98,7 @@ const DoctorSidebar = ({ props }) => {
                   <span>Schedule Timings</span>
                 </Link>
               </li>
-              <li
+              {/* <li
                 className={
                   pathnames.includes("/doctor/available-timing") ? "active bg" : ""
                 }
@@ -99,7 +107,7 @@ const DoctorSidebar = ({ props }) => {
                   <i className="fas fa-clock" />
                   <span>Available Timings</span>
                 </Link>
-              </li>
+              </li> */}
               {/* <li
                 className={pathnames.includes("/pages/invoice") ? "active" : ""}
               >
@@ -137,7 +145,7 @@ const DoctorSidebar = ({ props }) => {
                   <small className="unread-msg">23</small>
                 </Link>
               </li>
-              <li
+              {/* <li
                 className={
                   pathnames.includes("/doctor/profile-setting") ? "active bg" : ""
                 }
@@ -146,7 +154,7 @@ const DoctorSidebar = ({ props }) => {
                   <i className="fas fa-user-cog" />
                   <span>Profile Settings</span>
                 </Link>
-              </li>
+              </li> */}
               {/* <li
                 className={
                   pathnames.includes("/doctor/social-media") ? "active" : ""
@@ -156,7 +164,7 @@ const DoctorSidebar = ({ props }) => {
                   <i className="fas fa-share-alt" />
                   <span>Social Media</span>
                 </Link>
-              </li>
+              </li> */}
               <li
                 className={
                   pathnames.includes("/doctor/doctor-change-password")
@@ -168,8 +176,13 @@ const DoctorSidebar = ({ props }) => {
                   <i className="fas fa-lock" />
                   <span>Change Password</span>
                 </Link>
+<<<<<<< Updated upstream
               </li> */}
               <li className={pathnames.includes("/index-2") ? "active bg" : ""}>
+=======
+              </li>
+              <li className={pathnames.includes("/index-2") ? "active" : ""}>
+>>>>>>> Stashed changes
                 <Link to="/login">
                   <i className="fas fa-sign-out-alt" />
                   <span>Logout</span>

@@ -17,7 +17,9 @@ import {
   patient5,
 } from "../imagepath";
 import { Link } from "react-router-dom";
-const AppointmentList = () => {
+const AppointmentList = (props) => {
+  console.log("Apro",props);
+  const Appointments   = props.props;
   const data = [
     {
       id: 1,
@@ -88,78 +90,89 @@ const AppointmentList = () => {
   const columns = [
     {
       title: "Doctor Name",
-      dataIndex: "DoctorName",
+      dataIndex: "doctorDetail",
       render: (text, record) => (
         <>
           <Link className="avatar mx-2" to="/admin/profile">
             <img className="rounded-circle" src={record.image} />
           </Link>
           <Link to="/admin/profile" className="text-decoration-none">
-            {text}
+            {text.name}
           </Link>
         </>
       ),
-      sorter: (a, b) => a.DoctorName.length - b.DoctorName.length,
+      sorter: (a, b) => a.bookingDetail.doctorDetail.name.length - b.bookingDetail.doctorDetail.name.length,
+
     },
     {
-      title: "Speciality",
-      dataIndex: "Speciality",
-      sorter: (a, b) => a.Speciality.length - b.Speciality.length,
+      title: "BookingDate",
+      dataIndex: "bookingDetail",
+      render: (text, record) => (
+        <>
+         
+        
+            {text.bookingDate
+}
+          
+        </>
+      ),
+      sorter: (a, b) => a.bookingDetail.bookingFor.length - b.bookingDetail.bookingFor.length,
+
     },
 
     {
       title: "Patient Name",
-      dataIndex: "PatientName",
+      dataIndex: "userDetail",
       render: (text, record) => (
         <>
           <Link className="avatar mx-2" to="/admin/profile">
             <img className="rounded-circle" src={record.images1} />
           </Link>
-          <Link to="/admin/profile">{text}</Link>
+          <Link to="/admin/profile">{text.username}</Link>
         </>
       ),
-      sorter: (a, b) => a.PatientName.length - b.PatientName.length,
+      sorter: (a, b) => a.userDetail.username.length - b.userDetail.username.length,
     },
 
-    {
-      title: "Apointment Time",
-      render: (record) => (
-        <>
-          <span className="user-name">{record.Date}</span>
-          <br />
-          <span className="d-block">{record.time}</span>
-        </>
-      ),
-      sorter: (a, b) => a.Date.length - b.time.length,
-    },
-    {
-      title: "Status",
-      dataIndex: "Status",
-      render: (text, record) => {
-        return (
-          <div className="status-toggle">
-            <input
-              id={`rating${record?.id}`}
-              className="check"
-              type="checkbox"
-              defaultChecked=""
-            />
-            <label
-              htmlFor={`rating${record?.id}`}
-              className="checktoggle checkbox-bg"
-            >
-              checkbox
-            </label>
-          </div>
-        );
-      },
-      sorter: (a, b) => a.Status.length - b.Status.length,
-    },
-    {
-      title: "Amount",
-      dataIndex: "Amount",
-      sorter: (a, b) => a.Amount.length - b.Amount.length,
-    },
+    // {
+    //   title: "Apointment Time",
+    //   render: (record) => (
+    //     <>
+    //       <span className="user-name">{record.Date}</span>
+    //       <br />
+    //       <span className="d-block">{record.selectedTimeSlot}</span>
+    //     </>
+    //   ),
+    //   sorter: (a, b) => a.Date.length - b.time.length,
+    // },
+    // {
+    //   title: "Status",
+    //   dataIndex: "Status",
+    //   render: (text, record) => {
+    //     return (
+    //       <div className="status-toggle">
+    //         <input
+    //           id={`rating${record?.id}`}
+    //           className="check"
+    //           type="checkbox"
+    //           defaultChecked=""
+    //         />
+    //         <label
+    //           htmlFor={`rating${record?.id}`}
+    //           className="checktoggle checkbox-bg"
+    //         >
+    //           checkbox
+    //         </label>
+    //       </div>
+    //     );
+    //   },
+    //   sorter: (a, b) => a.Status.length - b.Status.length,
+    // },
+    // {
+    //   title: "Amount",
+    //   dataIndex: "Amount",
+    //   sorter: (a, b) => a.Amount.length - b.Amount.length,
+    // },
   ];
   return (
     <>
@@ -174,7 +187,7 @@ const AppointmentList = () => {
               <div className="table-responsive">
                 <Table
                   pagination={{
-                    total: data.length,
+                    total: Appointments.length,
                     showTotal: (total, range) =>
                       `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                     showSizeChanger: true,
@@ -183,7 +196,7 @@ const AppointmentList = () => {
                   }}
                   style={{ overflowX: "auto" }}
                   columns={columns}
-                  dataSource={data}
+                  dataSource={Appointments}
                   rowKey={(record) => record.id}
                   //  onChange={this.handleTableChange}
                 />

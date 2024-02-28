@@ -8,8 +8,16 @@ import Footer from "../../footer";
 import { Link } from "react-router-dom";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { useLocation } from "react-router-dom";
 const SearchDoctor = (props) => {
+
+  const location = useLocation();
+  const { state } = location;
+ console.log("state",state);
+  if (!state) {
+    // Handle the case where state is undefined
+    return <div>No data available</div>;
+  }
   // let pathname = props.location.pathname;
 
   // if (props.location.pathname === "/patient/search-doctor1") {
@@ -157,7 +165,7 @@ const SearchDoctor = (props) => {
 
             </div>
             <div className="col-md-12 col-lg-10 col-xl-10 mt-5">
-              <SearchList />
+              <SearchList  props={state.doctors}/>
               <div className="load-more text-center">
                 <Link to="#" className="btn btn-primary btn-sm">
                   Load More

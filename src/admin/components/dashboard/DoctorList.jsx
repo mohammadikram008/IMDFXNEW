@@ -11,7 +11,10 @@ import {
   doctor_thumb_05,
 } from "../imagepath";
 import { Link } from "react-router-dom";
-const DoctorListDesboard = () => {
+const DoctorListDesboard = (props) => {
+  console.log("Dpro",props);
+  const  doctorData  = props.props;
+
   const data = [
     {
       id: 1,
@@ -62,7 +65,7 @@ const DoctorListDesboard = () => {
   const columns = [
     {
       title: "Doctor Name",
-      dataIndex: "DoctorName",
+      dataIndex: "name",
       render: (text, record) => (
         <>
           <Link className="avatar mx-2" to="/admin/profile">
@@ -75,15 +78,15 @@ const DoctorListDesboard = () => {
     },
     {
       title: "Speciality",
-      dataIndex: "Speciality",
+      dataIndex: "specialization",
       sorter: (a, b) => a.Speciality.length - b.Speciality.length,
     },
 
-    {
-      title: "Earned",
-      dataIndex: "Earned",
-      sorter: (a, b) => a.Earned.length - b.Earned.length,
-    },
+    // {
+    //   title: "Earned",
+    //   dataIndex: "Earned",
+    //   sorter: (a, b) => a.Earned.length - b.Earned.length,
+    // },
     {
       title: "Review",
       dataIndex: "Rating",
@@ -113,7 +116,7 @@ const DoctorListDesboard = () => {
             <div className="table-responsive">
               <Table
                 pagination={{
-                  total: data.length,
+                  total: doctorData.length,
                   showTotal: (total, range) =>
                     `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                   showSizeChanger: true,
@@ -122,7 +125,7 @@ const DoctorListDesboard = () => {
                 }}
                 style={{ overflowX: "auto" }}
                 columns={columns}
-                dataSource={data}
+                dataSource={doctorData}
                 rowKey={(record) => record.id}
                 //  onChange={this.handleTableChange}
               />

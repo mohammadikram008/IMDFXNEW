@@ -20,6 +20,10 @@
     "@fullcalendar/interaction": "^6.1.10",
     "@fullcalendar/react": "^6.1.10",
     "@fullcalendar/timegrid": "^6.1.10",
+<<<<<<< Updated upstream
+=======
+    "@google-pay/button-react": "^3.0.10",
+>>>>>>> Stashed changes
     "@paypal/react-paypal-js": "^8.1.3",
     "@popperjs/core": "^2.11.8",
     "@react-oauth/google": "^0.12.1",

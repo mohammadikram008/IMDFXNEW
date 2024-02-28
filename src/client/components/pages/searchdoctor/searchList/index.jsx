@@ -7,30 +7,46 @@ import MyComponent from "./mycomponent";
 import { doc_1 } from "./img";
 import { FaHeart } from "react-icons/fa6"; import { AiOutlineCheckCircle } from "react-icons/ai";
 import TimeModel from "../../../patients/Model/TimeModel";
-const SearchList = () => {
+const SearchList = (props) => {
+  console.log("prossss", props.props);
   const history = useHistory()
   const imageUrl = `http://localhost:3005/api`;
   const doctorsData = [
     // Existing data remains unchanged
   ];
-  const [doctorsApiData, setDoctorsApiData] = useState([]);
+  const [doctorsApiData, setDoctorsApiData] = useState(props.props);
   const [TimePop, setTimePop] = useState(false);
   const [docDetail, setDocDetail] = useState()
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:3005/api/doctorpersnoldetails");
-        setDoctorsApiData(response.data);
-        console.log("response data", response.data);
-      } catch (error) {
-        console.error("Error fetching data from API:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:3005/api/doctorpersnoldetails");
+  //       setDoctorsApiData(response.data);
+  //       console.log("response data", response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching data from API:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // Check if data is already available in state
+  //       if (!props.props.length<0) {
+  //         const response = await axios.get("http://localhost:3005/api/doctorpersnoldetails");
+  //         setDoctorsApiData(response.data);
+  //         console.log("response data111", response.data);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching data from API:", error);
+  //     }
+  //   };
 
+  //   fetchData();
+  // }, [props]);
   const handleChangeViewProfile = (props) => {
     console.log("click");
     console.log("props", props);
@@ -97,75 +113,76 @@ const SearchList = () => {
           }
                   `}
       </style>
-      {doctorsApiData.map((doctor, index) => (
-        <div key={index} className="h-auto p-5  background-box mb-4">
-          <div className="card-body d-flex flex-column  justify-content-center align-items-center gap-5">
-            <div className="doctor-widget justify-content-between w-100 ">
-              <div className="doc-info-left">
-                <div className="doctor-img rounded-circle position-relative ">
-                  {/* <img src={`${imageUrl}/${doctor.image}`} className="img-fluid" alt="User" /> */}
-                  <img src={doc_1} className="img-fluid rounded-circle" alt="User" />
+      {doctorsApiData && doctorsApiData.length > 0 ?
+        (doctorsApiData.map((doctor, index) => (
+          <div key={index} className="h-auto p-5  background-box mb-4">
+            <div className="card-body d-flex flex-column  justify-content-center align-items-center gap-5">
+              <div className="doctor-widget justify-content-between w-100 ">
+                <div className="doc-info-left">
+                  <div className="doctor-img rounded-circle position-relative ">
+                    {/* <img src={`${imageUrl}/${doctor.image}`} className="img-fluid" alt="User" /> */}
+                    <img src={doc_1} className="img-fluid rounded-circle" alt="User" />
 
 
-                </div>
-                <div className="basic-data">
-                  <div className="d-flex gap-2 justify-content-start align-items-center  premium-div">
-                    <h2 className=" mb-1">{doctor.name}
-                    </h2>
-                    <div className="text-success d-flex gap-1 ">
+                  </div>
+                  <div className="basic-data">
+                    <div className="d-flex gap-2 justify-content-start align-items-center  premium-div">
+                      <h2 className=" mb-1">{doctor.name}
+                      </h2>
+                      <div className="text-success d-flex gap-1 ">
 
-                      Active
-                    </div>
-                    <MdStars size={32} className="star" />
-                    <div className="gold-gradient badge-bg">
-                      <div className="text-div">
-                        <p className="">PLATINUM PROVIDER</p>
+                        Active
+                      </div>
+                      <MdStars size={32} className="star" />
+                      <div className="gold-gradient badge-bg">
+                        <div className="text-div">
+                          <p className="">PLATINUM PROVIDER</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <p className="">Specialization: {doctor.specialization}</p>
-                  <h5 className="">{doctor.education}</h5>
-                  {/* Rating Stars */}
-                  <div className="rating">
-                    {/* Include your rating stars here */}
-                  </div>
+                    <p className="">Specialization: {doctor.specialization}</p>
+                    <h5 className="">{doctor.education}</h5>
+                    {/* Rating Stars */}
+                    <div className="rating">
+                      {/* Include your rating stars here */}
+                    </div>
 
-                  <div className="d-flex gap-3   text-gray-600 doctor-information">
-                    <div className=" d-flex flex-column align-items-start gap-1" >
-                      <h1 style={{
-                        fontSize: "15px"
-                      }} className="  fw-medium text-secondary">Under 15 minutes</h1>
-                      <h5>WAIT TIME</h5>
+                    <div className="d-flex gap-3   text-gray-600 doctor-information">
+                      <div className=" d-flex flex-column align-items-start gap-1" >
+                        <h1 style={{
+                          fontSize: "15px"
+                        }} className="  fw-medium text-secondary">Under 15 minutes</h1>
+                        <h5>WAIT TIME</h5>
+                      </div>
+                      <div
+                        style={{
+                          borderLeft: '1px solid gray', // Adjust the width and color of the line as needed
+                        }}
+                      ></div>
+                      <div className=" d-flex flex-column align-items-start gap-1 ">
+                        <h1 style={{
+                          fontSize: "15px"
+                        }} className="   fw-medium text-secondary">
+                          {doctor.yearofexperience} years
+                        </h1>
+                        <h5>EXPERIENCE</h5>
+                      </div>
+                      <div
+                        style={{
+                          borderLeft: '1px solid gray', // Adjust the width and color of the line as needed
+                        }}
+                      ></div>
+                      <div className=" d-flex flex-column align-items-start gap-1 ">
+                        <h1 style={{
+                          fontSize: "15px"
+                        }} className=" fw-medium text-secondary">
+                          98% (542)
+                        </h1>
+                        <h5>SATISFIED</h5>
+                      </div>
                     </div>
-                    <div
-                      style={{
-                        borderLeft: '1px solid gray', // Adjust the width and color of the line as needed
-                      }}
-                    ></div>
-                    <div className=" d-flex flex-column align-items-start gap-1 ">
-                      <h1 style={{
-                        fontSize: "15px"
-                      }} className="   fw-medium text-secondary">
-                        {doctor.yearofexperience} years
-                      </h1>
-                      <h5>EXPERIENCE</h5>
-                    </div>
-                    <div
-                      style={{
-                        borderLeft: '1px solid gray', // Adjust the width and color of the line as needed
-                      }}
-                    ></div>
-                    <div className=" d-flex flex-column align-items-start gap-1 ">
-                      <h1 style={{
-                        fontSize: "15px"
-                      }} className=" fw-medium text-secondary">
-                        98% (542)
-                      </h1>
-                      <h5>SATISFIED</h5>
-                    </div>
-                  </div>
 
-                  {/* <div className="d-flex items-center justify-between mx-3 border-t border-b mt-2 border-success">
+                    {/* <div className="d-flex items-center justify-between mx-3 border-t border-b mt-2 border-success">
                     <div className="d-flex items-center justify-center">
                       <h1 className="text-success">Available:</h1>
                       <h5 className="mx-2">Mon, 31 August</h5>
@@ -175,97 +192,102 @@ const SearchList = () => {
                       <h5>${doctor.fee}</h5>
                     </div>
                   </div> */}
+                  </div>
                 </div>
-              </div>
-              {/* Right Section */}
-              <div className="doc-info-right">
-                <div className="clini-infos">
-                  {/* ... clinic info details ... */}
-                </div>
-                <div className="clinic-booking">
-                  <button className="view-pro-btn"
-                    // onclick={() => handleChangeViewProfile(doctor)}
-                    onClick={() => handleChangeViewProfile(doctor._id)}
+                {/* Right Section */}
+                <div className="doc-info-right">
+                  <div className="clini-infos">
+                    {/* ... clinic info details ... */}
+                  </div>
+                  <div className="clinic-booking">
+                    <button className="view-pro-btn"
+                      // onclick={() => handleChangeViewProfile(doctor)}
+                      onClick={() => handleChangeViewProfile(doctor._id)}
 
-                  >
+                    >
 
-                    View Profile
+                      View Profile
 
-                  </button>
-                  {/* <Link to="/patient/doctor-profile" className="view-pro-btn">
+                    </button>
+                    {/* <Link to="/patient/doctor-profile" className="view-pro-btn">
                     View Profile
                   </Link> */}
-                  <button style={{
-                    borderRadius: "10px"
-                  }} onClick={() => handleTimePop(doctor._id)} className="login-btn-login">
-                    Book Appointment
-                  </button>
+                    <button style={{
+                      borderRadius: "10px"
+                    }} onClick={() => handleTimePop(doctor._id)} className="login-btn-login">
+                      Book Appointment
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="d-flex justify-content-center align-items-center gap-3">
+              <div className="d-flex justify-content-center align-items-center gap-3">
 
-              {/* Inner Card */}
-              <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2">
-                <h2 className="fs-5 fw-normal ">
-                  Inetgrate medical Hospital DHA
-                </h2>
-                <div className="d-flex my-4 justify-content-center align-items-center">
-                  <p className="text-gray-600">Available on: Mon, 31 August</p>
-                  <p>Fee: $300</p>
-                </div>
+                {/* Inner Card */}
+                <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2">
+                  <h2 className="fs-5 fw-normal ">
+                    Inetgrate medical Hospital DHA
+                  </h2>
+                  <div className="d-flex my-4 justify-content-center align-items-center">
+                    <p className="text-gray-600">Available on: Mon, 31 August</p>
+                    <p>Fee: $300</p>
+                  </div>
 
-                <div style={{
-                  backgroundColor: "blue",
-                  left: '0px',
-                  right: '0px',
-                  bottom: '0px',
-                }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
-                  Pay online and get up to 50% off
+                  <div style={{
+                    backgroundColor: "blue",
+                    left: '0px',
+                    right: '0px',
+                    bottom: '0px',
+                  }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
+                    Pay online and get up to 50% off
+                  </div>
                 </div>
-              </div>
-              {/* Inner Card */}
-              <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2">
-                <h2 className="fs-5 fw-normal ">
-                  Inetgrate medical Hospital DHA
-                </h2>
-                <div className="d-flex my-4 justify-content-center align-items-center">
-                  <p className="text-gray-600">Available on: Mon, 31 August</p>
-                  <p>Fee: $300</p>
-                </div>
+                {/* Inner Card */}
+                <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2">
+                  <h2 className="fs-5 fw-normal ">
+                    Inetgrate medical Hospital DHA
+                  </h2>
+                  <div className="d-flex my-4 justify-content-center align-items-center">
+                    <p className="text-gray-600">Available on: Mon, 31 August</p>
+                    <p>Fee: $300</p>
+                  </div>
 
-                <div style={{
-                  backgroundColor: "blue",
-                  left: '0px',
-                  right: '0px',
-                  bottom: '0px',
-                }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
-                  Pay online and get up to 50% off
+                  <div style={{
+                    backgroundColor: "blue",
+                    left: '0px',
+                    right: '0px',
+                    bottom: '0px',
+                  }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
+                    Pay online and get up to 50% off
+                  </div>
                 </div>
-              </div>
-              {/* Inner Card */}
-              <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2">
-                <h2 className="fs-5 fw-normal ">
-                  Inetgrate medical Hospital DHA
-                </h2>
-                <div className="d-flex my-4 justify-content-center align-items-center">
-                  <p className="text-gray-600">Available on: Mon, 31 August</p>
-                  <p>Fee: $300</p>
-                </div>
+                {/* Inner Card */}
+                <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2">
+                  <h2 className="fs-5 fw-normal ">
+                    Inetgrate medical Hospital DHA
+                  </h2>
+                  <div className="d-flex my-4 justify-content-center align-items-center">
+                    <p className="text-gray-600">Available on: Mon, 31 August</p>
+                    <p>Fee: $300</p>
+                  </div>
 
-                <div style={{
-                  backgroundColor: "blue",
-                  left: '0px',
-                  right: '0px',
-                  bottom: '0px',
-                }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
-                  Pay online and get up to 50% off
+                  <div style={{
+                    backgroundColor: "blue",
+                    left: '0px',
+                    right: '0px',
+                    bottom: '0px',
+                  }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
+                    Pay online and get up to 50% off
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        )))
+
+        : (
+          <div>No data available</div>
+        )
+      }
       <TimeModel doctorDetail={docDetail} TimePop={TimePop} setTimePop={setTimePop} />
 
     </div>

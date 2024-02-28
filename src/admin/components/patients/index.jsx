@@ -1,9 +1,11 @@
-import React from "react";
+import React ,{useEffect,useState}from "react";
+import axios from "axios";
 import { Table } from "antd";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
 import SidebarNav from "../sidebar";
 import { itemRender, onShowSizeChange } from "../paginationfunction";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import {
   patient1,
   patient10,
@@ -24,6 +26,27 @@ import {
 import { Link } from "react-router-dom";
 
 const Patients = () => {
+  // const location = useLocation();
+  // console.log("Ploc",location.state.key);
+  // const Patient=location.state.key;
+  const [Patient, setPatient] = useState([]);
+  const [doctor, setDoctor] = useState([]);
+  const fetchpatient = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3005/api/getpatient`);
+      setPatient(response.data);
+      // console.log("setDoctor", response.data);
+      // setLoading(false);
+    } catch (error) {
+      console.error('Error fetching getDoctorDetail:', error);
+      // setLoading(false);
+    }
+  };
+  useEffect(() => {
+   
+    fetchpatient();
+   
+  }, []);
   const data = [
     {
       id: 1,
@@ -192,14 +215,14 @@ const Patients = () => {
     },
   ];
   const columns = [
-    {
-      title: "Patient ID",
-      dataIndex: "PatientID",
-      sorter: (a, b) => a.PatientID.length - b.PatientID.length,
-    },
+    // {
+    //   title: "Patient ID",
+    //   dataIndex: "PatientID",
+    //   sorter: (a, b) => a.PatientID.length - b.PatientID.length,
+    // },
     {
       title: "Patient Name",
-      dataIndex: "PatientName",
+      dataIndex: "username",
       render: (text, record) => (
         <>
           <Link className="avatar mx-2" to="/admin/profile">
@@ -264,7 +287,7 @@ const Patients = () => {
                   <div className="table-responsive">
                     <Table
                       pagination={{
-                        total: data.length,
+                        total: Patient.length,
                         showTotal: (total, range) =>
                           `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                         showSizeChanger: true,
@@ -273,7 +296,7 @@ const Patients = () => {
                       }}
                       style={{ overflowX: "auto" }}
                       columns={columns}
-                      dataSource={data}
+                      dataSource={Patient}
                       rowKey={(record) => record.id}
                     />
                   </div>

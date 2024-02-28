@@ -1,16 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Scrollbars } from "react-custom-scrollbars";
 // import FeatherIcon from "feather-icons-react";
 import { Appcontext } from "../../../approuter";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
-const SidebarNav = () => {
+const SidebarNav = ({ Doctor, patient, Appointmentswithdetail }) => {
   // let pathname = props?.location?.pathname;
-
+  console.log("D,P,A", Doctor, patient, Appointmentswithdetail);
   const location = useLocation();
   const pathname = location.pathname;
-
+  const history = useHistory();
   const { setIsAuth } = useContext(Appcontext);
   const [isSideMenu, setSideMenu] = useState("");
   const [isSideMenuNew, setSideMenuNew] = useState("");
@@ -49,6 +49,23 @@ const SidebarNav = () => {
 
   const handleMouseLeave = () => {
     setMouseOverSidebar(false);
+  };
+  const handleNavigation = (category) => {
+    switch (category) {
+      case "doctor":
+        history.push({ pathname: "/admin/doctor-list", state: Doctor });
+        break;
+      case "patient":
+        history.push({ pathname: "/admin/patient-list", state: patient });
+        break;
+      case "appointment":
+        history.push({ pathname: "/admin/appointment-list", state: Appointments });
+        break;
+      // Add more cases as needed
+
+      default:
+        break;
+    }
   };
 
   return (
@@ -90,29 +107,98 @@ const SidebarNav = () => {
                       : ""
                   }
                 >
-                  <Link to="/admin/appointment-list">
+                  <Link
+                    to={{
+                      pathname: "/admin/appointment-list",
+                      state: { key: Appointmentswithdetail } // Replace with your actual data
+                    }}
+                  // onClick={() => handleNavigation("appointment")}
+                  >
                     <i className="fe fe-layout"></i> <span>Appointments</span>
                   </Link>
                 </li>
                 <li
                   className={pathname?.includes("specialities") ? "active" : ""}
                 >
-                  <Link to="/admin/specialities">
+                  <Link
+                    // onClick={() => handleNavigation("specialities")}
+                  // to="/admin/specialities"
+                  to={{
+                    pathname: "/admin/specialities",
+                    state: { key: Doctor } // Replace with your actual data
+                  }}
+                  >
                     <i className="fe fe-users"></i> <span>Specialities</span>
                   </Link>
                 </li>
-                <li
+                {/* <li
                   className={pathname?.includes("doctor-list") ? "active" : ""}
                 >
-                  <Link to="/admin/doctor-list">
+                  <Link
+                    //  to="/admin/doctor-list"
+                    // onClick={() => handleNavigation("doctor")}
+                    to={{
+                      pathname: "/admin/doctor-list",
+                      state: { key: Doctor } // Replace with your actual data
+                    }}
+                  >
                     <i className="fe fe-user-plus"></i>
                     <span>Doctors</span>
                   </Link>
+                </li> */}
+                  <li className="submenu">
+                  <Link
+                    to="#"
+                    className={isSideMenu == "reports" ? "subdrop" : ""}
+                    onClick={() =>
+                      toggleSidebar(isSideMenu == "reports" ? "" : "reports")
+                    }
+                  >
+                     <i className="fe fe-user-plus"></i>
+                    <span> Doctors</span> <span className="menu-arrow"></span>
+                  </Link>
+                  {isSideMenu == "reports" ? (
+                    <ul
+                      style={{
+                        display: isSideMenu == "reports" ? "block" : "none",
+                      }}
+                    >
+                      <li>
+                        <Link
+                         to="/admin/doctor-list"
+                          // to={{
+                          //   pathname: "/admin/doctor-list",
+                          //   state: { key: Doctor } // Replace with your actual data
+                          // }}
+                          className={pathname?.includes("doctor-list") ? "active" : ""}
+                        >
+                          Approved Doctor
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/admin/pending-doctor-list"
+                          className={pathname?.includes("pending-doctor-list") ? "active" : ""}
+                        >
+                          Pending Doctor
+                        </Link>
+                      </li>
+                    </ul>
+                  ) : (
+                    ""
+                  )}
                 </li>
                 <li
                   className={pathname?.includes("patient-list") ? "active" : ""}
                 >
-                  <Link to="/admin/patient-list">
+                  <Link
+                    // onClick={() => handleNavigation("patient")}
+                  //  to="/admin/patient-list"
+                  to={{
+                    pathname: "/admin/patient-list",
+                    state: { key: patient } // Replace with your actual data
+                  }}
+                  >
                     <i className="fe fe-user"></i> <span>Patients</span>
                   </Link>
                 </li>
@@ -136,7 +222,7 @@ const SidebarNav = () => {
                     <i className="fe fe-vector"></i> <span> Settings</span>
                   </Link>
                 </li>
-                <li className="submenu">
+                {/* <li className="submenu">
                   <Link
                     to="#"
                     className={isSideMenu == "reports" ? "subdrop" : ""}
@@ -167,7 +253,11 @@ const SidebarNav = () => {
                   ) : (
                     ""
                   )}
+<<<<<<< Updated upstream
                 </li>
+=======
+                </li> */}
+>>>>>>> Stashed changes
                 {/* <li className="menu-title">
                   <span>Pages</span>
                 </li>

@@ -170,7 +170,11 @@ const Dashboard = (props) => {
             <div style={{
               height: "80vh",
               // backgroundColor: "#e9eae7",
+<<<<<<< Updated upstream
               marginTop:"3rem"
+=======
+              marginTop: "3rem"
+>>>>>>> Stashed changes
 
             }} className="col-md-2 col-lg-2 rounded-5  col-xl-2 theiaStickySidebar pt-5">
               <StickyBox offsetTop={20} offsetBottom={20}>

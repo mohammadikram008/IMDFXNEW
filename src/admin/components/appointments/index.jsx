@@ -1,9 +1,10 @@
-import React from "react";
+import React ,{useEffect,useState}from "react";
 import { Table } from "antd";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
 import { itemRender, onShowSizeChange } from "../paginationfunction";
 import SidebarNav from "../sidebar";
+import axios from "axios"; 
 import {
   doctor_thumb_01,
   doctor_thumb_02,
@@ -28,7 +29,28 @@ import {
 } from "../imagepath";
 import { Link } from "react-router-dom";
 
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+
 const Appointments = () => {
+  // const location = useLocation();
+  // console.log("Aloc", location.state.key);
+  // const Appointment = location.state.key;
+  const [Appointmentswithdetail, setAppointmentsWithDetail] = useState([]);     
+  const fetchAppointmentswithalldetail = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3005/api/appointment-alldetails`);
+      setAppointmentsWithDetail(response.data);
+      console.log("setAppointmentsWithDetail", response.data);
+      // setLoading(false);
+    } catch (error) {
+      console.error('Error fetching getDoctorDetail:', error);
+      // setLoading(false);
+    }
+  };
+  useEffect(() => {
+   
+    fetchAppointmentswithalldetail();
+  }, []);
   const data = [
     {
       id: 1,
@@ -164,49 +186,63 @@ const Appointments = () => {
   const columns = [
     {
       title: "Doctor Name",
-      dataIndex: "DoctorName",
+      dataIndex: "doctorDetail",
       render: (text, record) => (
         <>
           <Link className="avatar mx-2" to="/admin/profile">
             <img className="rounded-circle" src={record.image} />
           </Link>
           <Link to="/admin/profile" className="text-decoration-none">
-            {text}
+            {text.name}
           </Link>
         </>
       ),
-      sorter: (a, b) => a.DoctorName.length - b.DoctorName.length,
+      sorter: (a, b) => a.bookingDetail.doctorDetail.name.length - b.bookingDetail.doctorDetail.name.length,
+
+
     },
     {
       title: "Speciality",
-      dataIndex: "Speciality",
-      sorter: (a, b) => a.Speciality.length - b.Speciality.length,
+      dataIndex: "doctorDetail",
+      render: (text, record) => (
+        <>
+
+          {text.specialization}
+
+        </>
+      ),
+      sorter: (a, b) => a.doctorDetail.specialization.length - b.doctorDetail.specialization.length,
     },
+ 
 
     {
       title: "Patient Name",
-      dataIndex: "PatientName",
+      dataIndex: "userDetail",
       render: (text, record) => (
         <>
           <Link className="avatar mx-2" to="/admin/profile">
             <img className="rounded-circle" src={record.images1} />
           </Link>
-          <Link to="/admin/profile">{text}</Link>
+          <Link to="/admin/profile">{text.username}</Link>
         </>
       ),
-      sorter: (a, b) => a.PatientName.length - b.PatientName.length,
+      sorter: (a, b) => a.userDetail.username.length - b.userDetail.username.length,
     },
 
+
     {
-      title: "Apointment Time",
-      render: (record) => (
+      title: "BookingDate",
+      dataIndex: "bookingDetail",
+      render: (text, record) => (
         <>
-          <span className="user-name">{record.Date}</span>
-          <br />
-          <span className="d-block">{record.time}</span>
+
+
+          {text.bookingDate }
+
         </>
       ),
-      sorter: (a, b) => a.Date.length - b.time.length,
+      sorter: (a, b) => a.bookingDetail.bookingFor.length - b.bookingDetail.bookingFor.length,
+
     },
     {
       title: "Status",
@@ -264,7 +300,7 @@ const Appointments = () => {
                   <div className="table-responsive">
                     <Table
                       pagination={{
-                        total: data.length,
+                        total: Appointmentswithdetail.length,
                         showTotal: (total, range) =>
                           `Showing ${range[0]} to ${range[1]} of ${total} entries`,
                         showSizeChanger: true,
@@ -273,7 +309,7 @@ const Appointments = () => {
                       }}
                       style={{ overflowX: "auto" }}
                       columns={columns}
-                      dataSource={data}
+                      dataSource={Appointmentswithdetail}
                       rowKey={(record) => record.id}
                     />
                   </div>

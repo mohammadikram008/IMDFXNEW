@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SidebarNav from "../sidebar";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
@@ -7,12 +7,68 @@ import PatientsListDesboard from "./PatientsList";
 import AppointmentList from "./AppointmentList";
 import LineChart from "./LineChart";
 import StatusCharts from "./StatusCharts";
+import axios from "axios";
 
 const Dashboard = () => {
+  const [Doctor, setDoctor] = useState([]);
+  const [patient, setPatient] = useState([]);
+  const [Appointments, setAppointments] = useState([]);
+  const [Appointmentswithdetail, setAppointmentsWithDetail] = useState([]);
+  const fetchdoctor = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3005/api/doctorpersnoldetails`);
+      setDoctor(response.data);
+      // console.log("setDoctor", response.data);
+      // setLoading(false);
+    } catch (error) {
+      console.error('Error fetching getDoctorDetail:', error);
+      // setLoading(false);
+    }
+  };
+  const fetchpatient = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3005/api/getpatient`);
+      setPatient(response.data);
+      // console.log("setDoctor", response.data);
+      // setLoading(false);
+    } catch (error) {
+      console.error('Error fetching getDoctorDetail:', error);
+      // setLoading(false);
+    }
+  };
+  const fetchAppointments = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3005/api/getallbookappointment`);
+      setAppointments(response.data);
+      // console.log("setDoctor", response.data);
+      // setLoading(false);
+    } catch (error) {
+      console.error('Error fetching getDoctorDetail:', error);
+      // setLoading(false);
+    }
+  };
+  const fetchAppointmentswithalldetail = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3005/api/appointment-alldetails`);
+      setAppointmentsWithDetail(response.data);
+      console.log("setAppointmentsWithDetail", response.data);
+      // setLoading(false);
+    } catch (error) {
+      console.error('Error fetching getDoctorDetail:', error);
+      // setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAppointments();
+    fetchdoctor();
+    fetchpatient();
+    fetchAppointmentswithalldetail();
+  }, []);
   return (
     <>
       <div className="main-wrapper">
-        <SidebarNav />
+        <SidebarNav Doctor={Doctor} patient={patient}  Appointmentswithdetail={Appointmentswithdetail}/>
         {/* Page Wrapper */}
         <div className="page-wrapper">
           <div className="content container-fluid pb-0">
@@ -35,7 +91,7 @@ const Dashboard = () => {
                         <i className="fe fe-users" />
                       </span>
                       <div className="dash-count">
-                        <h3>168</h3>
+                        <h3>{Doctor && Doctor.length}</h3>
                       </div>
                     </div>
                     <div className="dash-widget-info">
@@ -56,7 +112,7 @@ const Dashboard = () => {
                           <i className="fe fe-credit-card" />
                         </span>
                         <div className="dash-count">
-                          <h3>487</h3>
+                          <h3>{patient && patient.length}</h3>
                         </div>
                       </div>
                       <div className="dash-widget-info">
@@ -76,7 +132,7 @@ const Dashboard = () => {
                           <i className="fe fe-money" />
                         </span>
                         <div className="dash-count">
-                          <h3>485</h3>
+                          <h3>{Appointments && Appointments.length}</h3>
                         </div>
                       </div>
                       <div className="dash-widget-info">
@@ -113,41 +169,41 @@ const Dashboard = () => {
             <div className="row">
               <div className="col-md-12 col-lg-6">
                 {/* Sales Chart */}
-                <div className="card card-chart">
+                {/* <div className="card card-chart">
                   <div className="card-header">
                     <h4 className="card-title">Revenue</h4>
                   </div>
                   <div className="card-body">
-                    {/* <div id="morrisArea" /> */}
+                    <div id="morrisArea" />
                     <LineChart />
                   </div>
-                </div>
+                </div> */}
                 {/* /Sales Chart */}
               </div>
               <div className="col-md-12 col-lg-6">
                 {/* Invoice Chart */}
-                <div className="card card-chart">
+                {/* <div className="card card-chart">
                   <div className="card-header">
                     <h4 className="card-title">Status</h4>
                   </div>
                   <div className="card-body">
                     <div id="morrisLine" />
-                    {/* <LineChart /> */}
-                    {/* <StatusChart /> */}
+                    <LineChart />
+                    <StatusChart />
                     <StatusCharts />
                   </div>
-                </div>
+                </div> */}
                 {/* /Invoice Chart */}
               </div>
             </div>
 
             <div className="row">
-              <DoctorListDesboard />
-              <PatientsListDesboard />
+              <DoctorListDesboard props={Doctor} />
+              <PatientsListDesboard  props={patient}/>
             </div>
             {/* Today’s  Appointment */}
             <div className="row">
-              <AppointmentList />
+              <AppointmentList props={Appointmentswithdetail} />
             </div>
           </div>
         </div>
