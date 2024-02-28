@@ -74,8 +74,8 @@ const Accounts = (props) => {
               </div>
               <div className="col-md-7 col-lg-8 col-xl-9 mt-5">
                 <div className="row">
-                  <div className="col-lg-5 d-flex">
-                    <div className="card flex-fill">
+                  <div className="col-lg-5 d-flex pb-0 ">
+                    <div className="card flex-fill mb-0 ">
                       <div className="card-header">
                         <div className="row">
                           <div className="col-sm-6">
@@ -136,9 +136,9 @@ const Accounts = (props) => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-7 d-flex">
-                    <div className="card flex-fill">
-                      <div className="card-body">
+                  <div className="col-lg-7 d-flex pb-0 ">
+                    <div className="card flex-fill mb-0 ">
+                      <div className="card-body p-0 ">
                         <div className="row">
                           <div className="col-lg-6">
                             <div className="account-card bg-success-light">
@@ -151,11 +151,14 @@ const Accounts = (props) => {
                             </div>
                           </div>
                           <div className="col-lg-6">
-                            <div className="account-card bg-purple-light">
+                            <div style={{
+                              backgroundColor: "rgb(78 52 99 / 12%)",
+                              color:"#c580ff"
+                            }} className="account-card">
                               <span>$90.48</span> Balance
                             </div>
                           </div>
-                          <div className="col-md-12 text-center">
+                          <div className="col-lg-6 d-flex justify-content-center align-items-center ">
                             <Link
                               to="#payment_request_modal"
                               className="btn btn-primary request_btn"
@@ -1051,7 +1054,7 @@ const Accounts = (props) => {
                 id="request_amount"
                 className="form-control"
                 maxLength={6}
-                // oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+              // oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
               />
               <span className="help-block" />
             </div>

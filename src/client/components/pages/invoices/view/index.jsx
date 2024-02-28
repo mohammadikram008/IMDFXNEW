@@ -1,38 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { IMG01 } from "./img";
 import Header from "../../../header";
 import Footer from "../../../footer";
 import { Link } from "react-router-dom";
+import { greenlogo } from "../../../imagepath";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const InvoiceView = (props) => {
+  const history = useHistory()
+  useEffect(() => {
+    // Set isModalOpen to true after 2 seconds
+    const timeoutId = setTimeout(() => {
+      history.push('/patient/dashboard')
+    }, 5000);
+
+    // Clean up the timeout to avoid memory leaks
+    return () => clearTimeout(timeoutId);
+  }, []);
   return (
     <div>
       <Header {...props} />
       <>
-        {/* Breadcrumb */}
-        <div className="breadcrumb-bar-two">
-          <div className="container">
-            <div className="row align-items-center inner-banner">
-              <div className="col-md-12 col-12 text-center">
-                <h2 className="breadcrumb-title">Invoice View</h2>
-                <nav aria-label="breadcrumb" className="page-breadcrumb">
-                  <ol className="breadcrumb">
-                    <li className="breadcrumb-item">
-                      <Link to="/index-2">Home</Link>
-                    </li>
-                    <li className="breadcrumb-item" aria-current="page">
-                      Invoice View
-                    </li>
-                  </ol>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* /Breadcrumb */}
-
         {/* Page Content */}
-        <div className="content">
+        <div style={{
+          paddingTop: "10rem",
+          height: "100vh"
+        }} className="content">
           <div className="container">
             <div className="row">
               <div className="col-lg-8 offset-lg-2">
@@ -41,7 +34,7 @@ const InvoiceView = (props) => {
                     <div className="row">
                       <div className="col-md-6">
                         <div className="invoice-logo">
-                          <img src={IMG01} alt="logo" />
+                          <img src={greenlogo} alt="logo" className="w-50" />
                         </div>
                       </div>
                       <div className="col-md-6">
@@ -181,7 +174,6 @@ const InvoiceView = (props) => {
         </div>
         {/* /Page Content */}
       </>
-      <Footer {...props} />
     </div>
   );
 };

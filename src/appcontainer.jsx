@@ -9,6 +9,7 @@ import LoginContainer from "./client/components/login/login.jsx";
 import Register from "./client/components/register/register.jsx";
 import ForgotPassword from "./client/components/forgot-password";
 import Home from "./client/components/home/index";
+import PatientTimeSchedule from './client/components/patients/TimeSchedule/Timeschedule.jsx'
 // import Home9 from "./client/components/home/home9";
 // import Home2 from "./client/components/home/home2";
 // import Home3 from "./client/components/home/home3";
@@ -100,6 +101,7 @@ import PharmacyadminApp from "./pharmacyadmin/app-universal";
 // import Doctoraddblog from "./client/components/blog/doctorblog/doctoraddblog";
 // import Doctorpendingblog from "./client/components/blog/doctorblog/doctorpendingblog";
 // import Doctoreditblog from "./client/components/blog/doctorblog/doctoreditblog";
+import Wallet from "./client/components/doctors/Wallet/Wallet.jsx";
 import EditPrescription from "./client/components/doctors/patientprofile/edit-prescription";
 import EditBilling from "./client/components/doctors/editbilling/index";
 import MapList from "./client/components/patients/map-list/index";
@@ -273,6 +275,7 @@ const AppContainer = function (props) {
               <Route path="/pages/phone-otp" exact component={LoginPhoneOtp} />
               <Route path="/pages/eotp" exact component={EmailOtp} />
               <Route path="/pages/motp" exact component={MobileOtp} />
+              {/* <Route path="/doctor/wallet" exact component={Wallet} /> */}
 
               <Route
                 path="/pages/patient-signup"
@@ -341,12 +344,12 @@ const AppContainer = function (props) {
                 exact
                 component={SearchDoctor2}
               />
+              <Route path="/pages/invoice-view" exact component={InvoiceView} />
               {/* <Route path="/pages/component" exact component={Components} />
               <Route path="/pages/blank-page" exact component={BlankPage} />
               <Route path="/pages/calendar" exact component={Calendar} />
               <Route path="/pages/invoice" exact component={Invoice} />
               <Route path="/doctor/invoice" exact component={Invoice} />
-              <Route path="/pages/invoice-view" exact component={InvoiceView} />
               <Route path="/pages/aboutus" exact component={Aboutus} />
               <Route path="/pages/contactus" exact component={Contactus} />
               <Route path="/pages/comingsoon" exact component={Comingsoon} />
@@ -503,6 +506,7 @@ const AppContainer = function (props) {
               />
               <Route path="/pages/terms" exact component={Terms} />
               <Route path="/pages/privacy-policy" exact component={Policy} />
+              <Route path="/patient/time-schedule" exact component={PatientTimeSchedule} />
 
               {/* Pharmacy */}
               {/* <Route

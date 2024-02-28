@@ -14,25 +14,35 @@ const DoctorSidebar = ({ props }) => {
               <img src={doc1} alt="User Image" />
             </Link>
             <div className="profile-det-info">
-            <h3>{props && props.name}</h3>
-            {/* John Creister */}
-            <div className="patient-details">
-              <h5 className="text-success">
-                 active
-              </h5>
-              {/* <h5 className="mb-0">
+              <h3>{props && props.name}</h3>
+              {/* John Creister */}
+              <div className="patient-details">
+                <h5 className="text-success">
+                  active
+                </h5>
+                {/* <h5 className="mb-0">
                 <i className="fas fa-map-marker-alt"></i> Newyork, USA
               </h5> */}
+              </div>
             </div>
-          </div>
           </div>
         </div>
         <div className="dashboard-widget">
           <nav className="dashboard-menu">
+            <style>
+              {`
+          .dashboard-menu li:hover{
+            background-color:#e9e9e9;
+          }
+          .bg{
+            background-color:#e9e9e9;
+          }
+          `}
+            </style>
             <ul>
               <li
                 className={
-                  pathnames.includes("/doctor/doctor-dashboard") ? "active" : ""
+                  pathnames.includes("/doctor/doctor-dashboard") ? "active bg" : ""
                 }
               >
                 <Link to="/doctor/doctor-dashboard">
@@ -42,7 +52,7 @@ const DoctorSidebar = ({ props }) => {
               </li>
               <li
                 className={
-                  pathnames.includes("/doctor/appointments") ? "active" : ""
+                  pathnames.includes("/doctor/appointments") ? "active bg" : ""
                 }
               >
                 <Link to="/doctor/appointments">
@@ -52,7 +62,7 @@ const DoctorSidebar = ({ props }) => {
               </li>
               <li
                 className={
-                  pathnames.includes("/doctor/my-patients") ? "active" : ""
+                  pathnames.includes("/doctor/my-patients") ? "active bg" : ""
                 }
               >
                 <Link to="/doctor/my-patients">
@@ -62,7 +72,17 @@ const DoctorSidebar = ({ props }) => {
               </li>
               <li
                 className={
-                  pathnames.includes("/doctor/schedule-timing") ? "active" : ""
+                  pathnames.includes("/doctor/account") ? "active bg" : ""
+                }
+              >
+                <Link to="/doctor/account">
+                  <i className="fas fa-wallet" />
+                  <span>Wallet</span>
+                </Link>
+              </li>
+              <li
+                className={
+                  pathnames.includes("/doctor/schedule-timing") ? "active bg" : ""
                 }
               >
                 <Link to="/doctor/schedule-timing">
@@ -72,7 +92,7 @@ const DoctorSidebar = ({ props }) => {
               </li>
               <li
                 className={
-                  pathnames.includes("/doctor/available-timing") ? "active" : ""
+                  pathnames.includes("/doctor/available-timing") ? "active bg" : ""
                 }
               >
                 <Link to="/doctor/available-timing">
@@ -108,7 +128,7 @@ const DoctorSidebar = ({ props }) => {
               </li> */}
               <li
                 className={
-                  pathnames.includes("/doctor/chat-doctor") ? "active" : ""
+                  pathnames.includes("/doctor/chat-doctor") ? "active bg" : ""
                 }
               >
                 <Link to="/doctor/chat-doctor">
@@ -119,7 +139,7 @@ const DoctorSidebar = ({ props }) => {
               </li>
               <li
                 className={
-                  pathnames.includes("/doctor/profile-setting") ? "active" : ""
+                  pathnames.includes("/doctor/profile-setting") ? "active bg" : ""
                 }
               >
                 <Link to="/doctor/profile-setting">
@@ -149,7 +169,7 @@ const DoctorSidebar = ({ props }) => {
                   <span>Change Password</span>
                 </Link>
               </li> */}
-              <li className={pathnames.includes("/index-2") ? "active" : ""}>
+              <li className={pathnames.includes("/index-2") ? "active bg" : ""}>
                 <Link to="/login">
                   <i className="fas fa-sign-out-alt" />
                   <span>Logout</span>

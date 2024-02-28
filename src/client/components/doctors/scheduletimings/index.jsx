@@ -4,10 +4,29 @@ import { Link } from "react-router-dom";
 import Footer from "../../footer";
 // import { Modal } from "react-bootstrap";
 import Header from "../../header";
-
+import axios from "axios";
 const ScheduleTiming = (props) => {
   const [addListEmp, setAddListEmp] = useState([""]);
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const docId = localStorage.getItem('token');
+  const fetchAppointments = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3005/api/mypatient/${docId}`);
+      setAppointments(response.data);
+      console.log("mypatient", response.data)
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
 
+
+    fetchAppointments();
+    // fetchpatientdata();
+  }, []);
   const handelAddEmp = () => {
     setAddListEmp([...addListEmp, " "]);
   };
@@ -57,7 +76,7 @@ const ScheduleTiming = (props) => {
                     <div className="card-body">
                       <h4 className="card-title">Schedule Timings</h4>
                       <div className="profile-box">
-                        <div className="row">
+                        {/* <div className="row">
                           <div className="col-lg-4">
                             <div className="form-group">
                               <label>Timing Slot Duration</label>
@@ -72,7 +91,7 @@ const ScheduleTiming = (props) => {
                               </select>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div className="row">
                           <div className="col-md-12">
                             <div className="card schedule-widget mb-0">
@@ -172,51 +191,21 @@ const ScheduleTiming = (props) => {
                                 {/* <!-- /Sunday Slot -->
 
 																<!-- Monday Slot --> */}
-                                <div
-                                  id="slot_monday"
-                                  className="tab-pane fade show active"
-                                >
-                                  <h4 className="card-title d-flex justify-content-between">
-                                    <span>Time Slots</span>
-                                    <Link
-                                      className="edit-link"
-                                      data-bs-toggle="modal"
-                                      to="#edit_time_slot"
-                                    >
-                                      <i className="fa fa-edit me-1"></i>
-                                      Edit
-                                    </Link>
-                                  </h4>
+                                {
+                                  appointments && appointments.map((item, index) => (
 
-                                  {/* <!-- Slot List --> */}
-                                  <div className="doc-times">
-                                    <div className="doc-slot-list">
-                                      8:00 pm - 11:30 pm
-                                      <Link to="#" className="delete_schedule">
-                                        <i className="fa fa-times"></i>
-                                      </Link>
+                                    <div className="doc-times" key={index}>
+                                      <div className="doc-slot-list">
+                                        {item.PatietnDetails && item.PatietnDetails.username}   8:00 pm - 11:30 pm
+                                        {/* <Link to="#" className="delete_schedule">
+                                         <i className="fa fa-times"></i>
+                                       </Link> */}
+                                      </div>
+
                                     </div>
-                                    <div className="doc-slot-list">
-                                      11:30 pm - 1:30 pm
-                                      <Link to="#" className="delete_schedule">
-                                        <i className="fa fa-times"></i>
-                                      </Link>
-                                    </div>
-                                    <div className="doc-slot-list">
-                                      3:00 pm - 5:00 pm
-                                      <Link to="#" className="delete_schedule">
-                                        <i className="fa fa-times"></i>
-                                      </Link>
-                                    </div>
-                                    <div className="doc-slot-list">
-                                      6:00 pm - 11:00 pm
-                                      <Link to="#" className="delete_schedule">
-                                        <i className="fa fa-times"></i>
-                                      </Link>
-                                    </div>
-                                  </div>
-                                  {/* <!-- /Slot List --> */}
-                                </div>
+                                  ))
+
+                                }
                                 {/* <!-- /Monday Slot -->
 
 																<!-- Tuesday Slot --> */}

@@ -23,9 +23,10 @@ const DoctorDashboard = (props) => {
 
       const response = await axios.get(`http://localhost:3005/api/doc_appointments/${docId}`);
       setAppointments(response.data);
+      // console.log("setAppointments",response.data);
    
     } catch (error) {
-      console.error('Error fetching appointments:', error);
+      console.error('Error fetching doc_appointments:', error);
       setLoading(false);
     }
   };
@@ -35,9 +36,10 @@ const DoctorDashboard = (props) => {
 
       const response = await axios.get(`http://localhost:3005/api/mypatient/${docId}`);
       setMyPatient(response.data);
+      // console.log("setMyPatient",response.data);
    
     } catch (error) {
-      console.error('Error fetching appointments:', error);
+      console.error('Error fetching mypatient:', error);
       setLoading(false);
     }
   };
@@ -46,10 +48,10 @@ const DoctorDashboard = (props) => {
     try {
       const response = await axios.get(`http://localhost:3005/api/getDoctorDetail/${docId}`);
       setDoctor(response.data);
-      // console.log("DOC", response.data);
+      // console.log("setDoctor", response.data);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching appointments:', error);
+      console.error('Error fetching getDoctorDetail:', error);
       setLoading(false);
     }
   };

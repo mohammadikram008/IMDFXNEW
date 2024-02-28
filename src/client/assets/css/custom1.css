@@ -2075,7 +2075,8 @@ chat-attachment-list,
 }
 
 .change-photo-btn {
-  background-color: #20c0f3;
+  /* background-color: #20c0f3; */
+  background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
   color: #ffffff;
   cursor: pointer;
   display: block;
@@ -23492,6 +23493,7 @@ ul.benifits-col li i {
 
 .payment-form-group {
   margin-bottom: 10px;
+  flex-direction: column;
 }
 
 .payments-form .custom_radio {

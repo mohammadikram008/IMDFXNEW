@@ -12,16 +12,16 @@ import OwlCarousel from 'react-owl-carousel';
 import { Link, useHistory } from "react-router-dom";
 import IMG01 from "../../../assets/images/doc1.jpg";
 import DateRangePicker from "react-bootstrap-daterangepicker";
-import { BsCaretLeftFill, BsCaretRightFill } from 'react-icons/bs';
+import { BsCaretLeftFill, BsCaretRightFill } from 'react-icons/bs'; import { MdOutlineSecurity } from "react-icons/md";
 import "bootstrap-daterangepicker/daterangepicker.css";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 import { MdStars } from "react-icons/md";
 import { FaVideo } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
-import { IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io"; import { IoMdTime } from "react-icons/io";
 import { BsHospital } from "react-icons/bs";
-import { FaClock } from "react-icons/fa6";
+import { FaClock } from "react-icons/fa6"; import { FaHeadphones } from "react-icons/fa6";
 import Content from "./content";
 const Pagecontent = ({ toggleModal, doctorDetail }) => {
   console.log("ddddd", doctorDetail);
@@ -31,22 +31,22 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
   const [isBookingFixed, setIsBookingFixed] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
- 
+
 
   const toggleDropdown = () => {
-   
+
     setDropdownOpen(!isDropdownOpen);
   };
   const toggleDropdownHos = () => {
     setDropdownOpenHos(!isDropdownOpenHos);
   };
- 
+
   const handleModalClose = () => {
     setShowModal(false);
   };
- 
+
   const weekDays = ['Monday ', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',];
- 
+
 
   const toggleCollapse = () => {
     setIsOpen(!isOpen);
@@ -85,34 +85,34 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
   //   fetchData();
   // }, []);
   // Check if doctorDetail is null or undefined
- 
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       const threshold = 100;
-  
+
       if (window.innerWidth >= 768 && scrollTop > threshold) {
         setIsBookingFixed(true);
       } else {
         setIsBookingFixed(false);
       }
     };
-  
+
     window.addEventListener("scroll", handleScroll);
-  
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  const bookingCardClass = `booking-cards ${isBookingFixed ? 'booking-fixed' : ''} ${window.innerWidth <= 768 ? 'position-relative' : ''}`;
+  const bookingCardClass = `${isBookingFixed ? 'booking-fixed' : ''} ${window.innerWidth <= 768 ? 'position-relative' : ''}`;
 
 
- 
+
   if (!doctorDetail) {
     return <div>No doctor details available.</div>;
   }
-  
+
 
 
   return (
@@ -123,7 +123,7 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
       <div className={`card ${showModal ? 'modal-overlay' : ''} `}>
         <div className=" card-body">
           <div className="">
-            <div className="relative row">
+            <div className=" position-relative  row">
               <div className="col-md-8 col-sm-12">
 
                 <div className="doc-info-left">
@@ -299,56 +299,151 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
                 <div className="cards-div ">
 
 
-                  <div className={` ${bookingCardClass}`}>
-                    <div className="booking-card-heading">
-                      <FaVideo size={32} />
+                  <div style={{
+                    top: "20%",
+                    right: "15%"
+                  }} className="d-flex flex-column position-fixed  justify-content-start align-items-center gap-4">
+                    <div style={{
+                      backgroundColor: " #e9e9e6"
+                    }} className="px-5 py-5 rounded-3">
+                      <div className="d-flex justify-content-between  align-items-center gap-4  bg-transparent">
+                        <FaVideo size={25} />
 
-                      <div className="font-weight-bold text-xl">Dr. John Doe</div>
-                      <p className="rainbow  d-flex items-center justify-content-center">
-                        Save fuel and time!
-                      </p>
-                    </div>
+                        <div className="fw-bold">Dr. John Doe</div>
+                        <style jsx>
+                          {`
+          .bn5 {
+            padding: 1em 2em;
+            border: none;
+            outline: none;
+            color: rgb(255, 255, 255);
+            background: #111;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 10px;
+          }
 
-                    <div className="booking-card-body-main">
-                      <div className="booking-card-body-inner-div d-flex">
-                        <p>Fees:</p> <p>$100 - $150</p>
-                      </div>
-                      <div className="booking-card-body-inner-div">
-                        <p> Address:</p> <p> Use phone/laptop </p>
-                      </div>
-                      <div className=" booking-card-body-inner-div d-flex items-center justify-content-around mb-4 " onClick={toggleDropdown} >
-                        <span><FaClock /></span>
-                        <span className=" m-0 p-0  ">Available Time</span>
-                        <span> {isDropdownOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
-                      </div>
+          .bn5:before {
+            content: "";
+            background: linear-gradient(
+              45deg,
+              #ff0000,
+              #ff7300,
+              #fffb00,
+              #48ff00,
+              #00ffd5,
+              #002bff,
+              #7a00ff,
+              #ff00c8,
+              #ff0000
+            );
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowingbn5 20s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            border-radius: 10px;
+          }
 
-                      {isDropdownOpen ?
-                        <ul className="">
-                          {weekDays.map((day, index) => (
-                            <li key={index} className="d-flex">
-                              {day}: <p className="mx-2"> 9:00 AM - 5:00 PM</p>
-                            </li>
-                          ))}
-                        </ul>
-                        : ""
-                      }
-                    </div>
+          @keyframes glowingbn5 {
+            0% {
+              background-position: 0 0;
+            }
+            50% {
+              background-position: 400% 0;
+            }
+            100% {
+              background-position: 0 0;
+            }
+          }
 
+          .bn5:active {
+            color: #000;
+          }
 
+          .bn5:active:after {
+            background: transparent;
+          }
 
-                    <button className="login-btn-login btn-booking-card"
-                      // onclick="handleChange()"
-                      onClick={toggleModal}
-                    >
-                      <span className="d-flex items-center justify-content-center">
+          /* Default style for mobile screens */
+          .bn5:before {
+            opacity: 1;
+          }
 
-                        <p className="m-0 p-0">
-                          <FaVideo size={22} />
+          .bn5:after {
+            z-index: -1;
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #191919;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+          }
+        `}
+                        </style>
+                        <p style={{
+                          fontSize: "8px"
+                        }} className="bn5 px-5 mt-2 ">
+                          Save fuel <br /> and time!
                         </p>
-                        <p className="m-0 p-0 mx-2">Book Appointment</p>
-                      </span>
-                    </button>
+                      </div>
 
+                      <div className="booking-card-body-main">
+                        <div className="booking-card-body-inner-div gap-4  d-flex">
+                          <p>Fees:</p> <p>$100 - $150</p>
+                        </div>
+                        <div className="booking-card-body-inner-div">
+                          <p> Address:</p> <p> Use phone/laptop </p>
+                        </div>
+                        <div className=" booking-card-body-inner-div d-flex items-center gap-4  justify-content-between mb-4 " onClick={toggleDropdown} >
+                          <span><FaClock /></span>
+                          <div>
+                            <span className=" m-0 p-0  ">Available Time</span>
+                            <span> {isDropdownOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
+                          </div>
+                        </div>
+
+                        {isDropdownOpen ?
+                          <ul className="">
+                            {weekDays.map((day, index) => (
+                              <li key={index} className="d-flex">
+                                {day}: <p className="mx-2"> 9:00 AM - 5:00 PM</p>
+                              </li>
+                            ))}
+                          </ul>
+                          : ""
+                        }
+                      </div>
+
+
+
+                      <button className="login-btn-login btn-booking-card"
+                        // onclick="handleChange()"
+                        onClick={toggleModal}
+                      >
+                        <span className="d-flex items-center justify-content-center">
+
+                          <p className="m-0 p-0">
+                            <FaVideo size={22} />
+                          </p>
+                          <p className="m-0 p-0 mx-2">Book Appointment</p>
+                        </span>
+                      </button>
+                    </div>
+                    <ul className="text-black d-flex w-100 px-5 mx-3  flex-column gap-3">
+                      <li> <FaHeadphones size={20} />  <span className="px-2 fw-normal">Priorty customer support</span></li>
+                      <li> <MdOutlineSecurity size={20} />  <span className="px-2 fw-normal">100% secure</span></li>
+                      <li>  <IoMdTime size={20} /> <span className="px-2 fw-normal">Book Appointmet in 30 sec</span></li>
+                    </ul>
                   </div>
                   {/* <div className="booking-cards mt-5">
                     <div className="booking-card-heading">
@@ -405,7 +500,7 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
                 </div>
               </div>
               <div>
-                <Content/>
+                <Content />
               </div>
             </div>
 

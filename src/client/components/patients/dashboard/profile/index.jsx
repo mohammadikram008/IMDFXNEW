@@ -39,7 +39,7 @@ const Profile = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-console.log("fom",formData);
+    console.log("fom", formData);
     // Create FormData object
     const data = new FormData();
     for (const key in formData) {
@@ -50,7 +50,7 @@ console.log("fom",formData);
       // Make API request using axios
       const response = await axios.post(
         `http://localhost:3005/api/update-patient-profile/${userId}`, data,
-       
+
       );
 
       console.log("API response:", response.data);
@@ -87,7 +87,7 @@ console.log("fom",formData);
       <div className="content">
         <div className="container-fluid">
           <div className="row">
-          <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
               <StickyBox offsetTop={20} offsetBottom={20}>
                 <DashboardSidebar />
@@ -154,7 +154,7 @@ console.log("fom",formData);
                           </div>
                         </div>
                       </div>
-                     {/* <div className="col-12 col-md-6">
+                      {/* <div className="col-12 col-md-6">
                         <div className="form-group">
                           <label>Blood Group</label>
                           <select className="form-select form-control">
@@ -249,24 +249,24 @@ console.log("fom",formData);
                       </div>
                     </div>
                     <div className="d-flex">
-                    
-                    <div className="submit-section">
-                      <button
-                        type="submit"
-                        className="btn btn-primary submit-btn"
-                      >
-                        Save Changes
-                      </button>
+
+                      <div className="submit-section">
+                        <button
+                          type="submit"
+                          className="btn btn-primary login-btn-login"
+                        >
+                          Save Changes
+                        </button>
+                      </div>
+                      <div className="submit-section mx-3">
+                        <Link
+                          to="/patient/change-password"
+                          className="btn btn-primary login-btn-login"
+                        >
+                          Change Password
+                        </Link>
+                      </div>
                     </div>
-                    <div className="submit-section mx-3">
-                    <Link
-                      to="/patient/change-password"
-                      className="btn btn-primary submit-btn"
-                    >
-                       Change Password
-                    </Link>
-                  </div>
-                  </div>
                   </form>
                 </div>
               </div>

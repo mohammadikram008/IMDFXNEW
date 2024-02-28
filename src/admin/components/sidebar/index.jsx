@@ -168,7 +168,7 @@ const SidebarNav = () => {
                     ""
                   )}
                 </li>
-                <li className="menu-title">
+                {/* <li className="menu-title">
                   <span>Pages</span>
                 </li>
                 <li className={pathname?.includes("profile") ? "active" : ""}>
@@ -504,7 +504,7 @@ const SidebarNav = () => {
                       </Link>
                     </li>
                   </ul>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

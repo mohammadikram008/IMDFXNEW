@@ -64,7 +64,10 @@ const Header = (props) => {
         {/* Logo */}
         <div className="header-left">
           <Link to="/admin" className="logo">
-            <img src={logo} alt="Logo" />
+            <img src={logo} alt="Logo" style={{
+              width:"150px",
+              height:"25px"
+            }} />
           </Link>
           <Link to="/admin" className="logo logo-small">
             <img src={logoSmall} alt="Logo" width="30" height="30" />

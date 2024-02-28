@@ -178,7 +178,11 @@
     border-radius: 10px;
 
 }
-
+.checkout-model{
+    display: flex;
+    z-index: 10000;
+    margin-top: 2rem;
+}
 .pay-btn {
     width: 35%;
     /* background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%); */
@@ -775,7 +779,7 @@
     justify-content: center;
     width: 5rem;
     height: 5rem;
-    background: linear-gradient(to bottom, #ffcc00 0%, #ff9900 98%);
+    background: gray;
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -896,6 +900,9 @@
 .doctor-information-inner-div h5 {
     padding: 1rem;
 }
+/* .submit-sections{
+    background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
+} */
 
 @media (max-width: 575.98px) {
     .header .header-nav .logo img {

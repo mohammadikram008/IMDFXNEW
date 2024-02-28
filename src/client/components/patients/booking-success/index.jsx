@@ -7,29 +7,12 @@ const BookingSuccess = (props) => {
   return (
     <>
       <Header {...props} />
-      {/* // <!-- Breadcrumb --> */}
-      <div className="breadcrumb-bar-two">
-        <div className="container">
-          <div className="row align-items-center inner-banner">
-            <div className="col-md-12 col-12 text-center">
-              <h2 className="breadcrumb-title">Booking</h2>
-              <nav aria-label="breadcrumb" className="page-breadcrumb">
-                <ol className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to="/index">Home</Link>
-                  </li>
-                  <li className="breadcrumb-item" aria-current="page">
-                    Booking
-                  </li>
-                </ol>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* // <!-- /Breadcrumb -->       */}
-      <div className="content success-page-cont">
+
+      <div style={{
+        paddingTop:"10rem",
+        height:"100vh"
+      }} className="content success-page-cont ">
         <div className="container-fluid">
           <div className="row justify-content-center">
             <div className="col-lg-6">
@@ -55,7 +38,6 @@ const BookingSuccess = (props) => {
           </div>
         </div>
       </div>
-      <Footer {...props} />
     </>
   );
 };

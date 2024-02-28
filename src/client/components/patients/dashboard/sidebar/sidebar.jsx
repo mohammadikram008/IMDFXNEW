@@ -12,8 +12,11 @@ export const DashboardSidebar = ({ props }) => {
   const pathname = window.location.pathname;
   return (
     <div style={{
+      background:"none"
     }} className="profile-sidebar h-100 ">
-      <div className="widget-profile">
+      <div style={{
+      background:"none"
+    }} className="widget-profile">
         <div className="profile-info-widget">
           <Link to="#0" className="booking-doc-img ">
             <img style={{
@@ -26,9 +29,19 @@ export const DashboardSidebar = ({ props }) => {
         </div>
       </div>
       <div className="dashboard-widget">
+        <style>
+          {`
+          .dashboard-menu li:hover{
+            background-color:#e9e9e9;
+          }
+          .bg{
+            background-color:#e9e9e9;
+          }
+          `}
+        </style>
         <nav className="dashboard-menu">
           <ul>
-            <li className={pathname.includes("/dashboard") ? "active" : ""}>
+            <li className={pathname.includes("/dashboard") ? "active bg" : ""}>
               <Link to="/patient/dashboard">
                 <i className="fas fa-columns"></i>
                 <span>Dashboard</span>
@@ -51,7 +64,7 @@ export const DashboardSidebar = ({ props }) => {
             </li>
             */
             }
-            <li className={pathname.includes("/chat-doctor") ? "active" : ""}>
+            <li className={pathname.includes("/patient-chat") ? "active bg " : ""}>
               <Link to="/patient/patient-chat">
                 <i className="fas fa-comments"></i>
                 <span>Message</span>
@@ -88,19 +101,19 @@ export const DashboardSidebar = ({ props }) => {
             </li>
           */}
             <li
-              className={pathname.includes("/schedule-timing") ? "active" : ""
+              className={pathname.includes("/time-schedule") ? "active bg" : ""
               }
             >
               <Link
-                to="#"
-              //  to="/doctor/schedule-timing"
+          
+               to="/patient/time-schedule"
               >
                 <i className="fas fa-hourglass-start" />
                 <span>Schedule Timings</span>
               </Link>
             </li>
             <li
-              className={pathname.includes("/medicaldetails") ? "active" : ""}
+              className={pathname.includes("/medicaldetails") ? "active bg" : ""}
             >
               <Link
                 to="/patient/medicaldetails"
@@ -109,7 +122,7 @@ export const DashboardSidebar = ({ props }) => {
                 <span>Medical Details</span>
               </Link>
             </li>
-            <li className={pathname.includes("/profile") ? "active" : ""}>
+            <li className={pathname.includes("/profile") ? "active bg" : ""}>
               <Link to="/patient/profile">
                 <i className="fas fa-user-cog"></i>
                 <span>Profile Settings</span>
@@ -125,7 +138,7 @@ export const DashboardSidebar = ({ props }) => {
             </li> */}
             <li>
               <Link to="/login">
-                <i className="fas fa-sign-out-alt"></i>
+                <i className="fas fa-sign-out-alt bg"></i>
                 <span>Logout</span>
               </Link>
             </li>
