@@ -35,6 +35,7 @@ import Header from "../../header.jsx";
 const Dashboard = (props) => {
   const [count, setCount] = useState(1, 2, 3, 4);
   const [appointments, setAppointments] = useState([]);
+  const [payment, setPayments] = useState([]);
   const [patient, setPatient] = useState([]);
   const [docAppointment, setDocAppointment] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -119,12 +120,38 @@ const Dashboard = (props) => {
       setLoading(false);
     }
   };
+  const fetchpaymet = async () => {
+
+    try {
+      const response = await axios.get(`http://localhost:3005/api/mypayments/${userId}`);
+      setPayments(response.data);
+      console.log("setDocAppointment", response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     fetchdoctorappointment()
     fetchAppointments();
     fetchpatientdata();
+    fetchpaymet()
   }, []);
+// Calculate total fees and update each entry
+const totalFees = payment.reduce((total, entry) => {
+  // Parse the fee amount as a number and add it to the total
+  const fees = Number(entry.Fees);
+  total += fees;
 
+  // Add the fees property to each entry
+  entry.totalFees = fees;
+
+  return total;
+}, 0);
+
+console.log('Total Fees:', totalFees);
+// console.log('Updated Data:', dataArray);
   // if (loading) {
   //   // You can add a loading indicator here if needed
   //   return <p>Loading...</p>;
@@ -136,7 +163,7 @@ const Dashboard = (props) => {
   //   };
   //   this.handleSelect = this.handleSelect.bind(this);
   // }
-
+console.log("payments",payment);
   return (
     <>
       <Header {...props} />
@@ -170,11 +197,7 @@ const Dashboard = (props) => {
             <div style={{
               height: "80vh",
               // backgroundColor: "#e9eae7",
-<<<<<<< Updated upstream
               marginTop:"3rem"
-=======
-              marginTop: "3rem"
->>>>>>> Stashed changes
 
             }} className="col-md-2 col-lg-2 rounded-5  col-xl-2 theiaStickySidebar pt-5">
               <StickyBox offsetTop={20} offsetBottom={20}>
@@ -462,7 +485,7 @@ const Dashboard = (props) => {
                   className="container my-3 d-flex  rounded-4 justify-content-between  align-items-center  p-4 "
                 >
                   <h4 className="h5 text-danger  fw-medium ">Your balance</h4>
-                  <h4 className="h5 text-danger  fw-medium ">0.0$</h4>
+                  <h4 className="h5 text-danger  fw-medium ">{totalFees}$</h4>
                 </div>
                 <div className="row card-body gap-0 row-gap-4">
                   {paymentsCards.map((item, index) => {

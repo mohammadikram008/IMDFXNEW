@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import DoctorSidebar from "../sidebar";
 import { Link } from "react-router-dom";
 import Footer from "../../footer";
+import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 // import { Modal } from "react-bootstrap";
 import Header from "../../header";
 import axios from "axios";
@@ -37,6 +38,55 @@ const ScheduleTiming = (props) => {
     listEmp.splice(index, 1);
     setAddListEmp(listEmp);
   };
+  const handleCall = () => {
+    console.log("call");
+    myMeeting();
+  }
+  const handleMessage = () => {
+    console.log("message");
+  }
+
+
+  // Use a static room ID for all calls
+  const staticRoomID = 'yourStaticRoomID';
+
+  function randomID(len) {
+    let result = '';
+    if (result) return result;
+    var chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP',
+      maxPos = chars.length,
+      i;
+    len = len || 5;
+    for (i = 0; i < len; i++) {
+      result += chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return result;
+  }
+  const myMeeting = async (element) => {
+    // generate Kit Token
+    const appID = 2137259645;
+    const serverSecret = "ee104c1fbf40ac2fc78e322a2356d319";
+    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+      appID,
+      serverSecret,
+      staticRoomID, // Use the static room ID
+      randomID(5),
+      randomID(5)
+    );
+
+    // Create instance object from Kit Token.
+    const zp = ZegoUIKitPrebuilt.create(kitToken);
+
+    // Start the call
+    zp.joinRoom({
+      container: element,
+      // Remove sharedLinks code
+      scenario: {
+        mode: ZegoUIKitPrebuilt.OneONoneCall,
+      },
+    });
+  };
+
   return (
     <div>
       <Header {...props} />
@@ -195,11 +245,32 @@ const ScheduleTiming = (props) => {
                                   appointments && appointments.map((item, index) => (
 
                                     <div className="doc-times" key={index}>
-                                      <div className="doc-slot-list">
-                                        {item.PatietnDetails && item.PatietnDetails.username}   8:00 pm - 11:30 pm
+                                      <div className="doc-slot-list d-flex">
+                                       <h5 className="d-flex "> 
+                                         {item.PatietnDetails && item.PatietnDetails.username} 
+                                          <p className="mx-4">
+                                         Time:  8:00 pm - 11:30 pm
+                                          </p>
+                                        </h5>
                                         {/* <Link to="#" className="delete_schedule">
                                          <i className="fa fa-times"></i>
                                        </Link> */}
+                                       <div className="d-flex">
+
+                                        <div to="#" className="delete_schedule mx-3"  onClick={() => handleCall()}>
+                                          <i className="fa fa-video"></i>
+                                        </div>
+                                        {/* <div
+                                          className="myCallContainer"
+                                          ref={myMeeting}
+                                          style={{ width: '100px', height: '10px' }}
+                                        ></div> */}
+                                        <Link to="/doctor/chat-doctor" className="delete_schedule "
+                                        //  onClick={() => handleMessage()}
+                                         >
+                                          <i className="fa fa-message"></i>
+                                        </Link>
+                                        </div>
                                       </div>
 
                                     </div>

@@ -15,7 +15,6 @@ const Checkout = (props) => {
   const history = useHistory()
   console.log("pro", props);
   const { selectedDateData, selectedTimeSlot, doctorDetail } = props.location.state;
-
   const selectedDate = selectedDateData;
   const [selectedMethod, setSelectedMethod] = useState("payPal");
   const navigate = async () => {
@@ -75,9 +74,10 @@ const Checkout = (props) => {
     selectedDate: selectedDate,
     selectedTimeSlot: selectedTimeSlot,
     bookingDate: bookingDate,
-    userId, userId
+    userId, userId,
+    Fees:"100",
   });
-
+console.log("newfom",modelform);
   useEffect(() => {
     // Set isModalOpen to true after 2 seconds
     const timeoutId = setTimeout(() => {
@@ -237,7 +237,7 @@ const Checkout = (props) => {
                         //     />
                         //   </button>
                         // </div>
-                        <Paypal />
+                        <Paypal  modelform={modelform} />
                       )}
                       {selectedMethod === "wallet" && (
                         <div

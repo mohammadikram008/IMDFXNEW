@@ -1,25 +1,40 @@
+import React, { Fragment, useEffect, useState } from "react";
 import {
     PayPalScriptProvider,
     PayPalButtons,
     usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
+import GooglePayButton from '@google-pay/button-react';
+
 import "react-toastify/dist/ReactToastify.css";
-import React, { useEffect, useState } from "react";
+
 import { generateAccessToken } from "./generateAccessToken";
 import Modal from "./Modal";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
-<<<<<<< Updated upstream
-=======
-import GooglePayButton from '@google-pay/button-react';
->>>>>>> Stashed changes
 // This value is from the props in the UI
 const style = { layout: "vertical" };
 // Custom component to wrap the PayPalButtons and show loading spinner
-const ButtonWrapper = ({ showSpinner, setIsModalOpen }) => {
+const ButtonWrapper = ({ showSpinner, setIsModalOpen, formdata }) => {
     const [{ isPending }] = usePayPalScriptReducer();
     const history = useHistory()
+// console.log("MdF",modelform);
+const handleFormData= async()=>{
+    try {
+        console.log("MdF",formdata);
+        // Make your API request using Axios
+        const response = await axios.post('http://localhost:3005/api/bookappointment', formdata);
+        // Add any further logic here based on the API response
+        toast.success("Payment Add SuccessFully");
+        console.log('API response:', response.data);
+        // history.push(`/patient/booking-success`)
 
+    } catch (error) {
+        toast.error("Login failed. Please try again.");
+        console.error('Error making API request:', error);
+    }
+}
     async function createOrder() {
         try {
             const accessToken = await generateAccessToken();
@@ -71,6 +86,7 @@ const ButtonWrapper = ({ showSpinner, setIsModalOpen }) => {
             );
             const response = await res.json();
             console.log(response);
+            handleFormData()
             setIsModalOpen(true)
             const timeoutId = setTimeout(() => {
                 setIsModalOpen(false);
@@ -98,20 +114,21 @@ const ButtonWrapper = ({ showSpinner, setIsModalOpen }) => {
         </>
     );
 };
-export default function Paypal() {
+export default function Paypal({ modelform }) {
     const history = useHistory()
+const formdata=modelform
+    const bookingDate = new Date();
+    console.log("paypal props", modelform);
     const [isModalOpen, setIsModalOpen] = useState(false);
     return (
         <>
+
             <div style={{
                 maxWidth: "1000px",
                 zIndex: "1"
             }} className="w-100 p-5 ">
-<<<<<<< Updated upstream
-=======
-           
+                <div>
                     <GooglePayButton
-                   
                         environment="TEST"
                         paymentRequest={{
                             apiVersion: 2,
@@ -148,8 +165,7 @@ export default function Paypal() {
                             console.log('load payment data', paymentRequest);
                         }}
                     />
-            
->>>>>>> Stashed changes
+                </div>
                 <PayPalScriptProvider
                     options={{
                         clientId: "test",
@@ -158,14 +174,9 @@ export default function Paypal() {
                         disableFunding: "",
                     }}
                 >
-                    <ButtonWrapper showSpinner={true} setIsModalOpen={setIsModalOpen} />
-<<<<<<< Updated upstream
+                    <ButtonWrapper showSpinner={true} setIsModalOpen={setIsModalOpen} formdata={formdata} />
                 </PayPalScriptProvider >
-=======
 
-                </PayPalScriptProvider >
-               
->>>>>>> Stashed changes
             </div>
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <div className="d-flex justify-content-center align-items-center gap-3 py-5 flex-column w-100">

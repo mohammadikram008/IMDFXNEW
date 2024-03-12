@@ -95,19 +95,19 @@ const LoginContainer = (props) => {
   const responseFacebook = (response) => {
     console.log(response);
 
-    // setData({
-    //     name: response.name,
-    //     email: response.email,
-    //     picture: response.picture.data.url,
-    // });
-    // setPicture(response.picture.data.url);
-    // if (response.accessToken) {
-    //     setLogins(true);
-    //     alert(response.accessToken)
-    // } else {
-    //     setLogins(false);
-    //     alert(response)
-    // }
+    setData({
+        name: response.name,
+        email: response.email,
+        picture: response.picture.data.url,
+    });
+    setPicture(response.picture.data.url);
+    if (response.accessToken) {
+        setLogins(true);
+        alert(response.accessToken)
+    } else {
+        setLogins(false);
+        alert(response)
+    }
   }
 
   return (
@@ -217,14 +217,29 @@ const LoginContainer = (props) => {
                           </div>
                         </div> */}
                         <div className="social-login mb-4 my-1 d-flex justify-content-center align-items-center gap-2 ">
-                          <button className="facebook px-4 py-2 bg-white  d-flex justify-content-center align-items-center border gap-3 ">
-                            <FaFacebook size={20} color="#0E82FD" />
-                            <span>Facebook</span>
-                          </button>
-                          <button className="google px-4 py-2 bg-white  d-flex justify-content-center align-items-center border gap-3">
-                            <FcGoogle size={20} />
-                            <span>Google</span>
-                          </button>
+                          {/* <button className="facebook px-4 py-2 bg-white  d-flex justify-content-center align-items-center border gap-3 "> */}
+                            {/* <FaFacebook size={20} color="#0E82FD" />
+                            <span>Facebook</span> */}
+                             <FacebookLogin
+                              appId="1083617942780130"
+                              autoLoad={true}
+                              fields="name,email,picture"
+                              scope="public_profile,email"
+                              callback={responseFacebook}
+                              // callback={(response) => handleFacebookResponse(response)}
+                              icon="fa-facebook"
+                              // textButton="Sign in with Facebook"
+                              cssClass="custom-facebook-button"
+                            />
+                          {/* </button> */}
+                          {/* <button className="google px-4 py-2 bg-white  d-flex justify-content-center align-items-center border gap-3"> */}
+                            {/* <FcGoogle size={20} />
+                            <span>Google</span> */}
+                            <GoogleLogin
+                              onSuccess={(response) => responseMessage(response)}
+                              onError={(error) => errorMessage(error)}
+                            />
+                          {/* </button> */}
                         </div>
                         <div className="text-center dont-have">
                           Don’t have an account?{" "}

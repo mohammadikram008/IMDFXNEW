@@ -72,11 +72,7 @@ const DoctorSidebar = ({ props }) => {
               </li>
               <li
                 className={
-<<<<<<< Updated upstream
                   pathnames.includes("/doctor/account") ? "active bg" : ""
-=======
-                  pathnames.includes("/doctor/account") ? "active" : ""
->>>>>>> Stashed changes
                 }
               >
                 <Link to="/doctor/account">
@@ -86,11 +82,7 @@ const DoctorSidebar = ({ props }) => {
               </li>
               <li
                 className={
-<<<<<<< Updated upstream
                   pathnames.includes("/doctor/schedule-timing") ? "active bg" : ""
-=======
-                  pathnames.includes("/doctor/schedule-timing") ? "active" : ""
->>>>>>> Stashed changes
                 }
               >
                 <Link to="/doctor/schedule-timing">
@@ -176,13 +168,8 @@ const DoctorSidebar = ({ props }) => {
                   <i className="fas fa-lock" />
                   <span>Change Password</span>
                 </Link>
-<<<<<<< Updated upstream
-              </li> */}
+              </li> 
               <li className={pathnames.includes("/index-2") ? "active bg" : ""}>
-=======
-              </li>
-              <li className={pathnames.includes("/index-2") ? "active" : ""}>
->>>>>>> Stashed changes
                 <Link to="/login">
                   <i className="fas fa-sign-out-alt" />
                   <span>Logout</span>

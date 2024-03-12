@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 // import { Modal } from "react-bootstrap";
 import Footer from "../../footer";
+
+import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import Header from "../../header.jsx";
 const Timeschedule = (props) => {
     const [addListEmp, setAddListEmp] = useState([""]);
@@ -24,7 +26,7 @@ const Timeschedule = (props) => {
     const fetchdoctorappointment = async () => {
 
         try {
-            const response = await axios.get(`http://localhost:3005/api/mydoctor/${userId}`);
+            const response = await axios.get(`http://localhost:3005/api/getbookappointment/${userId}`);
             setDocAppointment(response.data);
             console.log("R", response.data);
 
@@ -37,6 +39,50 @@ const Timeschedule = (props) => {
         fetchdoctorappointment()
 
     }, []);
+    const handleCall = () => {
+        console.log("call");
+        myMeeting();
+    }
+
+    // Use a static room ID for all calls
+    const staticRoomID = 'yourStaticRoomID';
+
+    function randomID(len) {
+        let result = '';
+        if (result) return result;
+        var chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP',
+            maxPos = chars.length,
+            i;
+        len = len || 5;
+        for (i = 0; i < len; i++) {
+            result += chars.charAt(Math.floor(Math.random() * maxPos));
+        }
+        return result;
+    }
+    const myMeeting = async (element) => {
+        // generate Kit Token
+        const appID = 2137259645;
+        const serverSecret = "ee104c1fbf40ac2fc78e322a2356d319";
+        const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+            appID,
+            serverSecret,
+            staticRoomID, // Use the static room ID
+            randomID(5),
+            randomID(5)
+        );
+
+        // Create instance object from Kit Token.
+        const zp = ZegoUIKitPrebuilt.create(kitToken);
+
+        // Start the call
+        zp.joinRoom({
+            container: element,
+            // Remove sharedLinks code
+            scenario: {
+                mode: ZegoUIKitPrebuilt.OneONoneCall,
+            },
+        });
+    };
     return (
         <div>
             <Header {...props} />
@@ -213,10 +259,33 @@ const Timeschedule = (props) => {
 
                                                                             <div className="doc-times">
                                                                                 <div className="doc-slot-list">
-                                                                                    Dr.{item.doctorDetails && item.doctorDetails.name}   8:00 pm - 11:30 pm
+                                                                                    <h5 className="d-flex ">
+                                                                                    Dr.{item.doctorDetails && item.doctorDetails.name} 
+                                                                                        <p className="mx-4">
+                                                                                        {/* Time:  8:00 pm - 11:30 pm */}
+                                                                                            Time:  {item.appointmentDetails.selectedTimeSlot}
+                                                                                        </p>
+                                                                                    </h5>
+                                                                                  
                                                                                     {/* <Link to="#" className="delete_schedule">
                                          <i className="fa fa-times"></i>
                                        </Link> */}
+                                                                                    <div className="d-flex">
+
+                                                                                        <div to="#" className="delete_schedule mx-3" onClick={() => handleCall()}>
+                                                                                            <i className="fa fa-video"></i>
+                                                                                        </div>
+                                                                                        {/* <div
+  className="myCallContainer"
+  ref={myMeeting}
+  style={{ width: '100px', height: '10px' }}
+></div> */}
+                                                                                        <Link to="patient/patient-chat" className="delete_schedule "
+                                                                                        //  onClick={() => handleMessage()}
+                                                                                        >
+                                                                                            <i className="fa fa-message"></i>
+                                                                                        </Link>
+                                                                                    </div>
                                                                                 </div>
 
                                                                             </div>

@@ -253,11 +253,7 @@ const SidebarNav = ({ Doctor, patient, Appointmentswithdetail }) => {
                   ) : (
                     ""
                   )}
-<<<<<<< Updated upstream
                 </li>
-=======
-                </li> */}
->>>>>>> Stashed changes
                 {/* <li className="menu-title">
                   <span>Pages</span>
                 </li>

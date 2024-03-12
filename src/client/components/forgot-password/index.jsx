@@ -1,19 +1,51 @@
-import React, { useEffect } from "react";
-// import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import loginBanner from "../../assets/images/login-banner.png";
 import { Link } from "react-router-dom";
 import Header from "../header";
 import Footer from "../footer";
-
+import { ToastContainer, toast } from "react-toastify";
 const ForgotPassword = (props) => {
-  // const history = useHistory();
-  const config = "/react/template";
+  const [email, setEmail] = useState("");
+  const config = "/";
 
   useEffect(() => {
     document.body.classList.add("account-page");
 
     return () => document.body.classList.remove("account-page");
   }, []);
+
+  const handleEmailChange = (e) => {
+    console.log("hclick");
+    setEmail(e.target.value);
+  };
+
+  const handleResetPassword = async (e) => {
+    e.preventDefault();
+console.log("Sclick",email);
+    // Perform validation on the email if needed
+
+    // Assuming you have an API endpoint for password reset
+    const apiUrl = "your_password_reset_api_endpoint";
+
+    try {
+      const response = await axios.post("http://localhost:3005/api/reset-user-password", { email });
+
+      // Axios automatically parses the response JSON
+      if (response.status === 200) {
+        // Handle success, e.g., show a success message to the user
+        toast.success("Password reset link sent successfully!");
+        console.log("Password reset link sent successfully!");
+      } else {
+        // Handle error, e.g., show an error message to the user
+        toast.error("Failed to send password reset link");
+        console.error("Failed to send password reset link");
+      }
+    } catch (error) {
+      // Handle Axios errors, e.g., network error
+      console.error("Error sending password reset link:", error.message);
+    }
+  };
 
   return (
     <>
@@ -42,11 +74,14 @@ const ForgotPassword = (props) => {
                         </p>
                       </div>
                       {/* Forgot Password Form */}
-                      <form action={`${config}/home`}>
+                      <form onSubmit={handleResetPassword}>
                         <div className="form-group form-focus">
                           <input
                             type="email"
                             className="form-control floating"
+                            value={email}
+                            onChange={handleEmailChange}
+                            required
                           />
                           <label className="focus-label">Email</label>
                         </div>

@@ -15059,6 +15059,7 @@ i svg {
 }
 
 .doc-slot-list {
+  width: 80%;
   background-color: #d9534f;
   border: 1px solid #d43f3a;
   color: #ffffff;
@@ -15066,6 +15067,8 @@ i svg {
   margin: 10px 10px 0 0;
   padding: 6px 15px;
   border-radius: 4px;
+  display: flex;
+  justify-content:space-between;
 }
 
 .doc-slot-list a {
