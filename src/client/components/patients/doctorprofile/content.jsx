@@ -2,7 +2,8 @@ import React from "react";
 import { IMG01, IMG02, IMG03, IMG04, IMG07, IMG08 } from "./img";
 import { patient, patient1, patient2 } from "../../Pharmacy/image";
 import { Link } from "react-router-dom";
-const Content = () => {
+const Content = ({doctorDetail}) => {
+  console.log("con",doctorDetail);
   return (
     <div>
       <div className="card doctor-profile-overview">
@@ -18,14 +19,14 @@ const Content = () => {
                   Overview
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   className="nav-link"
                   to="#doc_locations"
                   data-bs-toggle="tab">
                   Locations
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <Link
                   className="nav-link"
@@ -58,14 +59,15 @@ const Content = () => {
                   <div className="widget about-widget">
                     <h4 className="widget-title">About Me</h4>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      {doctorDetail.aboutself}
+                      {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                       sed do eiusmod tempor incididunt ut labore et dolore magna
                       aliqua. Ut enim ad minim veniam, quis nostrud exercitation
                       ullamco laboris nisi ut aliquip ex ea commodo consequat.
                       Duis aute irure dolor in reprehenderit in voluptate velit
                       esse cillum dolore eu fugiat nulla pariatur. Excepteur
                       sint occaecat cupidatat non proident, sunt in culpa qui
-                      officia deserunt mollit anim id est laborum.
+                      officia deserunt mollit anim id est laborum. */}
                     </p>
                   </div>
                   {/* /About Details */}
@@ -81,14 +83,17 @@ const Content = () => {
                           <div className="experience-content">
                             <div className="timeline-content">
                               <Link to="#/" className="name">
-                                American Dental Medical University
+                              {doctorDetail.college}
+                                {/* American Dental Medical University */}
                               </Link>
-                              <div>BDS</div>
-                              <span className="time">1998 - 2003</span>
+                              <div>
+                              {doctorDetail.education}
+</div>
+                              {/* <span className="time">1998 - 2003</span> */}
                             </div>
                           </div>
                         </li>
-                        <li>
+                        {/* <li>
                           <div className="experience-user">
                             <div className="before-circle" />
                           </div>
@@ -101,7 +106,7 @@ const Content = () => {
                               <span className="time">2003 - 2005</span>
                             </div>
                           </div>
-                        </li>
+                        </li> */}
                       </ul>
                     </div>
                   </div>
@@ -121,12 +126,12 @@ const Content = () => {
                                 Glowing Smiles Family Dental Clinic
                               </Link>
                               <span className="time">
-                                2010 - Present (5 years)
+                             {doctorDetail.yearofexperience}
                               </span>
                             </div>
                           </div>
                         </li>
-                        <li>
+                        {/* <li>
                           <div className="experience-user">
                             <div className="before-circle" />
                           </div>
@@ -155,13 +160,13 @@ const Content = () => {
                               </span>
                             </div>
                           </div>
-                        </li>
+                        </li> */}
                       </ul>
                     </div>
                   </div>
                   {/* /Experience Details */}
                   {/* Awards Details */}
-                  <div className="widget awards-widget">
+                  {/* <div className="widget awards-widget">
                     <h4 className="widget-title">Awards</h4>
                     <div className="experience-box">
                       <ul className="experience-list">
@@ -222,10 +227,10 @@ const Content = () => {
                         </li>
                       </ul>
                     </div>
-                  </div>
+                  </div> */}
                   {/* /Awards Details */}
                   {/* Services List */}
-                  <div className="service-list">
+                  {/* <div className="service-list">
                     <h4>Services</h4>
                     <ul className="clearfix">
                       <li>Tooth cleaning </li>
@@ -235,18 +240,18 @@ const Content = () => {
                       <li>Fissure Sealants</li>
                       <li>Surgical Extractions</li>
                     </ul>
-                  </div>
+                  </div> */}
                   {/* /Services List */}
                   {/* Specializations List */}
                   <div className="service-list">
                     <h4>Specializations</h4>
                     <ul className="clearfix">
-                      <li>Children Care</li>
-                      <li>Dental Care</li>
+                      <li>{doctorDetail.specialization}</li>
+                      {/* <li>Dental Care</li>
                       <li>Oral and Maxillofacial Surgery </li>
                       <li>Orthodontist</li>
                       <li>Periodontist</li>
-                      <li>Prosthodontics</li>
+                      <li>Prosthodontics</li> */}
                     </ul>
                   </div>
                   {/* /Specializations List */}

@@ -25,7 +25,7 @@ function Doctor() {
   const fetchdoctordata = async () => {
 
     try {
-      const response = await axios.get(`http://localhost:3005/api/doctorpersnoldetails`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doctorpersnoldetails`);
       setDoctorData(response.data);
       // console.log("doctordetails", response.data);
     } catch (error) {
@@ -53,21 +53,30 @@ function Doctor() {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 5,
+          slidesToShow: 1,
           slidesToScroll: 1,
-          dots: true,
+          dots: false,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 1,
           slidesToScroll: 1,
-          dots: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 380,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          dots: false,
         },
       },
     ],
   };
+ 
   const imageUrl = "https://static.vecteezy.com/system/resources/previews/024/724/498/non_2x/asian-young-woman-doctor-with-stethoscope-in-uniform-smiling-isolated-on-transparent-medical-concept-generative-ai-png.png";
 
 

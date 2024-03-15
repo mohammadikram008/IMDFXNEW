@@ -4,7 +4,7 @@ import { Modal } from "react-bootstrap";
 import StickyBox from "react-sticky-box";
 import axios from "axios";
 import {
-  IMG01,
+  
   IMG02,
   IMG03,
   IMG04,
@@ -15,6 +15,8 @@ import {
   IMG010,
   IMG011,
 } from "./img";
+
+import IMG01 from "../../../assets/images/profileavatr.png";
 import DoctorSidebar from "../sidebar";
 import Footer from "../../footer";
 import Header from "../../header";
@@ -24,11 +26,13 @@ const Appointments = (props) => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const docId = localStorage.getItem('token');
+  
+  const [count, setCount] = useState(1);
   const fetchAppointments = async () => {
     try {
 
 
-      const response = await axios.get(`http://localhost:3005/api/doc_appointments/${docId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doc_appointments/${docId}`);
       setAppointments(response.data);
       console.log("DOappp", response.data)
       setLoading(false);
@@ -38,12 +42,22 @@ const Appointments = (props) => {
     }
   };
   useEffect(() => {
-
-
     fetchAppointments();
     // fetchpatientdata();
-  }, []);
-
+  }, [count]);
+  const handleAcceptChange = async (appoimentdetail) => {
+    // console.log("appo",appoimentdetail)
+    try {
+      const response = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/conformappointment/${docId}`, { appoimentdetail });
+      // setAppointments(response.data);
+      console.log("booking", response)
+      setCount(count + 1);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      setLoading(false);
+    }
+  }
   const handleClose = () => {
     setshow(false);
   };
@@ -51,33 +65,19 @@ const Appointments = (props) => {
   const handleShow = () => {
     setshow(true);
   };
-const handleAcceptChange= async(appoimentdetail)=>{
-  
-  // console.log("userId",userId);
-  try {
 
+  const handleCencelChange = async (id) => {
 
-    const response = await axios.post(`http://localhost:3005/api/conformappointment/${docId}`,{appoimentdetail});
-    // setAppointments(response.data);
-    console.log("booking", response)
-    setLoading(false);
-  } catch (error) {
-    console.error('Error fetching appointments:', error);
-    setLoading(false);
+    try {
+      const response = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/cancelappointment/${id}`);
+      console.log("cancel", response)
+      setCount(count + 1);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      setLoading(false);
+    }
   }
-}
-const handleCencelChange= async(id)=>{
-  
-  try {
-    const response = await axios.post(`http://localhost:3005/api/cancelappointment/${id}`);
-   
-    console.log("cancel", response)
-    setLoading(false);
-  } catch (error) {
-    console.error('Error fetching appointments:', error);
-    setLoading(false);
-  }
-}
   return (
     <div>
       <Header {...props} />
@@ -105,7 +105,7 @@ const handleCencelChange= async(id)=>{
       <div className="content ">
         <div className="container ">
           <div className="row mt-5">
-          {/* <div className="col-md-1 col-lg-1 col-xl-1 theiaStickySidebar "></div> */}
+            {/* <div className="col-md-1 col-lg-1 col-xl-1 theiaStickySidebar "></div> */}
             <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
               <StickyBox offsetTop={50} offsetBottom={20}>
                 <div className="appointments">
@@ -116,57 +116,57 @@ const handleCencelChange= async(id)=>{
             <div className="col-md-7 col-lg-8 col-xl-9">
               <div className="appointments">
                 {
-                  appointments && appointments.length>0?
-                  appointments.map((item, index) => (
-                    <div className="appointment-list">
-                      <div className="profile-info-widget">
-                        <Link
-                          to="/doctor/patient-profile"
-                          className="booking-doc-img"
-                        >
-                          <img src={IMG01} alt="User" />
-                        </Link>
-                        <div className="profile-det-info">
-                          <h3>
-                            {item.PatietnDetails.username}
-                            {/* <Link to="/doctor/patient-profile">{item.username}</Link> */}
-                          </h3>
-                          <div className="patient-details">
-                            <h5>
-                              <i className="far fa-clock"></i> {item.appointmentDetails.bookingDate}
-                            </h5>
-                            <h5>
-                              <i className="fas fa-map-marker-alt"></i> Newyork,
-                              United States
-                            </h5>
-                            <h5>
-                              <i className="fas fa-envelope"></i>{" "}
-                              richard@example.com
-                            </h5>
-                            <h5 className="mb-0">
-                              <i className="fas fa-phone"></i> +1 923 782 4575
-                            </h5>
+                  appointments && appointments.length > 0 ?
+                    appointments.map((item, index) => (
+                      <div className="appointment-list">
+                        <div className="profile-info-widget">
+                          <Link
+                            to="/doctor/patient-profile"
+                            className="booking-doc-img"
+                          >
+                            <img src={IMG01} alt="User" />
+                          </Link>
+                          <div className="">
+                            <h3>
+                              {item.PatietnDetails.username}
+                              {/* <Link to="/doctor/patient-profile">{item.username}</Link> */}
+                            </h3>
+                            <div className="patient-details">
+                              <h5>
+                                <i className="far fa-clock"></i> {item.appointmentDetails.bookingDate}
+                              </h5>
+                              <h5>
+                                <i className="fas fa-map-marker-alt"></i> Newyork,
+                                United States
+                              </h5>
+                              <h5>
+                                <i className="fas fa-envelope"></i>{" "}
+                                richard@example.com
+                              </h5>
+                              <h5 className="mb-0">
+                                <i className="fas fa-phone"></i> +1 923 782 4575
+                              </h5>
+                            </div>
                           </div>
                         </div>
+                        <div className="appointment-action">
+                          <Link
+                            to="#0"
+                            className="btn btn-sm bg-info-light"
+                            onClick={handleShow}
+                          >
+                            <i className="far fa-eye"></i> View
+                          </Link>
+                          <button className="btn btn-sm bg-success-light" onClick={() => handleAcceptChange(item.appointmentDetails)}>
+                            <i className="fas fa-check"></i> Accept
+                          </button>
+                          <button to="#0" className="btn btn-sm bg-danger-light" onClick={() => handleCencelChange(item.appointmentDetails._id)}>
+                            <i className="fas fa-times"></i> Cancel
+                          </button>
+                        </div>
                       </div>
-                      <div className="appointment-action">
-                        <Link
-                          to="#0"
-                          className="btn btn-sm bg-info-light"
-                          onClick={handleShow}
-                        >
-                          <i className="far fa-eye"></i> View
-                        </Link>
-                        <button className="btn btn-sm bg-success-light" onClick={()=>handleAcceptChange(item.appointmentDetails)}>
-                          <i className="fas fa-check"></i> Accept
-                        </button>
-                        <button to="#0" className="btn btn-sm bg-danger-light" onClick={()=>handleCencelChange(item.appointmentDetails._id)}>
-                          <i className="fas fa-times"></i> Cancel
-                        </button>
-                      </div>
-                    </div>
-                  ))
-                  :'No Appointment Yet!'
+                    ))
+                    : 'No Appointment Yet!'
                 }
 
 

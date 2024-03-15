@@ -71,7 +71,7 @@ const Index = () => {
             const alldata = new FormData();
 
             alldata.append('image', selectedFile);
-
+            console.log("alldata", selectedFile);
             if (formData.once) {
                 formData.once.forEach((item, index) => {
                     Object.entries(item).forEach(([key, value]) => {
@@ -108,7 +108,7 @@ const Index = () => {
                 }
             });
 
-            const response = await axios.post('http://localhost:3005/api/doctorpersnoldetails', alldata);
+            const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/doctorpersnoldetails', alldata);
 
             if (response.status === 200) {
                 console.log('response', response);
@@ -153,7 +153,7 @@ const Index = () => {
                         <div class="my-4 d-flex align-items-center">
                             <div class="border-top border-secondary flex-grow-1"></div>
                             <p class="mx-4 text-center font-weight-bold text-secondary">
-                            Basic Information
+                                Basic Information
                             </p>
                             <div class="border-top border-secondary flex-grow-1"></div>
                         </div>
@@ -237,7 +237,7 @@ const Index = () => {
                         <div class="my-4 d-flex align-items-center">
                             <div class="border-top border-secondary flex-grow-1"></div>
                             <p class="mx-4 text-center font-weight-bold text-secondary">
-                            Education
+                                Education
                             </p>
                             <div class="border-top border-secondary flex-grow-1"></div>
                         </div>
@@ -297,7 +297,7 @@ const Index = () => {
                         <div class="my-4 d-flex align-items-center">
                             <div class="border-top border-secondary flex-grow-1"></div>
                             <p class="mx-4 text-center font-weight-bold text-secondary">
-                            Once
+                                Once
                             </p>
                             <div class="border-top border-secondary flex-grow-1"></div>
                         </div>
@@ -440,7 +440,7 @@ const Index = () => {
                         <div class="my-4 d-flex align-items-center">
                             <div class="border-top border-secondary flex-grow-1"></div>
                             <p class="mx-4 text-center font-weight-bold text-secondary">
-                            Weekly
+                                Weekly
                             </p>
                             <div class="border-top border-secondary flex-grow-1"></div>
                         </div>
@@ -507,7 +507,7 @@ const Index = () => {
                     </form>
                 </div>
             </div>
-            <Footer  />
+            <Footer />
             <ToastContainer />
         </>
     );

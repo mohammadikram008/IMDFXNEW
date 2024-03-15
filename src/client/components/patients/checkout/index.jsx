@@ -44,7 +44,7 @@ const Checkout = (props) => {
   //   // };
   //   // try {
   //   //   // Make your API request using Axios
-  //   //   const response = await axios.post('http://localhost:3005/api/bookappointment', combinedData);
+  //   //   const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/bookappointment', combinedData);
 
   //   //   // Add any further logic here based on the API response
   //   //   setCardName("")
@@ -96,7 +96,7 @@ console.log("newfom",modelform);
     console.log("modelform", modelform);
     try {
       // Make your API request using Axios
-      const response = await axios.post('http://localhost:3005/api/bookappointment', modelform);
+      const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/bookappointment', modelform);
       // Add any further logic here based on the API response
       toast.success("Payment Add SuccessFully");
       console.log('API response:', response.data);
@@ -107,6 +107,11 @@ console.log("newfom",modelform);
       console.error('Error making API request:', error);
     }
   };
+  const handleSubmit= async()=>{
+    // const message="Your Transection is Successfull."
+    // const notify = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/usertransectionnotification/${userId}`,{message} );
+    setIsModalOpen(false)
+  }
 
   return (
     <Fragment>
@@ -418,10 +423,13 @@ console.log("newfom",modelform);
             />
           </div>
 
-          <button className="btn btn-primary" onClick={() => {
+          <button className="btn btn-primary"
+           onClick={() => {
             setIsModalOpen(false)
             console.log(modelform)
-          }} type="text">Submit</button>
+          }} 
+          // onClick={()=>handleSubmit()}
+          type="text">Submit</button>
         </div>
       </ModalComponent>
 

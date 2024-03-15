@@ -28,7 +28,7 @@
 //     e.preventDefault();
 
 //     try {
-//       const response = await axios.post("http://localhost:3005/api/doctorlogin", formData);
+//       const response = await axios.post("https://imdfx-newserver-production.up.railway.app/api/doctorlogin", formData);
 
 //       if (response.status === 200) {
 //         // Registration successful, handle redirection or show a success message
@@ -139,9 +139,13 @@ const DoctorRegister = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [accountType, setAccountType] = useState("individual");
   const history = useHistory();
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+  };
+  const handleAccountTypeChange = (type) => {
+    setAccountType(type);
   };
   const responseMessage = (response) => {
     console.log(response.credential);
@@ -157,31 +161,60 @@ const DoctorRegister = (props) => {
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
-
   const handleLogin = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post("http://localhost:3005/api/doctorlogin", { email, password });
+      // You can send the account type along with other data to the server
+      // const response = await axios.post("https://imdfx-newserver-production.up.railway.app/api/doctorlogin", { email, password, accountType });
+      const response = await axios.post("https://imdfx-newserver-production.up.railway.app/api/doctorlogin", { email, password, accountType });
 
       if (response.status === 200) {
-        // Registration successful, handle redirection or show a success message
         const token = response.data;
         toast.success("Login successful!");
         localStorage.setItem("token", token);
         localStorage.setItem("doctorlogin", "doctorlogin");
-        // console.log("Doctor registration successful");
         history.push("/");
-      } else {
-        console.error("Doctor registration failed");
+      } else if (response.status === 201) { 
+        const token = response.data;
+        toast.success("Login successful!");
+        localStorage.setItem("token", token);
+        localStorage.setItem("officelogin", "officelogin");
+        history.push("/office/office-dashboard");
+      }else{
+        console.error("Doctor login failed");
         toast.error("Login failed. Please try again.");
 
       }
     } catch (error) {
-      console.error("Error during doctor registration:", error);
+      console.error("Error during doctor login:", error);
       toast.error("Login failed. Please try again.");
-
     }
   };
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post("https://imdfx-newserver-production.up.railway.app/api/doctorlogin", { email, password });
+
+  //     if (response.status === 200) {
+  //       // Registration successful, handle redirection or show a success message
+  //       const token = response.data;
+  //       toast.success("Login successful!");
+  //       localStorage.setItem("token", token);
+  //       localStorage.setItem("doctorlogin", "doctorlogin");
+  //       // console.log("Doctor registration successful");
+  //       history.push("/");
+  //     } else {
+  //       console.error("Doctor registration failed");
+  //       toast.error("Login failed. Please try again.");
+
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during doctor registration:", error);
+  //     toast.error("Login failed. Please try again.");
+
+  //   }
+  // };
   return (
     <>
       <Header {...props} />
@@ -212,6 +245,37 @@ const DoctorRegister = (props) => {
                         </h3>
                       </div>
                       <form onSubmit={handleLogin}>
+                      <div className="my-2">
+                          <label className="focus-label">Account Type</label>
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input mx-2"
+                              type="radio"
+                              name="accountType"
+                              id="individual"
+                              value="individual"
+                              checked={accountType === "individual"}
+                              onChange={() => handleAccountTypeChange("individual")}
+                            />
+                            <label className="form-check-label mx-2" htmlFor="individual">
+                              Individual
+                            </label>
+                          </div>
+                          <div className="form-check form-check-inline">
+                            <input
+                              className="form-check-input"
+                              type="radio"
+                              name="accountType"
+                              id="office"
+                              value="office"
+                              checked={accountType === "office"}
+                              onChange={() => handleAccountTypeChange("office")}
+                            />
+                            <label className="form-check-label" htmlFor="office">
+                              Join as Office
+                            </label>
+                          </div>
+                        </div>
                         <div className="d-flex flex-column gap-2 my-1 ">
                           <label className="focus-label">Email</label>
                           <input
@@ -246,6 +310,7 @@ const DoctorRegister = (props) => {
                             {showPassword ? <IoEye /> : <IoIosEyeOff />}
                           </span>
                         </div>
+                        
                         <div className="text-end my-1">
                           <Link
                             className="forgot-link text-black "

@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+
+import axios from "axios";
 import DashboardSidebar from "../dashboard/sidebar/sidebar.jsx";
 import { Modal } from "react-bootstrap";
 import StickyBox from "react-sticky-box";
@@ -8,7 +10,89 @@ import Footer from "../../footer";
 
 const MedicalDetails = (props) => {
   const [show, setShow] = useState(false);
+  const [medicalrecords, setMedicalRecord] = useState([]);
+  const [operation, setOperation] = useState("add");
+  const [formData, setFormData] = useState({
+    bmi: "",
+    hr: "",
+    Weight: "",
+    Fbc: "",
+    dob: "", 
+  });
+  let count=1;
+  const userId = localStorage.getItem('token');
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    // console.log("formData", formData);
+    try {
+       // Check the operation flag and call the corresponding API
+    if (operation === "add") {
+      const response = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/medicaldetails/${userId}`, formData);
+      setShow(false);
+    } else if (operation === "edit") {
+      const response = await axios.put(`https://imdfx-newserver-production.up.railway.app/api/updatemedicaldetails/${userId}`, formData);
+      // Make an HTTP request to your API endpoint
+      
+      setShow(false);
+      // Handle the response as needed
+      console.log("API Response:", response.data);
+    }
+    
+    } catch (error) {
+      // Handle errors
+      console.error("API Error:", error);
+    }
+  };
+  const deleteDataApi = async () => {
+    try {
+      
+      // Call your delete API
+      const response = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/deletemedicaldetails/${userId}`);
+      setShow(true);
+      setShow(false);
+      console.log(response.data);
+      
+      // Handle success or update state as needed
+    } catch (error) {
+      console.error("Error deleting data:", error);
+      // Handle error
+    }
+  };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
+  const fetchmedical = async () => {
+
+    try {
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getmedicaldetails/${userId}`);
+      setMedicalRecord(response.data);
+      console.log("setMedicalRecord", response.data);
+      // setLoading(false);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      // setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchmedical()
+
+  }, [show]);
+  const openModalForAdd = () => {
+    setOperation("add");
+    setShow(true);
+  };
+
+  const openModalForEdit = () => {
+    setOperation("edit");
+    setShow(true);
+    // Fetch and populate the form data for editing
+    // You may want to implement this based on your requirement
+  };
   return (
     <div>
       <Header {...props} />
@@ -35,7 +119,7 @@ const MedicalDetails = (props) => {
       <div className="content">
         <div className="container-fluid">
           <div className="row">
-          <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
               <StickyBox offsetTop={20} offsetBottom={20}>
                 <DashboardSidebar />
@@ -52,7 +136,7 @@ const MedicalDetails = (props) => {
                       <Link
                         to="#modal_medical_form"
                         className="btn btn-primary float-end"
-                        onClick={() => setShow(true)}
+                        onClick={()=>openModalForAdd()}
                       >
                         Add Details
                       </Link>
@@ -66,7 +150,7 @@ const MedicalDetails = (props) => {
                               <thead>
                                 <tr>
                                   <th>#</th>
-                                  <th>Name</th>
+                                 
                                   <th>BMI</th>
                                   <th className="text-center">Heart Rate</th>
                                   <th className="text-center">FBC Status</th>
@@ -76,171 +160,46 @@ const MedicalDetails = (props) => {
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr>
-                                  <td>1</td>
-                                  <td>Richard Wilson</td>
-                                  <td>23.7</td>
-                                  <td className="text-center">89</td>
-                                  <td className="text-center">140</td>
-                                  <td>74Kg</td>
-                                  <td>
-                                    11 Nov 2019{" "}
-                                    <span className="d-block text-info">
-                                      10.00 AM
-                                    </span>
-                                  </td>
-                                  <td>
-                                    <div className="table-action">
-                                      <Link
-                                        to="#edit_medical_form"
-                                        onClick={() => setShow(true)}
-                                        className="btn btn-sm bg-info-light"
-                                      >
-                                        <i className="fas fa-edit" /> Edit
-                                      </Link>{" "}
-                                      &nbsp;
-                                      <Link
-                                        to="#"
-                                        className="btn btn-sm bg-danger-light"
-                                      >
-                                        <i className="fas fa-trash-alt" />{" "}
-                                        Delete
-                                      </Link>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>2</td>
-                                  <td>Champagne</td>
-                                  <td>25.2</td>
-                                  <td className="text-center">92</td>
-                                  <td className="text-center">135</td>
-                                  <td>73Kg</td>
-                                  <td>
-                                    3 Nov 2019{" "}
-                                    <span className="d-block text-info">
-                                      11.00 AM
-                                    </span>
-                                  </td>
-                                  <td>
-                                    <div className="table-action">
-                                      <Link
-                                        to="#edit_medical_form"
-                                        onClick={() => setShow(true)}
-                                        className="btn btn-sm bg-info-light"
-                                      >
-                                        <i className="fas fa-edit" /> Edit
-                                      </Link>
-                                      &nbsp;
-                                      <Link
-                                        to="#"
-                                        className="btn btn-sm bg-danger-light"
-                                      >
-                                        <i className="fas fa-trash-alt" />{" "}
-                                        Delete
-                                      </Link>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>3</td>
-                                  <td>Vena</td>
-                                  <td>24.5</td>
-                                  <td className="text-center">90</td>
-                                  <td className="text-center">125</td>
-                                  <td>73.5Kg</td>
-                                  <td>
-                                    1 Nov 2019{" "}
-                                    <span className="d-block text-info">
-                                      1.00 PM
-                                    </span>
-                                  </td>
-                                  <td>
-                                    <div className="table-action">
-                                      <Link
-                                        to="#edit_medical_form"
-                                        onClick={() => setShow(true)}
-                                        className="btn btn-sm bg-info-light"
-                                      >
-                                        <i className="fas fa-edit" /> Edit
-                                      </Link>
-                                      &nbsp;
-                                      <Link
-                                        to="#"
-                                        className="btn btn-sm bg-danger-light"
-                                      >
-                                        <i className="fas fa-trash-alt" />{" "}
-                                        Delete
-                                      </Link>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>4</td>
-                                  <td>Tressie</td>
-                                  <td>24.2</td>
-                                  <td className="text-center">95</td>
-                                  <td className="text-center">128</td>
-                                  <td>10.2Kg</td>
-                                  <td>
-                                    30 Oct 2019{" "}
-                                    <span className="d-block text-info">
-                                      9.00 AM
-                                    </span>
-                                  </td>
-                                  <td>
-                                    <div className="table-action">
-                                      <Link
-                                        to="#edit_medical_form"
-                                        onClick={() => setShow(true)}
-                                        className="btn btn-sm bg-info-light"
-                                      >
-                                        <i className="fas fa-edit" /> Edit
-                                      </Link>
-                                      &nbsp;
-                                      <Link
-                                        to="#"
-                                        className="btn btn-sm bg-danger-light"
-                                      >
-                                        <i className="fas fa-trash-alt" />{" "}
-                                        Delete
-                                      </Link>
-                                    </div>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>5</td>
-                                  <td>Christopher</td>
-                                  <td>24.7</td>
-                                  <td className="text-center">99</td>
-                                  <td className="text-center">122</td>
-                                  <td>12.8Kg</td>
-                                  <td>
-                                    28 Oct 2019{" "}
-                                    <span className="d-block text-info">
-                                      6.00 PM
-                                    </span>
-                                  </td>
-                                  <td>
-                                    <div className="table-action">
-                                      <Link
-                                        to="#edit_medical_form"
-                                        onClick={() => setShow(true)}
-                                        className="btn btn-sm bg-info-light"
-                                      >
-                                        <i className="fas fa-edit" /> Edit
-                                      </Link>
-                                      &nbsp;
-                                      <Link
-                                        to="#"
-                                        className="btn btn-sm bg-danger-light"
-                                      >
-                                        <i className="fas fa-trash-alt" />{" "}
-                                        Delete
-                                      </Link>
-                                    </div>
-                                  </td>
-                                </tr>
+                                {
+                                  medicalrecords && medicalrecords.map((item, index) => (
+                                    <tr key={index}>
+                                      <td>1</td>
+                                   
+                                      <td>{item.bmi}</td>
+                                      <td className="text-center">{item.hr}</td>
+                                      <td className="text-center">{item.Fbc}</td>
+                                      <td>{item.Weight} Kg</td>
+                                      <td>
+                                     {item.dob}
+                                        {/* <span className="d-block text-info">
+                                          10.00 AM
+                                        </span> */}
+                                      </td>
+                                      <td>
+                                        <div className="table-action">
+                                          <Link
+                                            to="#edit_medical_form"
+                                            onClick={()=>openModalForEdit()}
+                                            className="btn btn-sm bg-info-light"
+                                          >
+                                            <i className="fas fa-edit" /> Edit
+                                          </Link>{" "}
+                                          &nbsp;
+                                          <Link
+                                            to="#"
+                                            onClick={()=>deleteDataApi()}
+                                            className="btn btn-sm bg-danger-light"
+                                          >
+                                            <i className="fas fa-trash-alt" />{" "}
+                                            Delete
+                                          </Link>
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  ))
+                                }
+
+
                               </tbody>
                             </table>
                           </div>
@@ -270,10 +229,13 @@ const MedicalDetails = (props) => {
           <div className="modal-body">
             <div>
               <form
-                action="#"
-                encType="multipart/form-data"
-                autoComplete="off"
-                method="post"
+                onSubmit={handleFormSubmit}
+              // action="#"
+              // encType="multipart/form-data"
+              // autoComplete="off"
+              // method="post"
+
+
               >
                 <div className="modal-body">
                   <input type="hidden" defaultValue name="id" />
@@ -287,6 +249,8 @@ const MedicalDetails = (props) => {
                       type="text"
                       name="bmi"
                       className="form-control"
+                      onChange={handleInputChange}
+                      value={formData.bmi}
                       defaultValue="23.7"
                     />
                   </div>
@@ -296,7 +260,9 @@ const MedicalDetails = (props) => {
                       type="text"
                       name="hr"
                       className="form-control"
-                      defaultValue={89}
+                      value={formData.hr}
+                      onChange={handleInputChange}
+                    // defaultValue={89}
                     />
                   </div>
                   <div className="form-group">
@@ -304,6 +270,8 @@ const MedicalDetails = (props) => {
                     <input
                       type="text"
                       name="Weight"
+                      onChange={handleInputChange}
+                      value={formData.Weight}
                       className="form-control"
                       defaultValue={74}
                     />
@@ -313,6 +281,8 @@ const MedicalDetails = (props) => {
                     <input
                       type="text"
                       name="Fbc"
+                      onChange={handleInputChange}
+                      value={formData.Fbc}
                       className="form-control"
                       defaultValue={140}
                     />
@@ -320,20 +290,18 @@ const MedicalDetails = (props) => {
                   <div className="form-group">
                     <label className="control-label mb-10">Created Date </label>
                     <input
-                      type="text"
+                      type="date"
                       name="dob"
                       id="editdob"
-                      defaultValue="11/11/2019"
-                      readOnly
+                      value={formData.dob}
+                      onChange={handleInputChange}
                       className="form-control"
                     />
                   </div>
                 </div>
                 <div className="modal-footer text-center">
-                  <button
-                    type="submit"
-                    className="btn btn-outline btn-success "
-                  >
+
+                  <button type="submit" className="btn btn-outline btn-success">
                     Submit
                   </button>
                 </div>

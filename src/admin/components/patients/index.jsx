@@ -33,7 +33,7 @@ const Patients = () => {
   const [doctor, setDoctor] = useState([]);
   const fetchpatient = async () => {
     try {
-      const response = await axios.get(`http://localhost:3005/api/getpatient`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient`);
       setPatient(response.data);
       // console.log("setDoctor", response.data);
       // setLoading(false);

@@ -39,15 +39,14 @@ const LoginContainer = (props) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log("cliock");
+    // "https://imdfx-newserver-production.up.railway.app/login",
     try {
       const response = await axios.post(
-        "http://localhost:3005/api/login",
+        "https://imdfx-newserver-production.up.railway.app/api/login",
         { email, password },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+
+
       );
 
       if (response.status === 200) {
@@ -70,6 +69,7 @@ const LoginContainer = (props) => {
   localStorage.removeItem('token');
   localStorage.removeItem('clientlogin');
   localStorage.removeItem('doctorlogin');
+  localStorage.removeItem('officelogin');
   useEffect(() => {
     // Initialize Facebook SDK after component mounts
     window.fbAsyncInit = function () {
@@ -92,21 +92,24 @@ const LoginContainer = (props) => {
       fjs.parentNode.insertBefore(js, fjs);
     })(document, 'script', 'facebook-jssdk');
   }, []);
+
+
   const responseFacebook = (response) => {
+    console.log("CLICK");
     console.log(response);
 
     setData({
-        name: response.name,
-        email: response.email,
-        picture: response.picture.data.url,
+      name: response.name,
+      email: response.email,
+      picture: response.picture.data.url,
     });
     setPicture(response.picture.data.url);
     if (response.accessToken) {
-        setLogins(true);
-        alert(response.accessToken)
+      setLogins(true);
+      alert(response.accessToken)
     } else {
-        setLogins(false);
-        alert(response)
+      setLogins(false);
+      alert(response)
     }
   }
 
@@ -117,10 +120,10 @@ const LoginContainer = (props) => {
       <>
         {/* Page Content */}
         <div
-        style={{
-          height:"100vh"
-        }}
-        className="content content-login-page fixed-top top-space  ">
+          style={{
+            height: "100vh"
+          }}
+          className="content content-login-page fixed-top top-space  ">
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-8 offset-md-2  ">
@@ -162,10 +165,10 @@ const LoginContainer = (props) => {
                             onChange={handlePasswordChange}
                           />
                           <span
-                          style={{
-                            bottom:"10px",
-                            right:"5px"
-                          }}
+                            style={{
+                              bottom: "10px",
+                              right: "5px"
+                            }}
                             className="field-icon position-absolute toggle-password"
                             onClick={handleTogglePassword}
                           >
@@ -218,27 +221,36 @@ const LoginContainer = (props) => {
                         </div> */}
                         <div className="social-login mb-4 my-1 d-flex justify-content-center align-items-center gap-2 ">
                           {/* <button className="facebook px-4 py-2 bg-white  d-flex justify-content-center align-items-center border gap-3 "> */}
-                            {/* <FaFacebook size={20} color="#0E82FD" />
+                          {/* <FaFacebook size={20} color="#0E82FD" />
                             <span>Facebook</span> */}
-                             <FacebookLogin
+                          {/* <FacebookLogin
                               appId="1083617942780130"
                               autoLoad={true}
                               fields="name,email,picture"
                               scope="public_profile,email"
-                              callback={responseFacebook}
+                             callback={responseFacebook}
                               // callback={(response) => handleFacebookResponse(response)}
                               icon="fa-facebook"
                               // textButton="Sign in with Facebook"
                               cssClass="custom-facebook-button"
-                            />
+                            /> */}
+                          <FacebookLogin
+                            appId="862482638894435"
+                            autoLoad={true}
+                            fields="name,email,picture"
+                            scope="public_profile,email"
+                            callback={responseFacebook}
+                            icon="fa-facebook"
+                            cssClass="custom-facebook-button"
+                          />
                           {/* </button> */}
                           {/* <button className="google px-4 py-2 bg-white  d-flex justify-content-center align-items-center border gap-3"> */}
-                            {/* <FcGoogle size={20} />
+                          {/* <FcGoogle size={20} />
                             <span>Google</span> */}
-                            <GoogleLogin
-                              onSuccess={(response) => responseMessage(response)}
-                              onError={(error) => errorMessage(error)}
-                            />
+                          <GoogleLogin
+                            onSuccess={(response) => responseMessage(response)}
+                            onError={(error) => errorMessage(error)}
+                          />
                           {/* </button> */}
                         </div>
                         <div className="text-center dont-have">
@@ -269,7 +281,7 @@ const LoginContainer = (props) => {
                         ]}
                         wrapper="span"
                         speed={10}
-                        style={{ fontSize: '5em', display: 'inline-block',color:"white" }}
+                        style={{ fontSize: '5em', display: 'inline-block', color: "white" }}
                         repeat={Infinity}
                       />
                     </div>

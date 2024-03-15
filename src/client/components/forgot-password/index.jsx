@@ -29,7 +29,7 @@ console.log("Sclick",email);
     const apiUrl = "your_password_reset_api_endpoint";
 
     try {
-      const response = await axios.post("http://localhost:3005/api/reset-user-password", { email });
+      const response = await axios.post("https://imdfx-newserver-production.up.railway.app/api/reset-user-password", { email });
 
       // Axios automatically parses the response JSON
       if (response.status === 200) {

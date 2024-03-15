@@ -49,7 +49,7 @@ const Profile = (props) => {
     try {
       // Make API request using axios
       const response = await axios.post(
-        `http://localhost:3005/api/update-patient-profile/${userId}`, data,
+        `https://imdfx-newserver-production.up.railway.app/api/update-patient-profile/${userId}`, data,
 
       );
 

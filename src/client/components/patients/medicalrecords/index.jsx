@@ -23,36 +23,20 @@ const MedicalRecords = (props) => {
   return (
     <div>
       <Header {...props} />
-      <div className="breadcrumb-bar-two">
-        <div className="container">
-          <div className="row align-items-center inner-banner">
-            <div className="col-md-12 col-12 text-center">
-              <nav aria-label="breadcrumb" className="page-breadcrumb">
-                <h2 className="breadcrumb-title">Medical Records</h2>
-                <ol className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to="/patient/dashboard">Home</Link>
-                  </li>
-                  <li className="breadcrumb-item active" aria-current="page">
-                    Medical Records
-                  </li>
-                </ol>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div>
+   
       <div className="content">
-        <div className="container-fluid">
+        <div className="container-fluid mt-5">
           <div className="row">
-            <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+          <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
               <StickyBox offsetTop={20} offsetBottom={20}>
                 <DashboardSidebar />{" "}
               </StickyBox>
             </div>
-            <div className="col-md-7 col-lg-8 col-xl-9">
+            <div className="col-md-6 col-lg-6 col-xl-6">
               <Tablerecords />
             </div>
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
           </div>
         </div>
       </div>

@@ -16,7 +16,7 @@ const Dashboard = () => {
   const [Appointmentswithdetail, setAppointmentsWithDetail] = useState([]);
   const fetchdoctor = async () => {
     try {
-      const response = await axios.get(`http://localhost:3005/api/doctorpersnoldetails`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doctorpersnoldetails`);
       setDoctor(response.data);
       // console.log("setDoctor", response.data);
       // setLoading(false);
@@ -27,7 +27,7 @@ const Dashboard = () => {
   };
   const fetchpatient = async () => {
     try {
-      const response = await axios.get(`http://localhost:3005/api/getpatient`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient`);
       setPatient(response.data);
       // console.log("setDoctor", response.data);
       // setLoading(false);
@@ -38,7 +38,7 @@ const Dashboard = () => {
   };
   const fetchAppointments = async () => {
     try {
-      const response = await axios.get(`http://localhost:3005/api/getallbookappointment`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getallbookappointment`);
       setAppointments(response.data);
       // console.log("setDoctor", response.data);
       // setLoading(false);
@@ -49,7 +49,7 @@ const Dashboard = () => {
   };
   const fetchAppointmentswithalldetail = async () => {
     try {
-      const response = await axios.get(`http://localhost:3005/api/appointment-alldetails`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/appointment-alldetails`);
       setAppointmentsWithDetail(response.data);
       console.log("setAppointmentsWithDetail", response.data);
       // setLoading(false);

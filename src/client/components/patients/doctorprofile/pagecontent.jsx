@@ -74,7 +74,7 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
-  //       const response = await axios.get("http://localhost:3005/api/doctorpersnoldetails");
+  //       const response = await axios.get("https://imdfx-newserver-production.up.railway.app/api/doctorpersnoldetails");
   //       setDoctorsApiData(response.data);
   //       console.log("response data", response.data);
   //     } catch (error) {
@@ -299,10 +299,7 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
                 <div className="cards-div ">
 
 
-                  <div style={{
-                    top: "20%",
-                    right: "15%"
-                  }} className="d-flex flex-column position-fixed  justify-content-start align-items-center gap-4">
+                  <div  className="   pagecontent-2nd-col-main-div ">
                     <div style={{
                       backgroundColor: " #e9e9e6"
                     }} className="px-5 py-5 rounded-3">
@@ -439,7 +436,7 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
                         </span>
                       </button>
                     </div>
-                    <ul className="text-black d-flex w-100 px-5 mx-3  flex-column gap-3">
+                    <ul className="text-black d-flex w-100 px-5 mx-3  flex-column gap-3 pagecontent-text">
                       <li> <FaHeadphones size={20} />  <span className="px-2 fw-normal">Priorty customer support</span></li>
                       <li> <MdOutlineSecurity size={20} />  <span className="px-2 fw-normal">100% secure</span></li>
                       <li>  <IoMdTime size={20} /> <span className="px-2 fw-normal">Book Appointmet in 30 sec</span></li>
@@ -500,7 +497,7 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
                 </div>
               </div>
               <div>
-                <Content />
+                <Content doctorDetail={doctorDetail}/>
               </div>
             </div>
 

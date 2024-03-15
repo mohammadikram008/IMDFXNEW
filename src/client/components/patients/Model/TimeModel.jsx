@@ -16,8 +16,11 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Modal } from "antd";
-const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail }) => {
-  console.log("doctorDetail", doctorDetail);
+const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail,doctorTimeDetails }) => {
+
+  // const [doctorTimeDetails, setDoctorTimeDetails] = useState(doctorTimeDetail);
+  console.log("doctorTimeDetails",doctorTimeDetails);
+  // console.log("doctorTimeDetail", Timeslotes.session1);
   const history = useHistory();
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -120,21 +123,130 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail }) => {
 
   //     return dateContainers;
   //   };
+  
 
-  const renderTimeSlotContainers = (timeSlots) => {
-    return timeSlots.map((timeSlot, index) => (
-      <div
-        key={index}
-        className={`time-slot-container mt-3  md:flex flex-col items-center justify-center md:mx-3   w-44  `}
-        onClick={() => handleTimeSlotClick(timeSlot)}
-      >
-        <button className={` ${selectedTimeSlot === timeSlot ? "  btn-slot-click" : " btn-slot-select"}`}>
-          {timeSlot}
-        </button>
-      </div>
+  // const renderTimeSlotContainers = (timeSlots) => {
+  //   return timeSlots.map((timeSlot, index) => (
+  //     <div
+  //       key={index}
+  //       className={`time-slot-container mt-3  md:flex flex-col items-center justify-center md:mx-3   w-44  `}
+  //       onClick={() => handleTimeSlotClick(timeSlot)}
+  //     >
+  //       <button className={` ${selectedTimeSlot === timeSlot ? "  btn-slot-click" : " btn-slot-select"}`}>
+  //         {/* {timeSlot.session1.startTime} */}
+  //       </button>
+  //     </div>
+  //   ));
+  // };
+
+  // const renderTimeSlotContainers = (timeSlots) => {
+  //   return timeSlots.map((timeSlot, index) => (
+  //     <div
+  //       key={index}
+  //       className={`time-slot-container mt-3  md:flex flex-col items-center justify-center md:mx-3   w-44  `}
+  //       // onClick={() => handleTimeSlotClick(timeSlot)}
+  //     >
+  //       <button 
+  //       // className={` ${selectedTimeSlot === timeSlot ? "  btn-slot-click" : " btn-slot-select"}`}
+  //       >
+  //         {/* <p>Date: {timeSlot.date}</p> */}
+  //         {/* <p>Doctor ID: {timeSlot.doc_id}</p>
+  //         <p>Session 1 Start Time: {timeSlot.session1.startTime}</p>
+  //         <p>Session 1 End Time: {timeSlot.session1.endTime}</p>
+  //         <p>Session 2 Start Time: {timeSlot.session2.startTime}</p>
+  //         <p>Session 2 End Time: {timeSlot.session2.endTime}</p> */}
+  //       </button>
+  //     </div>
+  //   ));
+  // };
+  const renderTimeSlotContainers = () => {
+    return doctorTimeDetails && doctorTimeDetails.map((timeSlot, index) => (
+      // <div key={index} className="time-slot-container mt-3 md:flex flex-col items-center justify-center md:mx-3 w-44">
+      //   <div className="time-slot-info">
+      //     <p>Date: {timeSlot.date}</p>
+      //     <p>Doctor ID: {timeSlot.doc_id}</p>
+      //     <div className="session-info">
+      //       <p>Session 1:</p>
+      //       <p>Start Time: {timeSlot.session1.startTime}</p>
+      //       <p>End Time: {timeSlot.session1.endTime}</p>
+      //     </div>
+      //     <div className="session-info">
+      //       <p>Session 2:</p>
+      //       <p>Start Time: {timeSlot.session2.startTime}</p>
+      //       <p>End Time: {timeSlot.session2.endTime}</p>
+      //     </div>
+      //   </div>
+      //   <button className={`btn-slot ${selectedTimeSlot === timeSlot ? "btn-slot-click" : "btn-slot-select"}`} onClick={() => handleTimeSlotClick(timeSlot)}>
+      //     Select
+      //   </button>
+      // </div>
+       <div
+             key={index}
+             className={`time-slot-container mt-3  md:flex flex-col items-center justify-center md:mx-3   w-44  `}
+             // onClick={() => handleTimeSlotClick(timeSlot)}
+           >
+             <button 
+             onClick={() => handleTimeSlotClick(timeSlot.session1.startTime)}
+             className={` ${selectedTimeSlot === timeSlot.session1.startTime ? "  btn-slot-click" : " btn-slot-select"}`}
+             >
+               {/* <p>Date: {timeSlot.date}</p> */}
+               {/* <p>Doctor ID: {timeSlot.doc_id}</p>
+               <p>Session 1 Start Time: {timeSlot.session1.startTime}</p>
+               <p>Session 1 End Time: {timeSlot.session1.endTime}</p>
+               <p>Session 2 Start Time: {timeSlot.session2.startTime}</p>
+               <p>Session 2 End Time: {timeSlot.session2.endTime}</p> */}
+               <p> {timeSlot.session1.startTime}</p>
+             </button>
+             <button 
+               onClick={() => handleTimeSlotClick(timeSlot.session1.endTime)}
+             className={` ${selectedTimeSlot === timeSlot.session1.endTime ? "  btn-slot-click" : " btn-slot-select mt-2"}`}
+             >
+               {/* <p>Date: {timeSlot.date}</p> */}
+               {/* <p>Doctor ID: {timeSlot.doc_id}</p>
+               <p>Session 1 Start Time: {timeSlot.session1.startTime}</p>
+               <p>Session 1 End Time: {timeSlot.session1.endTime}</p>
+               <p>Session 2 Start Time: {timeSlot.session2.startTime}</p>
+               <p>Session 2 End Time: {timeSlot.session2.endTime}</p> */}
+               <p> {timeSlot.session1.endTime}</p>
+             </button>
+           </div>
     ));
   };
-
+  const renderTimeSlotContainer = () => {
+    return doctorTimeDetails && doctorTimeDetails.map((timeSlot, index) => (
+     
+       <div
+             key={index}
+             className={`time-slot-container mt-3  md:flex flex-col items-center justify-center md:mx-3   w-44  `}
+             >
+             <button 
+             onClick={() => handleTimeSlotClick(timeSlot.session2.startTime)}
+             className={` ${selectedTimeSlot === timeSlot.session2.startTime ? "  btn-slot-click" : " btn-slot-select "}`}
+             >
+               {/* <p>Date: {timeSlot.date}</p> */}
+               {/* <p>Doctor ID: {timeSlot.doc_id}</p>
+               <p>Session 1 Start Time: {timeSlot.session1.startTime}</p>
+               <p>Session 1 End Time: {timeSlot.session1.endTime}</p>
+               <p>Session 2 Start Time: {timeSlot.session2.startTime}</p>
+               <p>Session 2 End Time: {timeSlot.session2.endTime}</p> */}
+               <p> {timeSlot.session2.startTime}</p>
+             </button>
+             <button 
+              onClick={() => handleTimeSlotClick(timeSlot.session2.endTime)}
+             className={` ${selectedTimeSlot === timeSlot.session2.endTime ? "  btn-slot-click" : " btn-slot-select mt-2"}`}
+             >
+               {/* <p>Date: {timeSlot.date}</p> */}
+               {/* <p>Doctor ID: {timeSlot.doc_id}</p>
+               <p>Session 1 Start Time: {timeSlot.session1.startTime}</p>
+               <p>Session 1 End Time: {timeSlot.session1.endTime}</p>
+               <p>Session 2 Start Time: {timeSlot.session2.startTime}</p>
+               <p>Session 2 End Time: {timeSlot.session2.endTime}</p> */}
+               <p> {timeSlot.session2.endTime}</p>
+             </button>
+           </div>
+    ));
+  };
+ 
   const settings = {
     dots: false,
     infinite: true,
@@ -143,7 +255,7 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail }) => {
     autoplaySpeed: 3000,
     slidesToShow: 6,
     slidesToScroll: 6,
-    nextArrow: null, // Hides the next arrow
+    nextArrow: null, 
     prevArrow: null,
     initialSlide: 2,
     responsive: [
@@ -151,21 +263,22 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail }) => {
         breakpoint: 1024,
         settings: {
           slidesToShow: 5,
-          slidesToScroll: 1,
+          slidesToScroll: 5,
           dots: false,
         },
       },
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
+          slidesToShow: 10,
+          slidesToScroll: 5,
           dots: false,
 
         },
       },
     ],
   };
+
   const owlOptions = {
     loop: true,
     margin: 10,
@@ -235,7 +348,7 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail }) => {
               <div className="modal-body">
                 <div className="d-flex align-items-center justify-content-between date-btn-icon">
                   {/* <div className=" col-sm-8 col-md-4 text-sm-end"></div> */}
-                  <div className=" col-sm-8 col-md-12 text-sm-end">
+                  <div className=" model-heading-tag col-md-12 text-sm-end">
                     <div className="datepicker-icon">
                       <div className="border p-4 mt-4 rounded-md shadow">
 
@@ -287,7 +400,7 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail }) => {
                       <h2 className="text-lg font-bold">Morning Slots</h2>
                     </div>
                     <div className="d-flex flex-column md:flex-row align-items-center justify-content-center">
-                      {renderTimeSlotContainers(["8:00 AM", "10:00 AM"])}
+                      {renderTimeSlotContainers()}
                     </div>
                   </div>
                   <div className="border p-4  text-center rounded-md shadow">
@@ -296,7 +409,7 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail }) => {
                       <h2 className="text-lg font-bold">Evening Slots</h2>
                     </div>
                     <div className="d-flex flex-column md:flex-row align-items-center justify-content-center">
-                      {renderTimeSlotContainers(["6:00 PM", "8:00 PM"])}
+                      {renderTimeSlotContainer()}
                     </div>
                   </div>
                 </div>

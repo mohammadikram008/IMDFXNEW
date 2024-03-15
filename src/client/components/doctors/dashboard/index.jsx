@@ -15,16 +15,18 @@ const DoctorDashboard = (props) => {
 
   const [appointments, setAppointments] = useState([]);
   const [mypatient, setMyPatient] = useState([]);
+
+  const [todayappointments, setTodayAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const docId = localStorage.getItem('token');
   const fetchAppointments = async () => {
     try {
 
 
-      const response = await axios.get(`http://localhost:3005/api/doc_appointments/${docId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doc_appointments/${docId}`);
       setAppointments(response.data);
       // console.log("setAppointments",response.data);
-   
+
     } catch (error) {
       console.error('Error fetching doc_appointments:', error);
       setLoading(false);
@@ -34,10 +36,10 @@ const DoctorDashboard = (props) => {
     try {
 
 
-      const response = await axios.get(`http://localhost:3005/api/mypatient/${docId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/mypatient/${docId}`);
       setMyPatient(response.data);
       // console.log("setMyPatient",response.data);
-   
+
     } catch (error) {
       console.error('Error fetching mypatient:', error);
       setLoading(false);
@@ -46,7 +48,7 @@ const DoctorDashboard = (props) => {
   const fetchpatientdata = async () => {
 
     try {
-      const response = await axios.get(`http://localhost:3005/api/getDoctorDetail/${docId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getDoctorDetail/${docId}`);
       setDoctor(response.data);
       // console.log("setDoctor", response.data);
       setLoading(false);
@@ -55,13 +57,33 @@ const DoctorDashboard = (props) => {
       setLoading(false);
     }
   };
-
+  const fetchTodayAppointments = async () => {
+    try {
+      // const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/gettodayappointments/${userId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/gettodayappointments/${userId}`);
+      setTodayAppointments(response.data);
+      console.log("setTodayAppointments", response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     fetchAppointments();
     fetchpatientdata();
     fetchmypatient();
+    fetchTodayAppointments();
   }, []);
+  console.log("appointments", appointments);
+  // Get current date in the format "DD, MMM YYYY"
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
 
+  const todayAppointmentsFiltered = todayappointments.filter(item => item.selectedDate === currentDate);
   return (
     <div>
       <Header {...props} />
@@ -158,8 +180,11 @@ const DoctorDashboard = (props) => {
                               style={{ position: "relative", top: "-18px" }}
                             >
                               <h6>Today Patient</h6>
-                              <h3>160</h3>
-                              <p className="text-muted">06, Nov 2019</p>
+                              <h3>
+                                {todayAppointmentsFiltered ? todayAppointmentsFiltered.length : "0"}
+                              </h3>
+                              {/* <p className="text-muted"> { todayAppointmentsFiltered ? todayAppointmentsFiltered : "12 mar 2019"}</p> */}
+                              <p className="text-muted"> {currentDate}</p>
                             </div>
                           </div>
                         </div>
@@ -198,9 +223,9 @@ const DoctorDashboard = (props) => {
                               className="dash-widget-info"
                               style={{ position: "relative", top: "-18px" }}
                             >
-                              <h6>Appoinments</h6>
+                              <h6>Total Appoinments</h6>
                               <h3>{appointments && appointments.length}</h3>
-                              <p className="text-muted">06, Apr 2019</p>
+                              <p className="text-muted">{currentDate}</p>
                             </div>
                           </div>
                         </div>

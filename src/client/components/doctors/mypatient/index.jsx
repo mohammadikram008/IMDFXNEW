@@ -26,7 +26,7 @@ const MypPatient = (props) => {
   const docId = localStorage.getItem('token');
   const fetchAppointments = async () => {
     try {
-      const response = await axios.get(`http://localhost:3005/api/mypatient/${docId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/mypatient/${docId}`);
       setAppointments(response.data);
       console.log("mypatient", response.data)
       setLoading(false);

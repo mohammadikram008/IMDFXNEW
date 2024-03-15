@@ -166,19 +166,22 @@
     text-align: center;
     color: white;
 }
-.gpay-card-info-container.black{
+
+.gpay-card-info-container.black {
     width: 99%;
     height: 3.4rem;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.google-pay-button-container{
+
+.google-pay-button-container {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .btn-booking-card {
     width: 100%;
     height: 2.5rem;
@@ -190,11 +193,13 @@
     border-radius: 10px;
 
 }
-.checkout-model{
+
+.checkout-model {
     display: flex;
     z-index: 10000;
     margin-top: 2rem;
 }
+
 .pay-btn {
     width: 35%;
     /* background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%); */
@@ -446,11 +451,12 @@
     /* background: linear-gradient(180deg, rgb(45, 82, 57) 0%, rgb(40, 185, 178) 100%); */
     background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
     border: none;
+    display: flex;
     border-radius: 50px;
     justify-content: center;
-    align-items: center;
     padding: 0.7rem;
     text-align: center;
+    justify-content: center;
     color: white;
     width: 10rem;
     /* transform: scale(.9); */
@@ -512,9 +518,11 @@
     color: white;
     padding: 1rem;
 }
+
 .media-body h6 {
     color: white;
-} 
+}
+
 .slot-heading-imgtext {
     display: flex;
     justify-content: center;
@@ -853,6 +861,7 @@
 
 .doctor-profile-overview {
     width: 50rem;
+    margin-top: 2rem;
 }
 
 .booking-cards.booking-fixed {
@@ -875,6 +884,58 @@
 }
 
 /* Adjust the styles as needed */
+.inetgrate-card {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 3;
+
+
+}
+
+.btn-timeavaible.enabled {
+    opacity: 1;
+  }
+  
+  /* Define styles for disabled state */
+  .btn-timeavaible.disabled {
+    opacity: 0.5;
+  }
+
+.upload-pdf {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+
+}
+
+.alldoctor-profiles{
+    width: 70%;
+}
+.inetgrate-card{
+    width: 100%;
+    justify-content: start;
+}
+.inetgrate-card-inner{
+width: 40%
+}
+.inetgrate-card-main{
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+.notify-message{
+    border-bottom: 1px solid white;
+}
+.inetgrate-card-div {
+    margin-left: 2rem;
+}
+
+.modal-footer {
+    margin-top: 1rem;
+}
 
 @media (max-width: 767.98px) {
     .header .header-nav .logo img {
@@ -901,6 +962,34 @@
         align-items: center;
     }
 
+    .doctor-image {
+        height: 12rem;
+
+    }
+
+    .inetgrate-card {
+        flex-direction: column;
+
+
+    }
+
+    .inetgrate-card-div {
+        margin-top: 2rem;
+        margin-left: 0rem;
+    }
+
+    .model-heading-tag {
+        width: 100%;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2rem;
+    }
+
+
 }
 
 .doctor-information-inner-div h1 {
@@ -912,6 +1001,23 @@
 .doctor-information-inner-div h5 {
     padding: 1rem;
 }
+
+.pagecontent-2nd-col-main-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 4;
+    /* margin-top: 5%; */
+    margin-right: 15%;
+
+
+}
+
+.pagecontent-text {
+    margin-top: 2rem;
+}
+
 /* .submit-sections{
     background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
 } */
@@ -956,10 +1062,16 @@
     }
 
     .pagecontent-2nd-col {
-        margin-top: 4rem;
+        /* margin-top: 4rem; */
         position: relative;
+        justify-content: center;
+        align-items: center;
         /* z-index: 10; */
 
+    }
+
+    .pagecontent-text {
+        margin-top: 2rem;
     }
 
     .cards-div {
@@ -985,5 +1097,12 @@
     .doctor-information-inner-div h5 {
         font-size: 12px;
         padding: 1rem;
+    }
+
+    .pagecontent-2nd-col-main-div {
+        position: relative;
+        /* margin-top: 10%; */
+        margin-right: 0;
+
     }
 }

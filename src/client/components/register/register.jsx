@@ -38,7 +38,7 @@ const Register = (props) => {
     e.preventDefault();
     console.log("formData", formData)
     try {
-      const response = await axios.post("http://localhost:3005/api/signup", formData);
+      const response = await axios.post("https://imdfx-newserver-production.up.railway.app/api/signup", formData);
 
       if (response.status === 200) {
         // Registration successful, handle redirection or show a success message

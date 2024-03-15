@@ -23,11 +23,11 @@ function Speacialities() {
   const fetchDoctorsBySpecialty = async (specialty) => {
     try {
       // Replace the URL with your actual backend URL
-      const response = await axios.get(`http://localhost:3005/api/doctors-by-specialty/${specialty}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doctors-by-specialty/${specialty}`);
       setDoctors(response.data);
       console.log("serachdoc", response.data);
       // history.push(`/patient/search-doctor1?specialty=${response.data}`);
-    
+
       history.push({
         pathname: "/patient/search-doctor1",
         state: { doctors: response.data },
@@ -43,18 +43,18 @@ function Speacialities() {
   const handleAllSpecialtyClick = (specialty) => {
     history.push({
       pathname: "/patient/search-doctor1",
-      state: { doctors:doctorsApiData },
+      state: { doctors: doctorsApiData },
     });
   };
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Check if data is already available in state
-       
-          const response = await axios.get("http://localhost:3005/api/doctorpersnoldetails");
-          setDoctorsApiData(response.data);
-          console.log("response data111", response.data);
-        
+
+        const response = await axios.get("https://imdfx-newserver-production.up.railway.app/api/doctorpersnoldetails");
+        setDoctorsApiData(response.data);
+        console.log("response data111", response.data);
+
       } catch (error) {
         console.error("Error fetching data from API:", error);
       }
@@ -215,10 +215,10 @@ function Speacialities() {
             </OwlCarousel>
           </div>
           <div className="specialities-btn aos" data-aos="fade-up">
-          <div onClick={() => handleAllSpecialtyClick()} className="btn">
-            {/* <Link to="/patient/search-doctor1" className="btn"> */}
+            <div onClick={() => handleAllSpecialtyClick()} className="btn">
+              {/* <Link to="/patient/search-doctor1" className="btn"> */}
               See All Specialities
-            {/* </Link> */}
+              {/* </Link> */}
             </div>
           </div>
         </div>

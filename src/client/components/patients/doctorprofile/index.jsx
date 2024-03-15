@@ -13,6 +13,7 @@ import TimeModel from "../Model/TimeModel";
 const DoctorProfile = (props) => {
   const { id } = props.location.state;
   console.log("iddd", id);
+  const docId = id;
   const [show, setShow] = useState(false);
   const [videocall, setvideocall] = useState(false);
   const [isOpen, setisOpen] = useState(false);
@@ -21,6 +22,7 @@ const DoctorProfile = (props) => {
 
   const [TimePop, setTimePop] = useState(false);
   const doctorlogin = localStorage.getItem("doctorlogin")
+  console.log("d", doctorlogin);
   const handleToggleModal = () => {
     if (doctorlogin) {
       alert("Login as a patient");
@@ -33,18 +35,28 @@ const DoctorProfile = (props) => {
     setTimePop(false);
   };
   const [doctorDetail, setDoctorDetail] = useState(null);
-
+  const [doctorTimeDetail, setDoctorTimeDetail] = useState([]);
+  const fetchDoctorDetail = async () => {
+    try {
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getDoctorDetail/${id}`);
+      setDoctorDetail(response.data);
+      // console.log("profile",response.data);
+    } catch (error) {
+      console.error('Error fetching doctor details:', error);
+    }
+  };
+  const fetchDoctorAvaibleTimeDetail = async () => {
+    try {
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/get-doc_avaibletime/${docId}`);
+      setDoctorTimeDetail(response.data);
+      console.log("Time", response.data);
+    } catch (error) {
+      console.error('Error fetching doctor Time details:', error);
+    }
+  };
   useEffect(() => {
-    const fetchDoctorDetail = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3005/api/getDoctorDetail/${id}`);
-        setDoctorDetail(response.data);
 
-      } catch (error) {
-        console.error('Error fetching doctor details:', error);
-      }
-    };
-
+    fetchDoctorAvaibleTimeDetail();
     fetchDoctorDetail();
   }, [id]);
 
@@ -96,7 +108,7 @@ const DoctorProfile = (props) => {
           doctorDetail={doctorDetail}
         />
       )} */}
-      <TimeModel doctorDetail={doctorDetail} TimePop={TimePop} setTimePop={setTimePop} />
+      <TimeModel doctorDetail={doctorDetail} TimePop={TimePop} setTimePop={setTimePop}  doctorTimeDetails={doctorTimeDetail.doctorAvailability}/>
       <Footer {...props} />
     </Fragment>
   );

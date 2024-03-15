@@ -19,22 +19,31 @@ const style = { layout: "vertical" };
 const ButtonWrapper = ({ showSpinner, setIsModalOpen, formdata }) => {
     const [{ isPending }] = usePayPalScriptReducer();
     const history = useHistory()
-// console.log("MdF",modelform);
-const handleFormData= async()=>{
-    try {
-        console.log("MdF",formdata);
-        // Make your API request using Axios
-        const response = await axios.post('http://localhost:3005/api/bookappointment', formdata);
-        // Add any further logic here based on the API response
-        toast.success("Payment Add SuccessFully");
-        console.log('API response:', response.data);
-        // history.push(`/patient/booking-success`)
+    // console.log("MdF",modelform);
 
-    } catch (error) {
-        toast.error("Login failed. Please try again.");
-        console.error('Error making API request:', error);
+    const userId = localStorage.getItem('token');
+    const handleFormData = async () => {
+        try {
+            console.log("MdF", formdata);
+            const message = "Your Transection is Successfull.your appointment has Booked"
+            // Make your API request using Axios
+            const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/bookappointment', formdata);
+            const notify = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/usertransectionnotification/${userId}`, { message });
+            // Add any further logic here based on the API response
+            toast.success("Payment Add SuccessFully");
+            console.log('API response:', response.data);
+            history.push({
+                pathname: '/patient/invoice-view',
+                state: { id: formdata.doc_id }
+            });
+            // history.push('/patient/invoice-view')
+            // history.push(`/patient/booking-success`)
+
+        } catch (error) {
+            toast.error("Login failed. Please try again.");
+            console.error('Error making API request:', error);
+        }
     }
-}
     async function createOrder() {
         try {
             const accessToken = await generateAccessToken();
@@ -88,13 +97,13 @@ const handleFormData= async()=>{
             console.log(response);
             handleFormData()
             setIsModalOpen(true)
-            const timeoutId = setTimeout(() => {
-                setIsModalOpen(false);
-                history.push('/patient/dashboard')
-            }, 10000);
+            // const timeoutId = setTimeout(() => {
+            //     setIsModalOpen(false);
+            //     history.push('/patient/dashboard')
+            // }, 10000);
 
             // Clean up the timeout to avoid memory leaks
-            return () => clearTimeout(timeoutId);
+            // return () => clearTimeout(timeoutId);
         } catch (error) {
             console.log(error);
         }
@@ -116,7 +125,7 @@ const handleFormData= async()=>{
 };
 export default function Paypal({ modelform }) {
     const history = useHistory()
-const formdata=modelform
+    const formdata = modelform
     const bookingDate = new Date();
     console.log("paypal props", modelform);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -185,7 +194,10 @@ const formdata=modelform
                     <p className="my-2 text-center">Success! you will recieve <br /> confirmation email</p>
                     <button className="btn btn-primary py-2 px-5 fw-medium " onClick={() => {
                         setIsModalOpen(false)
-                        history.push('/patient/dashboard')
+                        history.push({
+                            pathname: '/patient/invoice-view',
+                            state: { id: modelform.doc_id }
+                        });
                     }} type="text">Done</button>
                 </div>
             </Modal>

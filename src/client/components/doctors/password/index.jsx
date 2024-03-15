@@ -26,7 +26,7 @@ const Password = (props) => {
     try {
       // Make API request using axios
       const response = await axios.post(
-        `http://localhost:3005/api/change-doctor-password/${doc_Id}`, // Replace with your actual backend URL
+        `https://imdfx-newserver-production.up.railway.app/api/change-doctor-password/${doc_Id}`, // Replace with your actual backend URL
         passwordData
       );
 

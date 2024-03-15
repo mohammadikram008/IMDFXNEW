@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { IMG01, IMG02 } from "../doctorprofile/img";
 import { Modal } from "react-bootstrap";
 import { uploadicon } from "../../imagepath";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import {
   doctorthumb3,
   doctorthumb4,
@@ -13,7 +14,24 @@ import {
 } from "../../blog/doctorblog/img";
 const Tablerecords = () => {
   const [show, setShow] = useState(false);
-
+  const [appointments, setAppointments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const userId = localStorage.getItem('token');
+  const fetchAppointments = async () => {
+    try {
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/get-prescriptions/${userId}`);
+      setAppointments(response.data);
+      console.log("P", response.data)
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchAppointments();
+    // fetchpatientdata();
+  }, []);
   return (
     <div>
       <div className="row">
@@ -23,21 +41,21 @@ const Tablerecords = () => {
               {/* Tab Menu */}
               <nav className="user-tabs mb-4">
                 <ul className="nav nav-tabs nav-tabs-bottom nav-justified">
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <Link
                       className="nav-link active"
                       to="#pat_medicalrecords"
                       data-bs-toggle="tab">
                       Medical Records
                     </Link>
-                  </li>
+                  </li> */}
                   <li className="nav-item">
-                    <Link
-                      className="nav-link"
-                      to="#pat_prescription"
+                    <p
+                      // className="nav-link"
+                      // to="#pat_prescription"
                       data-bs-toggle="tab">
                       Prescription
-                    </Link>
+                    </p>
                   </li>
                 </ul>
               </nav>
@@ -45,20 +63,20 @@ const Tablerecords = () => {
               {/* Tab Content */}
               <div className="tab-content pt-0">
                 {/* Medical Records Tab */}
-                <div
+                {/* <div
                   id="pat_medicalrecords"
                   className="tab-pane fade show active">
-                  {/* <div className="text-end">
-              <Link
-                to="#"
-                className="add-new-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#add_medical_records_modal"
-                onClick={()=> setShow(true)}
-              >
-                Add Medical Records
-              </Link>
-            </div> */}
+                  <div className="text-end">
+                    <Link
+                      to="#"
+                      className="add-new-btn"
+                      data-bs-toggle="modal"
+                      data-bs-target="#add_medical_records_modal"
+                      onClick={() => setShow(true)}
+                    >
+                      Add Medical Records
+                    </Link>
+                  </div>
                   <div className="text-end">
                     {" "}
                     <Link
@@ -229,25 +247,85 @@ const Tablerecords = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 {/* /Medical Records Tab */}
                 {/* Prescription Tab */}
-                <div className="tab-pane fade" id="pat_prescription">
+                <div className=""
+                //  id="pat_prescription"
+                >
                   <div className="card card-table mb-0">
                     <div className="card-body">
                       <div className="table-responsive">
                         <table className="table table-hover table-center mb-0">
                           <thead>
+
                             <tr>
                               <th>#</th>
-                              <th>Date</th>
-                              <th>Name</th>
+                              {/* <th>Date</th> */}
+                              <th>Prescription</th>
                               <th>Doctor</th>
                               <th>Action</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
+                            {
+                              appointments.map((item, index) => (
+                                <tr key={index}>
+                                  <td>{index}</td>
+                                  {/* <td>
+                                    3 Nov 2019{" "}
+                                    <span className="d-block text-info">
+                                      11.00 AM
+                                    </span>
+                                  </td> */}
+                                  <td>{item._doc.name}{""} </td>
+                                  <td>
+                                    <h2 className="table-avatar">
+                                      {/* <Link
+                                        to="/patient/doctor-profile"
+                                        className="avatar avatar-sm me-2">
+                                        <img
+                                          className="avatar-img rounded-circle"
+                                          src={IMG02}
+                                          alt="User Image"
+                                        />
+                                      </Link> */}
+                                      {/* <Link to="/patient/doctor-profile"> */}
+                                        {/* Dr. Darren Elder <span>Dental</span> */}
+                                        <p>
+                                       Dr.{item.doctorDetails.name} <span>{item.doctorDetails.specialization}</span> 
+                                        </p>
+                                      {/* </Link> */}
+                                    </h2>
+                                  </td>
+                                  <td>
+                                    <div className="table-action">
+                                      {/* <Link
+                                        to="#"
+                                        className="btn btn-sm bg-info-light">
+                                        <i className="far fa-eye" /> View
+                                      </Link> */}
+                                      &nbsp;
+                                      {/* <Link
+                                      to="#"
+                                      className="btn btn-sm bg-success-light">
+                                      <i className="fas fa-print" /> Print
+                                    </Link> */}
+
+                                      <Link
+                                        to="#"
+                                        title="Download attachment"
+                                        className="btn btn-primary btn-sm">
+                                        {" "}
+                                        <i className="fa fa-download" />
+                                      </Link>
+
+                                    </div>
+                                  </td>
+                                </tr>
+                              ))}
+
+                            {/* <tr>
                               <td>1</td>
                               <td>
                                 11 Nov 2019{" "}
@@ -288,47 +366,7 @@ const Tablerecords = () => {
                                 </div>
                               </td>
                             </tr>
-                            <tr>
-                              <td>2</td>
-                              <td>
-                                3 Nov 2019{" "}
-                                <span className="d-block text-info">
-                                  11.00 AM
-                                </span>
-                              </td>
-                              <td>Prescription</td>
-                              <td>
-                                <h2 className="table-avatar">
-                                  <Link
-                                    to="/patient/doctor-profile"
-                                    className="avatar avatar-sm me-2">
-                                    <img
-                                      className="avatar-img rounded-circle"
-                                      src={IMG02}
-                                      alt="User Image"
-                                    />
-                                  </Link>
-                                  <Link to="/patient/doctor-profile">
-                                    Dr. Darren Elder <span>Dental</span>
-                                  </Link>
-                                </h2>
-                              </td>
-                              <td>
-                                <div className="table-action">
-                                  <Link
-                                    to="#"
-                                    className="btn btn-sm bg-info-light">
-                                    <i className="far fa-eye" /> View
-                                  </Link>
-                                  &nbsp;
-                                  <Link
-                                    to="#"
-                                    className="btn btn-sm bg-success-light">
-                                    <i className="fas fa-print" /> Print
-                                  </Link>
-                                </div>
-                              </td>
-                            </tr>
+                          
                             <tr>
                               <td>3</td>
                               <td>
@@ -494,7 +532,7 @@ const Tablerecords = () => {
                                   </Link>
                                 </div>
                               </td>
-                            </tr>
+                            </tr> */}
                           </tbody>
                         </table>
                       </div>

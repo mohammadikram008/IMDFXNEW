@@ -4751,10 +4751,11 @@ table .table-hover tbody tr:hover td {
 }
 @media (max-width: 991.98px) {
   .header-one .logo.navbar-brand {
-    width: 100%;
+    width: 30%;
     text-align: center;
     margin: 0;
     padding: 0;
+    margin-left: 2rem;
   }
 }
 .header-one .header-nav .header-navbar-rht {

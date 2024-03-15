@@ -90,7 +90,7 @@ const DoctorSidebar = ({ props }) => {
                   <span>Schedule Timings</span>
                 </Link>
               </li>
-              {/* <li
+              <li
                 className={
                   pathnames.includes("/doctor/available-timing") ? "active bg" : ""
                 }
@@ -99,7 +99,7 @@ const DoctorSidebar = ({ props }) => {
                   <i className="fas fa-clock" />
                   <span>Available Timings</span>
                 </Link>
-              </li> */}
+              </li>
               {/* <li
                 className={pathnames.includes("/pages/invoice") ? "active" : ""}
               >
@@ -137,6 +137,27 @@ const DoctorSidebar = ({ props }) => {
                   <small className="unread-msg">23</small>
                 </Link>
               </li>
+              <li
+                className={pathnames.includes("/medicalrecords") ? "active bg" : ""}
+              >
+                <Link
+                  to="/doctor/medicalrecords"
+                >
+                  <i className="fas fa-file-medical-alt"></i>
+                  <span>Medical Report</span>
+                </Link>
+              </li>
+              <li
+                className={pathnames.includes("/joindoctorinoffice") ? "active bg" : ""}
+              >
+                <Link
+                  to="/doctor/joindoctorinoffice"
+                >
+                  <i className="fas fa-user"></i>
+                  <span>Join  Office</span>
+                </Link>
+              </li>
+              
               {/* <li
                 className={
                   pathnames.includes("/doctor/profile-setting") ? "active bg" : ""
@@ -168,7 +189,7 @@ const DoctorSidebar = ({ props }) => {
                   <i className="fas fa-lock" />
                   <span>Change Password</span>
                 </Link>
-              </li> 
+              </li>
               <li className={pathnames.includes("/index-2") ? "active bg" : ""}>
                 <Link to="/login">
                   <i className="fas fa-sign-out-alt" />

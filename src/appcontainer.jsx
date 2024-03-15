@@ -28,6 +28,7 @@ import PatientTimeSchedule from './client/components/patients/TimeSchedule/Times
 // import BlogDetails from "./client/components/blog/blogdetails";
 //pages
 import VideoCall from "./client/components/pages/videocall";
+import WaitingPage from "./client/components/patients/TimeSchedule/WaitingPage.jsx";
 import VoiceCall from "./client/components/pages/voicecall";
 import SearchDoctor from "./client/components/pages/searchdoctor/search-doctor1";
 import Components from "./client/components/pages/component";
@@ -41,6 +42,8 @@ import DoctorChat from "./client/components/doctors/chat";
 // import DoctorDashboard from "./client/components/doctors/dashboard";
 import PatientChat from "./client/components/patients/chat";
 import MyPatient from "./client/components/doctors/mypatient";
+import OfficeDoctor from "./client/components/doctors/OfficeDoctor";
+import OfficeDoctorRequest from "./client/components/doctors/OfficeDoctorRequests";
 import Booking from "./client/components/patients/booking/booking1";
 import Booking2 from "./client/components/patients/booking/booking2";
 
@@ -51,15 +54,20 @@ import PatientDependent from "./client/components/patients/dependent";
 import PatientAccounts from "./client/components/patients/accounts";
 import Orders from "./client/components/patients/orders";
 import MedicalRecords from "./client/components/patients/medicalrecords";
+import DoctorMedicalRecords from "./client/components/patients/medicalrecords/DoctorMedicalReport.jsx";
 import MedicalDetails from "./client/components/patients/medicaldetails";
+import JoinOffice from "./client/components/patients/JoinDoctorinOffice/index.jsx";
 import Favourties from "./client/components/patients/dashboard/favourties";
+import OfficeProfile from "./client/components/doctors/OfficeProfile";
 import Profile from "./client/components/patients/dashboard/profile";
 import Password from "./client/components/patients/dashboard/password";
 import DoctorDashboard from "./client/components/doctors/dashboard";
+import OfficeDashboard from "./client/components/doctors/OfficeDashboard";
 import SocialMedia from "./client/components/doctors/socialmedia";
 import ScheduleTiming from "./client/components/doctors/scheduletimings";
 import DoctorPassword from "./client/components/doctors/password";
 import Appointments from "./client/components/doctors/appointments";
+import OfficeAppointments from "./client/components/doctors/OfficeAppointmentes";
 import PatientProfile from "./client/components/doctors/patientprofile";
 import AddPescription from "./client/components/doctors/addpescription";
 import AddBilling from "./client/components/doctors/addbilling";
@@ -149,6 +157,7 @@ import EmailOtp from "./client/components/pages/authentication/email-otp.jsx";
 import MobileOtp from "./client/components/pages/authentication/phone-otp.jsx";
 import AvailableTiming from "./client/components/doctors/availabletiming/index.jsx";
 import Accounts from "./client/components/doctors/account/index.jsx";
+import OfficeAccounts from "./client/components/doctors/OfficeAccount/index.jsx";
 import Cardiohome from "./client/components/home/cardiology/cardiohome.jsx";
 import Paediatrichome from "./client/components/home/paediatric/paediatrichome.jsx";
 import Home6 from "./client/components/home/home6.jsx";
@@ -256,6 +265,7 @@ const AppContainer = function (props) {
               <Route path="/pages/video-call" exact component={VideoCall} />
               <Route path="/pages/voice-call" exact component={VoiceCall} />
               <Route path="/doctor/chat-doctor" exact component={DoctorChat} />
+              <Route path="/patient/waiting-page/:remainingMinutes" exact component={WaitingPage} />
 
               <Route path="/login" exact component={LoginContainer} />
               <Route path="/register" exact component={Register} />
@@ -344,7 +354,7 @@ const AppContainer = function (props) {
                 exact
                 component={SearchDoctor2}
               />
-              <Route path="/pages/invoice-view" exact component={InvoiceView} />
+              <Route path="/patient/invoice-view" exact component={InvoiceView} />
               {/* <Route path="/pages/component" exact component={Components} />
               <Route path="/pages/blank-page" exact component={BlankPage} />
               <Route path="/pages/calendar" exact component={Calendar} />
@@ -389,6 +399,8 @@ const AppContainer = function (props) {
                 component={DoctorProfile}
               />
               <Route path="/doctor/my-patients" exact component={MyPatient} />
+              <Route path="/office/officedoctor" exact component={OfficeDoctor} />
+              <Route path="/office/officedoctorrequest" exact component={OfficeDoctorRequest} />
               <Route path="/patient/booking1" exact component={Booking} />
               <Route path="/patient/booking2" exact component={Booking2} />
               <Route
@@ -426,6 +438,7 @@ const AppContainer = function (props) {
               />
               <Route path="/patient/favourites" exact component={Favourties} />
               <Route path="/patient/profile" exact component={Profile} />
+              <Route path="/office/profile" exact component={OfficeProfile} />
               <Route
                 path="/patient/change-password"
                 exact
@@ -435,6 +448,11 @@ const AppContainer = function (props) {
                 path="/doctor/doctor-dashboard"
                 exact
                 component={DoctorDashboard}
+              />
+              <Route
+                path="/office/office-dashboard"
+                exact
+                component={OfficeDashboard}
               />
               <Route
                 path="/doctor/social-media"
@@ -452,6 +470,7 @@ const AppContainer = function (props) {
                 component={AvailableTiming}
               />
               <Route path="/doctor/account" exact component={Accounts} />
+              <Route path="/office/account" exact component={OfficeAccounts} />
               <Route
                 path="/doctor/doctor-change-password"
                 exact
@@ -462,13 +481,18 @@ const AppContainer = function (props) {
                 exact
                 component={Appointments}
               />
+               <Route
+                path="/office/appointments"
+                exact
+                component={OfficeAppointments}
+              />
               <Route
                 path="/doctor/patient-profile"
                 exact
                 component={PatientProfile}
               />
               <Route
-                path="/add-prescription"
+                path="/doctor/add-prescription"
                 exact
                 component={AddPescription}
               />
@@ -483,6 +507,16 @@ const AppContainer = function (props) {
                 path="/doctor/doctor-register"
                 exact
                 component={DoctorRegister}
+              />
+               <Route
+                path="/doctor/medicalrecords"
+                exact
+                component={DoctorMedicalRecords}
+              />
+              <Route
+                path="/doctor/joindoctorinoffice"
+                exact
+                component={JoinOffice}
               />
               <Route
                 path="/registerstepone"

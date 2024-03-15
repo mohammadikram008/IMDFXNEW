@@ -122,6 +122,16 @@ export const DashboardSidebar = ({ props }) => {
                 <span>Medical Details</span>
               </Link>
             </li>
+            <li
+              className={pathname.includes("/medicalrecords") ? "active bg" : ""}
+            >
+              <Link
+                to="/patient/medicalrecords"
+              >
+                <i className="fas fa-file-medical-alt"></i>
+                <span>Medical Report</span>
+              </Link>
+            </li>
             <li className={pathname.includes("/profile") ? "active bg" : ""}>
               <Link to="/patient/profile">
                 <i className="fas fa-user-cog"></i>

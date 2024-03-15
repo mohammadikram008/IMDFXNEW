@@ -8,20 +8,74 @@ import { doc_1 } from "./img";
 import { FaHeart } from "react-icons/fa6"; import { AiOutlineCheckCircle } from "react-icons/ai";
 import TimeModel from "../../../patients/Model/TimeModel";
 const SearchList = (props) => {
-  console.log("prossss", props.props);
   const history = useHistory()
-  const imageUrl = `http://localhost:3005/api`;
+  const imageUrl = `https://imdfx-newserver-production.up.railway.app/api`;
   const doctorsData = [
     // Existing data remains unchanged
   ];
   const [doctorsApiData, setDoctorsApiData] = useState(props.props);
   const [TimePop, setTimePop] = useState(false);
-  const [docDetail, setDocDetail] = useState()
+  const [docDetail, setDocDetail] = useState();
+  const [officeDetails, setOfficeDetails] = useState({});
+  console.log("doctorsApiData", doctorsApiData);
+  const fetchOfficeDetails = async () => {
+    try {
+      const doc_id = doctorsApiData.map((doctor) => doctor._id);
+      const officeDetailsResponse = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/office-accept-request`, { doc_id });
+      setOfficeDetails(officeDetailsResponse.data);
+      console.log("officeDetails", officeDetailsResponse.data);
+    } catch (error) {
+      console.error("Error fetching office details:", error);
+    }
+  };
+
+  // useEffect(() => {
+  //   fetchOfficeDetails();
+  // }, [doctorsApiData]);
+  const [combinedData, setCombinedData] = useState([]);
+  const fetchCombinedData = async () => {
+    try {
+      const doc_id_list = doctorsApiData.map((doctor) => doctor._id);
+      const officeDetailsResponse = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/office-accept-request`, { doc_id: doc_id_list });
+      const combined = doctorsApiData.map((doctor) => {
+        const officeDetail = officeDetailsResponse.data.find((office) => office.doc_id === doctor._id);
+        if (officeDetail) {
+          return { ...doctor, officeDetail };
+        } else {
+          return doctor;
+        }
+      });
+      setCombinedData(combined);
+      console.log("Combined Data:", combined);
+    } catch (error) {
+      console.error("Error fetching combined data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCombinedData();
+  }, [doctorsApiData]);
+
+  // useEffect(() => {
+  //   // Combine doctorsApiData and officeDetails
+  //   const combined = doctorsApiData.map(doctor => {
+  //     const officeDetail = officeDetails[doctor.doc_id];
+  //     return {
+  //       ...doctor,
+  //       officeDetail: officeDetail ? officeDetail : null
+  //     };
+  //   });
+
+  //   // Set the combined data state
+  //   setCombinedData(combined);
+  //   console.log("combined",combined);
+  // }, [doctorsApiData, officeDetails]);
+
 
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
-  //       const response = await axios.get("http://localhost:3005/api/doctorpersnoldetails");
+  //       const response = await axios.get("https://imdfx-newserver-production.up.railway.app/api/doctorpersnoldetails");
   //       setDoctorsApiData(response.data);
   //       console.log("response data", response.data);
   //     } catch (error) {
@@ -36,7 +90,7 @@ const SearchList = (props) => {
   //     try {
   //       // Check if data is already available in state
   //       if (!props.props.length<0) {
-  //         const response = await axios.get("http://localhost:3005/api/doctorpersnoldetails");
+  //         const response = await axios.get("https://imdfx-newserver-production.up.railway.app/api/doctorpersnoldetails");
   //         setDoctorsApiData(response.data);
   //         console.log("response data111", response.data);
   //       }
@@ -112,10 +166,11 @@ const SearchList = (props) => {
             box-shadow: 0 0 10px 5px rgba(128, 128, 128, 0.5); /* Adjust the shadow properties as needed */
           }
                   `}
+        {/* alldoctor-profiles */}
       </style>
-      {doctorsApiData && doctorsApiData.length > 0 ?
-        (doctorsApiData.map((doctor, index) => (
-          <div key={index} className="h-auto p-5  background-box mb-4">
+      {combinedData && combinedData.length > 0 ?
+        (combinedData.map((doctor, index) => (
+          <div key={index} className="h-auto p-5  background-box mb-4  alldoctor-profiles ">
             <div className="card-body d-flex flex-column  justify-content-center align-items-center gap-5">
               <div className="doctor-widget justify-content-between w-100 ">
                 <div className="doc-info-left">
@@ -220,66 +275,161 @@ const SearchList = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="d-flex justify-content-center align-items-center gap-3">
-
-                {/* Inner Card */}
-                <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2">
-                  <h2 className="fs-5 fw-normal ">
-                    Inetgrate medical Hospital DHA
-                  </h2>
-                  <div className="d-flex my-4 justify-content-center align-items-center">
-                    <p className="text-gray-600">Available on: Mon, 31 August</p>
-                    <p>Fee: $300</p>
-                  </div>
-
-                  <div style={{
-                    backgroundColor: "blue",
-                    left: '0px',
-                    right: '0px',
-                    bottom: '0px',
-                  }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
-                    Pay online and get up to 50% off
-                  </div>
+              {doctor.officeDetail && doctor.officeDetail ?
+                <>
+                  <div className="inetgrate-card-main">
+                    <div className="  inetgrate-card ">
+                      {/* Inner Card */}
+                      <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
+                        <h4 className="fs-5 fw-normal ">
+                          {/* Inetgrate medical Hospital DHA */}
+                          Employee at {doctor.officeDetail.name} Hospital
+                        </h4>
+                        <div className="d-flex my-4 justify-content-center align-items-center">
+                          <p className="text-gray-600">  <i className="fas fa-map-marker-alt"></i> <span className="mx-1">{doctor.officeDetail.city}, {doctor.officeDetail.country} {""}</span></p>
+                          {/* <p className="mx-4">   <i className="fas fa-envelope"></i>{doctor.officeDetail.email}</p> */}
+                          <p className="mx-2">Fees:{doctor.once.map((item, i) => (item.consultationfees))}</p>
+                        </div>
+                        <div style={{
+                          backgroundColor: "blue",
+                          left: '0px',
+                          right: '0px',
+                          bottom: '0px',
+                        }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
+                          Pay online and get up to 50% off
+                        </div>
+                      </div>
+                      {/* <div className="position-relative border border-secondary  mx-2 rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
+                <h4 className="fs-5 fw-normal ">
+                Self Employee
+                </h4>
+                <div className="d-flex my-4 justify-content-center align-items-center">
+                  <p className="text-gray-600">  <i className="fas fa-map-marker-alt"></i>Rawalpinid, pakistan {""}</p>
+                  <p className="mx-4">   <i className="fas fa-envelope"></i>IMDFX@gmail.com</p>
                 </div>
-                {/* Inner Card */}
-                <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2">
-                  <h2 className="fs-5 fw-normal ">
-                    Inetgrate medical Hospital DHA
-                  </h2>
-                  <div className="d-flex my-4 justify-content-center align-items-center">
-                    <p className="text-gray-600">Available on: Mon, 31 August</p>
-                    <p>Fee: $300</p>
-                  </div>
-
-                  <div style={{
-                    backgroundColor: "blue",
-                    left: '0px',
-                    right: '0px',
-                    bottom: '0px',
-                  }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
-                    Pay online and get up to 50% off
-                  </div>
+  
+                <div style={{
+                  backgroundColor: "blue",
+                  left: '0px',
+                  right: '0px',
+                  bottom: '0px',
+                }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
+                  Pay online and get up to 50% off
                 </div>
-                {/* Inner Card */}
-                <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2">
-                  <h2 className="fs-5 fw-normal ">
-                    Inetgrate medical Hospital DHA
-                  </h2>
-                  <div className="d-flex my-4 justify-content-center align-items-center">
-                    <p className="text-gray-600">Available on: Mon, 31 August</p>
-                    <p>Fee: $300</p>
+              </div> */}
+                      {/* {doctor.officeDetails &&
+                officeDetails.map((item, index) => (
+                  <div className="inetgrate-card">
+                  
+                    <div className="position-relative border border-secondary rounded-2 d-flex flex-column justify-content-center align-items-center rounded-md px-3 py-2">
+                      <h2 className="fs-5 fw-normal">
+                        {item.name}
+                      </h2>
+                      <div className="d-flex my-4 justify-content-center align-items-center">
+                        <p className="text-gray-600">Available on: Mon, 31 August</p>
+                        <p>Fee: $300</p>
+                      </div>
+                      <div style={{
+                        backgroundColor: "blue",
+                        left: '0px',
+                        right: '0px',
+                        bottom: '0px',
+                      }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
+                        Pay online and get up to 50% off
+                      </div>
+                    </div>
                   </div>
+                ))
+              } */}
 
-                  <div style={{
-                    backgroundColor: "blue",
-                    left: '0px',
-                    right: '0px',
-                    bottom: '0px',
-                  }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
-                    Pay online and get up to 50% off
-                  </div>
+                      {/* <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
+                <h2 className="fs-5 fw-normal ">
+                  Inetgrate medical Hospital DHA
+                </h2>
+                <div className="d-flex my-4 justify-content-center align-items-center">
+                  <p className="text-gray-600">Available on: Mon, 31 August</p>
+                  <p>Fee: $300</p>
+                </div>
+
+                <div style={{
+                  backgroundColor: "blue",
+                  left: '0px',
+                  right: '0px',
+                  bottom: '0px',
+                }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
+                  Pay online and get up to 50% off
                 </div>
               </div>
+              <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
+                <h2 className="fs-5 fw-normal ">
+                  Inetgrate medical Hospital DHA
+                </h2>
+                <div className="d-flex my-4 justify-content-center align-items-center">
+                  <p className="text-gray-600">Available on: Mon, 31 August</p>
+                  <p>Fee: $300</p>
+                </div>
+
+                <div style={{
+                  backgroundColor: "blue",
+                  left: '0px',
+                  right: '0px',
+                  bottom: '0px',
+                }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
+                  Pay online and get up to 50% off
+                </div>
+              </div> */}
+
+                    </div>
+                  </div>
+                </>
+                :
+                <div className="inetgrate-card-main">
+                  <div className="  inetgrate-card ">
+
+                    {/* Inner Card */}
+                    <div className="position-relative border border-secondary inetgrate-card-inner   rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
+                      <h4 className="fs-5 fw-normal ">
+                        Self Employee
+                      </h4>
+                      <div className="d-flex my-4 justify-content-center align-items-center">
+                        <p className="text-gray-600">Condition treatment: {" "}{doctor.conditionstreated} </p>
+                        {/* <p className="mx-4">   <i className="fas fa-envelope"></i>{doctor.email}</p> */}
+                        <p className="mx-2">Fees:{doctor.once.map((item, i) => (item.consultationfees))}</p>
+                      </div>
+
+                      <div style={{
+                        backgroundColor: "blue",
+                        left: '0px',
+                        right: '0px',
+                        bottom: '0px',
+                      }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
+                        Pay online and get up to 50% off
+                      </div>
+                    </div>
+                    {/* <div className="position-relative border border-secondary  mx-2 rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
+                <h4 className="fs-5 fw-normal ">
+                Individual 
+                </h4>
+                <div className="d-flex my-4 justify-content-center align-items-center">
+                  <p className="text-gray-600">  <i className="fas fa-map-marker-alt"></i>Rawalpinid, pakistan {""}</p>
+                  <p className="mx-4">   <i className="fas fa-envelope"></i>IMDFX@gmail.com</p>
+                </div>
+  
+                <div style={{
+                  backgroundColor: "blue",
+                  left: '0px',
+                  right: '0px',
+                  bottom: '0px',
+                }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
+                  Pay online and get up to 50% off
+                </div>
+              </div> */}
+
+
+                  </div>
+                </div>
+              }
+
             </div>
           </div>
         )))

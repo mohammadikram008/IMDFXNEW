@@ -35,6 +35,7 @@ import Header from "../../header.jsx";
 const Dashboard = (props) => {
   const [count, setCount] = useState(1, 2, 3, 4);
   const [appointments, setAppointments] = useState([]);
+  const [todayappointments, setTodayAppointments] = useState([]);
   const [payment, setPayments] = useState([]);
   const [patient, setPatient] = useState([]);
   const [docAppointment, setDocAppointment] = useState([]);
@@ -43,6 +44,7 @@ const Dashboard = (props) => {
   const userId = localStorage.getItem('token');
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedAmount, setSelectedAmount] = useState(null);
+  const [medicalrecords, setMedicalRecord] = useState([]);
   const handleCardClick = (index, price) => {
     setSelectedCard(index);
     setSelectedAmount(price);
@@ -85,9 +87,21 @@ const Dashboard = (props) => {
     try {
 
 
-      const response = await axios.get(`http://localhost:3005/api/appointments/${userId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/appointments/${userId}`);
       setAppointments(response.data);
       console.log("Appointment", response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      setLoading(false);
+    }
+  };
+  const fetchTodayAppointments = async () => {
+    try {
+      // const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/gettodayappointments/${userId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/gettodayappointments/${userId}`);
+      setTodayAppointments(response.data);
+      console.log("setTodayAppointments", response.data);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching appointments:', error);
@@ -99,7 +113,7 @@ const Dashboard = (props) => {
     try {
 
 
-      const response = await axios.get(`http://localhost:3005/api/getpatient/${userId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient/${userId}`);
       setPatient(response.data);
       console.log("patient", response.data);
       setLoading(false);
@@ -111,7 +125,7 @@ const Dashboard = (props) => {
   const fetchdoctorappointment = async () => {
 
     try {
-      const response = await axios.get(`http://localhost:3005/api/mydoctor/${userId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/mydoctor/${userId}`);
       setDocAppointment(response.data);
       console.log("setDocAppointment", response.data);
       setLoading(false);
@@ -123,7 +137,7 @@ const Dashboard = (props) => {
   const fetchpaymet = async () => {
 
     try {
-      const response = await axios.get(`http://localhost:3005/api/mypayments/${userId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/mypayments/${userId}`);
       setPayments(response.data);
       console.log("setDocAppointment", response.data);
       setLoading(false);
@@ -132,26 +146,39 @@ const Dashboard = (props) => {
       setLoading(false);
     }
   };
+  const fetchmedical = async () => {
+
+    try {
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getmedicaldetails/${userId}`);
+      setMedicalRecord(response.data);
+      console.log("setMedicalRecord", response.data);
+      // setLoading(false);
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+      // setLoading(false);
+    }
+  };
   useEffect(() => {
     fetchdoctorappointment()
     fetchAppointments();
     fetchpatientdata();
-    fetchpaymet()
+    fetchpaymet();
+    fetchmedical();
+    fetchTodayAppointments();
   }, []);
-// Calculate total fees and update each entry
-const totalFees = payment.reduce((total, entry) => {
-  // Parse the fee amount as a number and add it to the total
-  const fees = Number(entry.Fees);
-  total += fees;
+  // Calculate total fees and update each entry
+  const totalFees = payment.reduce((total, entry) => {
+    // Parse the fee amount as a number and add it to the total
+    const fees = Number(entry.Fees);
+    total += fees;
 
-  // Add the fees property to each entry
-  entry.totalFees = fees;
+    // Add the fees property to each entry
+    entry.totalFees = fees;
 
-  return total;
-}, 0);
+    return total;
+  }, 0);
 
-console.log('Total Fees:', totalFees);
-// console.log('Updated Data:', dataArray);
+  // console.log('Updated Data:', dataArray);
   // if (loading) {
   //   // You can add a loading indicator here if needed
   //   return <p>Loading...</p>;
@@ -163,7 +190,16 @@ console.log('Total Fees:', totalFees);
   //   };
   //   this.handleSelect = this.handleSelect.bind(this);
   // }
-console.log("payments",payment);
+  console.log("appointments", appointments);
+  // Get current date in the format "DD, MMM YYYY"
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+
+  const todayAppointmentsFiltered = todayappointments.filter(item => item.selectedDate === currentDate);
+
   return (
     <>
       <Header {...props} />
@@ -197,7 +233,7 @@ console.log("payments",payment);
             <div style={{
               height: "80vh",
               // backgroundColor: "#e9eae7",
-              marginTop:"3rem"
+              marginTop: "3rem"
 
             }} className="col-md-2 col-lg-2 rounded-5  col-xl-2 theiaStickySidebar pt-5">
               <StickyBox offsetTop={20} offsetBottom={20}>
@@ -206,59 +242,8 @@ console.log("payments",payment);
             </div>
             <div className="col-md-6 col-lg-6 col-xl-6 mt-5">
               <div>
-                {/* <div className="row">
-                  <div className="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
-                    <div className="card">
-                      <div className="card-body text-center">
-                        <div className="mb-3">
-                          <img src={Dashboard1} width={55} />
-                        </div>
-                        <h5>Heart Rate</h5>
-                        <h6>
-                          12 <sub>bpm</sub>
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
-                    <div className="card">
-                      <div className="card-body text-center">
-                        <div className="mb-3">
-                          <img src={Dashboard2} width={55} />
-                        </div>
-                        <h5>Body Temperature</h5>
-                        <h6>
-                          18 <sub>C</sub>
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
-                    <div className="card">
-                      <div className="card-body text-center">
-                        <div className="mb-3">
-                          <img src={Dashboard3} width={55} />
-                        </div>
-                        <h5>Glucose Level</h5>
-                        <h6>70 - 90</h6>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
-                    <div className="card">
-                      <div className="card-body text-center">
-                        <div className="mb-3">
-                          <img src={Dashboard4} width={55} />
-                        </div>
-                        <h5>Blood Pressure</h5>
-                        <h6>
-                          202/90 <sub>mg/dl</sub>
-                        </h6>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
-                <div className="card-body d-flex align-items-center gap-3 mb-0  py-0">
+
+                <div className="card-body  d-flex justify-content-between align-items-center gap-3 mb-0 py-0">
                   <div className="col-md-12 col-lg-4">
                     <div className="dash-widget dct-border-rht">
                       <ProgressBar
@@ -336,8 +321,20 @@ console.log("payments",payment);
                         style={{ position: "relative", top: "-18px" }}
                       >
                         <h6>Today Appoinments</h6>
-                        <h3>160</h3>
-                        <p className="text-muted">06, Nov 2019</p>
+                        <h3>
+                          {todayAppointmentsFiltered ? todayAppointmentsFiltered.length : "0"}
+                        </h3>
+                        {/* <p className="text-muted"> { todayAppointmentsFiltered ? todayAppointmentsFiltered : "12 mar 2019"}</p> */}
+                        <p className="text-muted"> {currentDate}</p>
+
+                        {/* {todayappointments ? todayappointments.map((item, index) => (
+                          <>
+
+                            <p className="text-muted">{item.selectedDate}</p>
+
+                          </>
+                        )) : "0"} */}
+                        {/* <p className="text-muted">06, Nov 2019</p> */}
                       </div>
                     </div>
                   </div>
@@ -376,13 +373,70 @@ console.log("payments",payment);
                         className="dash-widget-info"
                         style={{ position: "relative", top: "-18px" }}
                       >
-                        <h6>Appoinments</h6>
+                        <h6>Total Appoinments</h6>
                         <h3>{appointments && appointments.length}</h3>
-                        <p className="text-muted">06, Apr 2019</p>
+                        <p className="text-muted">{currentDate}</p>
                       </div>
                     </div>
                   </div>
                 </div>
+                {
+                  medicalrecords.map((item, indx) => (
+                    <div className="row  " >
+                      <div className="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
+                        <div className="card">
+                          <div className="card-body text-start ">
+                            <div className="mb-3">
+                              <img src={Dashboard1} width={55} />
+                            </div>
+                            <h5>Heart Rate</h5>
+                            <h6>
+                              {item.hr}<sub>bpm</sub>
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
+                        <div className="card">
+                          <div className="card-body text-start ">
+                            <div className="mb-3">
+                              <img src={Dashboard2} width={55} />
+                            </div>
+                            <h5>Body Temperature</h5>
+                            <h6>
+                              18 <sub>C</sub>
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
+                        <div className="card">
+                          <div className="card-body text-start ">
+                            <div className="mb-3">
+                              <img src={Dashboard3} width={55} />
+                            </div>
+                            <h5>Glucose Level</h5>
+                            <h6>{item.bmi}</h6>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
+                        <div className="card">
+                          <div className="card-body text-start ">
+                            <div className="mb-3">
+                              <img src={Dashboard4} width={55} />
+                            </div>
+                            <h5>Blood Pressure</h5>
+                            <h6>
+                              {item.Fbc}<sub>mg/dl</sub>
+                            </h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                }
+
                 {  /*  <div className="row patient-graph-col">
                   <div className="col-12">
                     <div className="card">
@@ -602,7 +656,7 @@ console.log("payments",payment);
                           to="#pat_prescriptions"
                           data-bs-toggle="tab"
                         >
-                          My Appointments
+                          Confirmed Appoinments
                         </Link>
                       </li>
 
@@ -900,9 +954,16 @@ console.log("payments",payment);
                                   appointments.map((appointment) => (
                                     <tr key={appointment._id}>
                                       <td>
+                                        
                                         <h2 className="table-avatar">
                                           <Link
-                                            to={`/patient/doctor-profile/${appointment.doctorDetails._id}`}
+                                            to={{
+                                              pathname: `/patient/doctor-profile`,
+                                              state: {
+                                                id: appointment.doctorDetails._id
+                                              }
+                                            }}
+                                            // to={`/patient/doctor-profile/${appointment.doctorDetails._id}`}
                                             className="avatar avatar-sm me-2"
                                           >
                                             <img
@@ -913,7 +974,12 @@ console.log("payments",payment);
                                             />
                                           </Link>
                                           <Link
-                                            to={`/patient/doctor-profile/${appointment.doctorDetails._id}`}
+                                            to={{
+                                              pathname: `/patient/doctor-profile`,
+                                              state: {
+                                                id: appointment.doctorDetails._id
+                                              }
+                                            }}
                                           >
                                             {appointment.doctorDetails.name}{' '}
                                             <span>{appointment.doctorDetails.specialization}</span>
@@ -950,7 +1016,11 @@ console.log("payments",payment);
                                           </Link>
                                           &nbsp;
                                           <Link
-                                            to={`#0`}
+                                            // to={`/patient/invoice-view`}
+                                            to={{
+                                              pathname: `/patient/invoice-view`,
+                                              state: { id: appointment.appointmentDetails.doc_id }
+                                            }}
                                             className="btn btn-sm bg-info-light"
                                           >
                                             <i className="far fa-eye"></i> View
@@ -1017,7 +1087,12 @@ console.log("payments",payment);
                                           </Link>
                                           &nbsp;
                                           <Link
-                                            to="#"
+                                            // to="#"
+
+                                            to={{
+                                              pathname: `/patient/invoice-view`,
+                                              state: { id: item.appointmentDetails.docId }
+                                            }}
                                             className="btn btn-sm bg-info-light"
                                           >
                                             <i className="far fa-eye"></i> View
