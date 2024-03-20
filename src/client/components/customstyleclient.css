@@ -441,6 +441,7 @@
     justify-content: center;
     align-items: center;
     padding: 0.7rem;
+    height: 3rem;
     text-align: center;
     color: black;
     width: 10rem;
@@ -451,13 +452,13 @@
     /* background: linear-gradient(180deg, rgb(45, 82, 57) 0%, rgb(40, 185, 178) 100%); */
     background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
     border: none;
-    display: flex;
     border-radius: 50px;
-    justify-content: center;
     padding: 0.7rem;
+    display: flex;
     text-align: center;
     justify-content: center;
     color: white;
+    height: 3rem;
     width: 10rem;
     /* transform: scale(.9); */
 }
@@ -895,12 +896,12 @@
 
 .btn-timeavaible.enabled {
     opacity: 1;
-  }
-  
-  /* Define styles for disabled state */
-  .btn-timeavaible.disabled {
+}
+
+/* Define styles for disabled state */
+.btn-timeavaible.disabled {
     opacity: 0.5;
-  }
+}
 
 .upload-pdf {
     display: flex;
@@ -910,25 +911,30 @@
 
 }
 
-.alldoctor-profiles{
+.alldoctor-profiles {
     width: 70%;
 }
-.inetgrate-card{
+
+.inetgrate-card {
     width: 100%;
     justify-content: start;
 }
-.inetgrate-card-inner{
-width: 40%
+
+.inetgrate-card-inner {
+    width: 40%
 }
-.inetgrate-card-main{
+
+.inetgrate-card-main {
     width: 100%;
     display: flex;
     justify-content: start;
     align-items: center;
 }
-.notify-message{
+
+.notify-message {
     border-bottom: 1px solid white;
 }
+
 .inetgrate-card-div {
     margin-left: 2rem;
 }
@@ -936,7 +942,48 @@ width: 40%
 .modal-footer {
     margin-top: 1rem;
 }
+.doctor-widget{
+width: 100%;
+}
+.report-main-div{
+    flex-direction: column;
+}
 
+.clinic-services-timer {
+    display: flex;
+  }
+  
+  .timer-box {
+    display: flex;
+    /* flex-direction: column; */
+    align-items:center;
+    justify-content: center;
+    border: 1px solid black;
+    padding: .5rem;
+    border-radius: 10px;
+    width: 7rem;
+    height: 5rem;
+    margin-right: 10px;
+  }
+  
+  .timer-text {
+    font-size: 28px; /* Adjust the font size as needed */
+    text-shadow: 1px 1px 2px rgba(7, 7, 7, 0.5); /* Add shadow */
+  }
+  
+  .timer-box p {
+    margin: 0; /* Remove default margin */
+    font-size: 20px; /* Adjust the font size as needed */
+  }
+  .disable-join-btn{
+    background-color: #8fa7a0;
+  }
+
+@media (max-width: 1440px) {
+    .alldoctor-profiles {
+        width: 100%;
+    }
+}
 @media (max-width: 767.98px) {
     .header .header-nav .logo img {
         height: 30px;
@@ -989,7 +1036,19 @@ width: 40%
         margin-top: 2rem;
     }
 
+    .doc-info-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .doctor-widget{
+        width: 100%;
+        }
+        .alldoctor-profiles {
+            width: 100%;
+        }
 }
 
 .doctor-information-inner-div h1 {

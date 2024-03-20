@@ -9,30 +9,34 @@ import { FaHeart } from "react-icons/fa6"; import { AiOutlineCheckCircle } from 
 import TimeModel from "../../../patients/Model/TimeModel";
 const SearchList = (props) => {
   const history = useHistory()
-  const imageUrl = `https://imdfx-newserver-production.up.railway.app/api`;
+  const imageUrl = `http://localhost:3005`;
   const doctorsData = [
     // Existing data remains unchanged
   ];
+  console.log("props.props",props.props);
   const [doctorsApiData, setDoctorsApiData] = useState(props.props);
   const [TimePop, setTimePop] = useState(false);
   const [docDetail, setDocDetail] = useState();
   const [officeDetails, setOfficeDetails] = useState({});
   console.log("doctorsApiData", doctorsApiData);
-  const fetchOfficeDetails = async () => {
+
+  const [doctorTimeDetail, setDoctorTimeDetail] = useState([]);
+  const [combinedData, setCombinedData] = useState(props.props);
+
+  const loginId = localStorage.getItem('token');
+
+
+  const fetchDoctorAvaibleTimeDetail = async (docId) => {
     try {
-      const doc_id = doctorsApiData.map((doctor) => doctor._id);
-      const officeDetailsResponse = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/office-accept-request`, { doc_id });
-      setOfficeDetails(officeDetailsResponse.data);
-      console.log("officeDetails", officeDetailsResponse.data);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/get-doc_avaibletime/${docId}`);
+      setDoctorTimeDetail(response.data);
+      console.log("Time", response.data);
     } catch (error) {
-      console.error("Error fetching office details:", error);
+      console.error('Error fetching doctor Time details:', error);
     }
   };
-
-  // useEffect(() => {
-  //   fetchOfficeDetails();
-  // }, [doctorsApiData]);
-  const [combinedData, setCombinedData] = useState([]);
+ 
+ 
   const fetchCombinedData = async () => {
     try {
       const doc_id_list = doctorsApiData.map((doctor) => doctor._id);
@@ -52,8 +56,10 @@ const SearchList = (props) => {
     }
   };
 
+
   useEffect(() => {
     fetchCombinedData();
+    // fetchDoctorAvaibleTimeDetail();
   }, [doctorsApiData]);
 
   // useEffect(() => {
@@ -102,8 +108,7 @@ const SearchList = (props) => {
   //   fetchData();
   // }, [props]);
   const handleChangeViewProfile = (props) => {
-    console.log("click");
-    console.log("props", props);
+    
     const id = props
     history.push({
       pathname: "/patient/doctor-profile",
@@ -112,8 +117,17 @@ const SearchList = (props) => {
 
   }
   const handleTimePop = (id) => {
-    setDocDetail(doctorsApiData.filter((item) => item._id === id)[0])
-    setTimePop(!TimePop)
+    console.log("i", id);
+    if(loginId){
+
+      setDocDetail(doctorsApiData.filter((item) => item._id === id)[0])
+      setTimePop(!TimePop)
+      fetchDoctorAvaibleTimeDetail(id)
+    }else{
+      history.push({
+        pathname: "/login",
+     });
+    }
   }
 
   return (
@@ -172,9 +186,11 @@ const SearchList = (props) => {
         (combinedData.map((doctor, index) => (
           <div key={index} className="h-auto p-5  background-box mb-4  alldoctor-profiles ">
             <div className="card-body d-flex flex-column  justify-content-center align-items-center gap-5">
-              <div className="doctor-widget justify-content-between w-100 ">
+              <div className="doctor-widget justify-content-between  ">
                 <div className="doc-info-left">
                   <div className="doctor-img rounded-circle position-relative ">
+                 
+                    {/* <img src={`http://localhost:3005/uploads//dafb82ac1615a4fcec977ac6db88bb61`} className="img-fluid" alt="User" /> */}
                     {/* <img src={`${imageUrl}/${doctor.image}`} className="img-fluid" alt="User" /> */}
                     <img src={doc_1} className="img-fluid rounded-circle" alt="User" />
 
@@ -299,85 +315,7 @@ const SearchList = (props) => {
                           Pay online and get up to 50% off
                         </div>
                       </div>
-                      {/* <div className="position-relative border border-secondary  mx-2 rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
-                <h4 className="fs-5 fw-normal ">
-                Self Employee
-                </h4>
-                <div className="d-flex my-4 justify-content-center align-items-center">
-                  <p className="text-gray-600">  <i className="fas fa-map-marker-alt"></i>Rawalpinid, pakistan {""}</p>
-                  <p className="mx-4">   <i className="fas fa-envelope"></i>IMDFX@gmail.com</p>
-                </div>
-  
-                <div style={{
-                  backgroundColor: "blue",
-                  left: '0px',
-                  right: '0px',
-                  bottom: '0px',
-                }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
-                  Pay online and get up to 50% off
-                </div>
-              </div> */}
-                      {/* {doctor.officeDetails &&
-                officeDetails.map((item, index) => (
-                  <div className="inetgrate-card">
-                  
-                    <div className="position-relative border border-secondary rounded-2 d-flex flex-column justify-content-center align-items-center rounded-md px-3 py-2">
-                      <h2 className="fs-5 fw-normal">
-                        {item.name}
-                      </h2>
-                      <div className="d-flex my-4 justify-content-center align-items-center">
-                        <p className="text-gray-600">Available on: Mon, 31 August</p>
-                        <p>Fee: $300</p>
-                      </div>
-                      <div style={{
-                        backgroundColor: "blue",
-                        left: '0px',
-                        right: '0px',
-                        bottom: '0px',
-                      }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
-                        Pay online and get up to 50% off
-                      </div>
-                    </div>
-                  </div>
-                ))
-              } */}
-
-                      {/* <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
-                <h2 className="fs-5 fw-normal ">
-                  Inetgrate medical Hospital DHA
-                </h2>
-                <div className="d-flex my-4 justify-content-center align-items-center">
-                  <p className="text-gray-600">Available on: Mon, 31 August</p>
-                  <p>Fee: $300</p>
-                </div>
-
-                <div style={{
-                  backgroundColor: "blue",
-                  left: '0px',
-                  right: '0px',
-                  bottom: '0px',
-                }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
-                  Pay online and get up to 50% off
-                </div>
-              </div>
-              <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
-                <h2 className="fs-5 fw-normal ">
-                  Inetgrate medical Hospital DHA
-                </h2>
-                <div className="d-flex my-4 justify-content-center align-items-center">
-                  <p className="text-gray-600">Available on: Mon, 31 August</p>
-                  <p>Fee: $300</p>
-                </div>
-
-                <div style={{
-                  backgroundColor: "blue",
-                  left: '0px',
-                  right: '0px',
-                  bottom: '0px',
-                }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
-                  Pay online and get up to 50% off
-                </div>
-              </div> */}
+                      
 
                     </div>
                   </div>
@@ -387,7 +325,7 @@ const SearchList = (props) => {
                   <div className="  inetgrate-card ">
 
                     {/* Inner Card */}
-                    <div className="position-relative border border-secondary inetgrate-card-inner   rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
+                    <div className="position-relative border border-secondary    rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
                       <h4 className="fs-5 fw-normal ">
                         Self Employee
                       </h4>
@@ -402,7 +340,7 @@ const SearchList = (props) => {
                         left: '0px',
                         right: '0px',
                         bottom: '0px',
-                      }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
+                      }} className="text-white btn-effect w-100 position-absolute rounded-bottom d-flex justify-content-center align-items-center">
                         Pay online and get up to 50% off
                       </div>
                     </div>
@@ -438,7 +376,7 @@ const SearchList = (props) => {
           <div>No data available</div>
         )
       }
-      <TimeModel doctorDetail={docDetail} TimePop={TimePop} setTimePop={setTimePop} />
+      <TimeModel doctorDetail={docDetail} TimePop={TimePop} setTimePop={setTimePop} doctorTimeDetails={doctorTimeDetail.doctorAvailability} />
 
     </div>
   );

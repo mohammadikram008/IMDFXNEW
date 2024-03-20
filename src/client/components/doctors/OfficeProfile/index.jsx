@@ -1,28 +1,33 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import DoctorSidebar from "../sidebar/OfficeSidebar";
 import Footer from "../../footer";
 import StickyBox from "react-sticky-box";
 import Header from "../../header";
 import axios from "axios";
-
 import IMG01 from "../../../assets/images/profileavatr.png";
+
 const Profile = (props) => {
-  const userId = localStorage.getItem('token');
+  const [offices, setOffices] = useState([]);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    dateOfBirth: "",
-    email: "",
-    mobile: "",
-    address: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    country: "",
-    image: null, // Add an image field to the form data
+    name: offices.name,
+    email: offices.email,
+    phone: offices.phone,
+    password: offices.password,
+    officename: offices.officename,
+    officeemail: offices.officeemail,
+    officephone: offices.officephone,
+    officephone: offices.officewebsite,
+    officewebsite: offices.officewebsite,
+    officespecialty: offices.officespecialty,
+    country: offices.country,
+    street: offices.street,
+    city: offices.city,
+    state: offices.state,
+    zipcode: offices.zipcode,
+    image: null,
   });
+  const officeId = localStorage.getItem('token');
 
   const handleInputChange = (e) => {
     setFormData({
@@ -51,12 +56,11 @@ const Profile = (props) => {
     try {
       // Make API request using axios
       const response = await axios.post(
-        `https://imdfx-newserver-production.up.railway.app/api/update-patient-profile/${userId}`, data,
+        `http://localhost:3005/api/update-office-profile/${officeId}`, data,
 
       );
-
       console.log("API response:", response.data);
-      alert("updated")
+      // alert("updated")
       // Handle success, e.g., show a success message
     } catch (error) {
       alert(error)
@@ -64,28 +68,26 @@ const Profile = (props) => {
       // Handle error, e.g., show an error message
     }
   };
+
+  const fetchHospital = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3005/api/getofficeDetail/${officeId}`);
+      setOffices(response.data);
+      console.log("Office", response.data);
+
+    } catch (error) {
+      console.error('Error fetching mypatient:', error);
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchHospital();
+  }, []);
+
   return (
     <div>
       <Header {...props} />
-      {/* <div className="breadcrumb-bar-two">
-        <div className="container">
-          <div className="row align-items-center inner-banner">
-            <div className="col-md-12 col-12 text-center">
-              <h2 className="breadcrumb-title">Profile Settings</h2>
-              <nav aria-label="breadcrumb" className="page-breadcrumb">
-                <ol className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to="/index-2">Home</Link>
-                  </li>
-                  <li className="breadcrumb-item active" aria-current="page">
-                    Profile Settings
-                  </li>
-                </ol>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div> */}
+
       <div className="content">
         <div className="container-fluid">
           <div className="row">
@@ -123,85 +125,63 @@ const Profile = (props) => {
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>First Name</label>
+                          <label>Office Name</label>
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="Richard"
-                            name="firstName" onChange={handleInputChange}
+                            placeholder="Office name"
+                            name="officename"
+                            value={formData.officename}
+                            onChange={handleInputChange}
                           />
                         </div>
                       </div>
-                      <div className="col-12 col-md-6">
-                        <div className="form-group">
-                          <label>Last Name</label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            defaultValue="Wilson"
-                            name="lastName" onChange={handleInputChange}
-                          />
-                        </div>
-                      </div>
-                      <div className="col-12 col-md-6">
-                        <div className="form-group">
-                          <label>Date of Birth</label>
-                          <div className="cal-icon">
-                            <input
-                              type="text"
-                              className="form-control datetimepicker"
-                              defaultValue="24-07-1983"
-                              name="dateOfBirth" onChange={handleInputChange}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      {/* <div className="col-12 col-md-6">
-                        <div className="form-group">
-                          <label>Blood Group</label>
-                          <select className="form-select form-control">
-                            <option>A-</option>
-                            <option>A+</option>
-                            <option>B-</option>
-                            <option>B+</option>
-                            <option>AB-</option>
-                            <option>AB+</option>
-                            <option>O-</option>
-                            <option>O+</option>
-                          </select>
-                        </div>
-                      </div>
-    */}
+
                       <div className="col-12 col-md-6">
                         <div className="form-group">
                           <label>Email ID</label>
                           <input
                             type="email"
                             className="form-control"
-                            defaultValue="richard@example.com"
+                            placeholder="abc@example.com"
+                            value={formData.email}
                             name="email" onChange={handleInputChange}
                           />
                         </div>
                       </div>
                       <div className="col-12 col-md-6">
                         <div className="form-group">
-                          <label>Mobile</label>
+                          <label>Office Phone</label>
                           <input
                             type="text"
-                            defaultValue="+1 202-555-0125"
+                            placeholder="+92 34545566"
                             className="form-control"
-                            name="mobile" onChange={handleInputChange}
+                            value={formData.officephone}
+                            name="officephone" onChange={handleInputChange}
                           />
+
+                        </div>
+                        <div className="form-group">
+                          <label>Office Website</label>
+                          <input
+                            type="text"
+                            placeholder="example.com"
+                            className="form-control"
+                            value={formData.officewebsite}
+                            name="officewebsite" onChange={handleInputChange}
+                          />
+
                         </div>
                       </div>
-                      <div className="col-12">
+                      <div className="col-6">
                         <div className="form-group">
-                          <label>Address</label>
+                          <label>officespecialty</label>
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="806 Twin Willow Lane"
-                            name="address" onChange={handleInputChange}
+                            placeholder="Operations"
+                            value={formData.officespecialty}
+                            name="officespecialty" onChange={handleInputChange}
                           />
                         </div>
                       </div>
@@ -211,7 +191,8 @@ const Profile = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="Old Forge"
+                            placeholder="city"
+                            value={formData.city}
                             name="city" onChange={handleInputChange}
                           />
                         </div>
@@ -222,7 +203,8 @@ const Profile = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="Newyork"
+                            placeholder="state"
+                            value={formData.state}
                             name="state" onChange={handleInputChange}
                           />
                         </div>
@@ -233,8 +215,9 @@ const Profile = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="13420"
-                            name="zipCode" onChange={handleInputChange}
+                            placeholder="zipCode"
+                            value={formData.zipcode}
+                            name="zipcode" onChange={handleInputChange}
                           />
                         </div>
                       </div>
@@ -244,7 +227,8 @@ const Profile = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="United States"
+                            placeholder="Pakistan"
+                            value={formData.country}
                             name="country" onChange={handleInputChange}
                           />
                         </div>
@@ -262,7 +246,7 @@ const Profile = (props) => {
                       </div>
                       <div className="submit-section mx-3">
                         <Link
-                          to="/patient/change-password"
+                          to="/office/password"
                           className="btn btn-primary login-btn-login"
                         >
                           Change Password

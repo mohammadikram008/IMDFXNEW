@@ -10,6 +10,7 @@ import {
   doctor_thumb_04,
   doctor_thumb_05,
 } from "../imagepath";
+import avator1 from '../../assets/img/avatar-01.jpg'
 import { Link } from "react-router-dom";
 const DoctorListDesboard = (props) => {
   console.log("Dpro",props);
@@ -69,9 +70,10 @@ const DoctorListDesboard = (props) => {
       render: (text, record) => (
         <>
           <Link className="avatar mx-2" to="/admin/profile">
-            <img className="rounded-circle" src={record.image} />
+            <img className="rounded-circle" src={avator1} />
           </Link>
-          <Link to="/admin/profile">{text}</Link>
+          {/* <Link to="/admin/profile">{text}</Link> */}
+          <p>{text}</p>
         </>
       ),
       sorter: (a, b) => a.DoctorName.length - b.DoctorName.length,

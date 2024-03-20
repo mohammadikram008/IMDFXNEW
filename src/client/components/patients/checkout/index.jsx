@@ -15,6 +15,7 @@ const Checkout = (props) => {
   const history = useHistory()
   console.log("pro", props);
   const { selectedDateData, selectedTimeSlot, doctorDetail } = props.location.state;
+  console.log("selectedDateData",selectedDateData,"selectedTimeSlot",selectedTimeSlot,"doctorDetail",doctorDetail);
   const selectedDate = selectedDateData;
   const [selectedMethod, setSelectedMethod] = useState("payPal");
   const navigate = async () => {
@@ -112,7 +113,15 @@ console.log("newfom",modelform);
     // const notify = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/usertransectionnotification/${userId}`,{message} );
     setIsModalOpen(false)
   }
+const handlechangeModel=()=>{
+  if (!modelform.gender || !modelform.bookingFor || !modelform.patientAge || !modelform.details) {
+    toast.error('Please fill all Form Feild');
+  }else{
 
+    setIsModalOpen(false);
+  }
+
+}
   return (
     <Fragment>
       <Header {...props} />
@@ -296,18 +305,18 @@ console.log("newfom",modelform);
                       <div className="booking-date-list">
                         <ul>
                           <li>
-                            Booking Date: <span>Sun, 30 Aug 2022</span>
+                            Booking Date: <span>{selectedDateData}</span>
                           </li>
                           <li>
-                            Booking Time: <span>10.00AM to 11:00AM</span>
+                            Booking Time: <span>{selectedTimeSlot}</span>
                           </li>
                         </ul>
                       </div>
-                      <div className="booking-doctor-right">
+                      {/* <div className="booking-doctor-right">
                         <p>
                           <Link to="/patient/booking1">Edit</Link>
                         </p>
-                      </div>
+                      </div> */}
                     </div>
                     <div className="booking-list">
                       <div className="booking-date-list">
@@ -320,11 +329,11 @@ console.log("newfom",modelform);
                           </li>
                         </ul>
                       </div>
-                      <div className="booking-doctor-right">
+                      {/* <div className="booking-doctor-right">
                         <p>
                           <Link to="/consultation">Edit</Link>
                         </p>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -424,11 +433,12 @@ console.log("newfom",modelform);
           </div>
 
           <button className="btn btn-primary"
-           onClick={() => {
-            setIsModalOpen(false)
-            console.log(modelform)
-          }} 
-          // onClick={()=>handleSubmit()}
+          //  onClick={() => {
+            
+          //   setIsModalOpen(false)
+          //   console.log(modelform)
+          // }} 
+          onClick={()=>handlechangeModel()}
           type="text">Submit</button>
         </div>
       </ModalComponent>

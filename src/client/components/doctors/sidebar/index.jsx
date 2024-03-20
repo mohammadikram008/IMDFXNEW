@@ -4,6 +4,11 @@ import { doctor_thumb_02, doc_01, doc_02, doc_03 } from "../../imagepath";
 import doc1 from '../../../assets/images/doc1.jpg'
 const DoctorSidebar = ({ props }) => {
   let pathnames = window.location.pathname;
+  console.log("proDoc",props);
+  const imageUrl = `https://imdfx-newserver-production.up.railway.app/api`;
+  // const imageUrl = `http://localhost:3005/api/`;
+  // const imageUrl = props.image ? `http://localhost:3005/${props.image.replace(/\\/g, '/')}` : '';
+  console.log("img",imageUrl);
   return (
     <>
       {/* Profile Sidebar */}
@@ -12,6 +17,7 @@ const DoctorSidebar = ({ props }) => {
           <div className="profile-info-widget">
             <Link to="#" className="booking-doc-img">
               <img src={doc1} alt="User Image" />
+              {/* {props.image && <img src={imageUrl} alt="User Image" />} */}
             </Link>
             <div className="profile-det-info">
               <h3>{props && props.name}</h3>

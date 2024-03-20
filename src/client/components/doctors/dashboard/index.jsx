@@ -246,7 +246,7 @@ const DoctorDashboard = (props) => {
                           to="#upcoming-appointments"
                           data-bs-toggle="tab"
                         >
-                          Upcoming
+                          Pending Appointments
                         </Link>
                       </li>
                       <li className="nav-item">
@@ -255,7 +255,7 @@ const DoctorDashboard = (props) => {
                           to="#today-appointments"
                           data-bs-toggle="tab"
                         >
-                          Today
+                          Confirm Appointments
                         </Link>
                       </li>
                     </ul>

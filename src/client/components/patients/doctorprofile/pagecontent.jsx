@@ -306,7 +306,7 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
                       <div className="d-flex justify-content-between  align-items-center gap-4  bg-transparent">
                         <FaVideo size={25} />
 
-                        <div className="fw-bold">Dr. John Doe</div>
+                        <div className="fw-bold">{doctorDetail.name}</div>
                         <style jsx>
                           {`
           .bn5 {
@@ -396,7 +396,9 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
 
                       <div className="booking-card-body-main">
                         <div className="booking-card-body-inner-div gap-4  d-flex">
-                          <p>Fees:</p> <p>$100 - $150</p>
+                          <p>Fees:</p> <p>{doctorDetail.once.map((items,index)=>(
+                            items.consultationfees
+                          ))}</p>
                         </div>
                         <div className="booking-card-body-inner-div">
                           <p> Address:</p> <p> Use phone/laptop </p>

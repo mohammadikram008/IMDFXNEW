@@ -9,8 +9,10 @@ import Footer from "../../footer";
 
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import Header from "../../header.jsx";
-import { IMG01 } from "../doctorprofile/img.jsx";
+// import { IMG01 } from "../doctorprofile/img.jsx";
+import  IMG01  from "./doctorAi.jpg";
 const Timeschedule = (props) => {
+    console.log("ppppppppp",props);
     const [addListEmp, setAddListEmp] = useState([""]);
     const [docAppointment, setDocAppointment] = useState([]);
     const userId = localStorage.getItem('token');
@@ -18,26 +20,41 @@ const Timeschedule = (props) => {
         setAddListEmp([...addListEmp, " "]);
     };
     useEffect(() => { }, []);
-
+    
     const handelRemoveEmp = (index) => {
         const listEmp = [...addListEmp];
         listEmp.splice(index, 1);
         setAddListEmp(listEmp);
     };
     const fetchdoctorappointment = async () => {
-
+        
         try {
             const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getbookappointment/${userId}`);
             setDocAppointment(response.data);
             console.log("R", response.data);
-
+            
         } catch (error) {
             console.error('Error fetching appointments:', error);
-
+            
         }
     };
+    const [patient, setPatient] = useState([]);
+    const fetchpatientdata = async () => {
+
+        try {
+    
+    
+          const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient/${userId}`);
+          setPatient(response.data);
+         
+        } catch (error) {
+          console.error('Error fetching appointments:', error);
+       
+        }
+      };
     useEffect(() => {
         fetchdoctorappointment()
+        fetchpatientdata()
 
     }, []);
     const handleCall = (selectedDateTime) => {
@@ -48,7 +65,13 @@ const Timeschedule = (props) => {
             const timeDifference = appointmentDateTime - currentDateTime;
             const remainingMinutes = Math.floor(timeDifference / (1000 * 60));
 
-            props.history.push(`/patient/waiting-page/${selectedDateTime}`);  // Use props.history.push
+            // props.history.push(`/patient/waiting-page/${selectedDateTime}`); 
+            props.history.push({
+                pathname: `/patient/waiting-page`,
+                state: { selectedDateTime }
+              });
+            
+            // Use props.history.push
             //   props.history.push(`/patient/waiting-page`);  // Use props.history.push
         } else {
             console.log("call");
@@ -112,7 +135,7 @@ const Timeschedule = (props) => {
                 <div className="container">
                     <div className="row mt-5">
                         <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
-                            <DashboardSidebar />
+                            <DashboardSidebar props={patient} />
                         </div>
                         <div className="col-md-7 col-lg-8 col-xl-9">
                             <div className="row">

@@ -61,6 +61,7 @@ import Favourties from "./client/components/patients/dashboard/favourties";
 import OfficeProfile from "./client/components/doctors/OfficeProfile";
 import Profile from "./client/components/patients/dashboard/profile";
 import Password from "./client/components/patients/dashboard/password";
+import OfficePassword from "./client/components/doctors/officepassword/index.jsx";
 import DoctorDashboard from "./client/components/doctors/dashboard";
 import OfficeDashboard from "./client/components/doctors/OfficeDashboard";
 import SocialMedia from "./client/components/doctors/socialmedia";
@@ -265,7 +266,7 @@ const AppContainer = function (props) {
               <Route path="/pages/video-call" exact component={VideoCall} />
               <Route path="/pages/voice-call" exact component={VoiceCall} />
               <Route path="/doctor/chat-doctor" exact component={DoctorChat} />
-              <Route path="/patient/waiting-page/:remainingMinutes" exact component={WaitingPage} />
+              <Route path="/patient/waiting-page" exact component={WaitingPage} />
 
               <Route path="/login" exact component={LoginContainer} />
               <Route path="/register" exact component={Register} />
@@ -273,6 +274,11 @@ const AppContainer = function (props) {
                 path="/pages/forgot-password"
                 exact
                 component={ForgotPassword}
+              />
+               <Route
+                path="/office/password"
+                exact
+                component={OfficePassword}
               />
               <Route
                 path="/pages/forgot-password2"
@@ -301,48 +307,10 @@ const AppContainer = function (props) {
               <Route path="/signup" exact component={Signup} />
 
               {/* home */}
+             
               <Route path="/" exact component={Generalhome} />
-              <Route path="/index-2" exact component={Home} />
-              {/* <Route path="/homeslider1" exact component={HomeSlider1} /> */}
-              {/* <Route path="/index-2" exact component={Home2} /> */}
-              {/* <Route path="/index-3" exact component={Home3} /> */}
-              {/* <Route path="/homeslider2" exact component={HomeSlider2} /> */}
-              {/* <Route path="/index-5" exact component={Cardiohome} /> */}
-              {/* <Route path="/index-8" exact component={Paediatrichome} /> */}
-
-              {/* <Route path="/index-6" exact component={Home6} /> */}
-              {/* <Route path="/index-7" exact component={Home7} /> */}
-              {/* <Route path="/index-4" exact component={Home4} /> */}
-              {/* <Route path="/index-9" exact component={Home9} /> */}
-              {/* <Route path="/index-10" exact component={Home10} /> */}
-              {/* <Route path="/home11" exact component={Home11} /> */}
-              {/* <Route path="/index-11" exact component={CosmeticsHome} /> */}
-              {/* <Route path="/index-12" exact component={HomeTwelve} /> */}
-              {/* <Route path="/home12" exact component={Home12} /> */}
-              {/* <Route path="/home13" exact component={Home13} /> */}
-              {/* <Route path="/home14" exact component={Home14} /> */}
-
-              {/* blog */}
-              {/* <Route path="/blog/blog-list" exact component={BlogList} /> */}
-              {/* <Route path="/blog/blog-grid" exact component={BlogGrid} /> */}
-              {/* <Route path="/blog/blog-details" exact component={BlogDetails} /> */}
-              {/* <Route path="/doctor-blog" exact component={Doctorblog} /> */}
-              {/* <Route
-                path="/blog/doctor-add-blog"
-                exact
-                component={Doctoraddblog}
-              /> */}
-              {/* <Route
-                path="/blog/doctor-pending-blog"
-                exact
-                component={Doctorpendingblog}
-              />
-              <Route
-                path="/blog/doctor-edit-blog"
-                exact
-                component={Doctoreditblog}
-              /> */}
-              {/* pages */}
+              {/* <Route path="/index-2" exact component={Home} /> */}
+             
 
               <Route
                 path="/patient/search-doctor1"
@@ -355,18 +323,8 @@ const AppContainer = function (props) {
                 component={SearchDoctor2}
               />
               <Route path="/patient/invoice-view" exact component={InvoiceView} />
-              {/* <Route path="/pages/component" exact component={Components} />
-              <Route path="/pages/blank-page" exact component={BlankPage} />
-              <Route path="/pages/calendar" exact component={Calendar} />
-              <Route path="/pages/invoice" exact component={Invoice} />
-              <Route path="/doctor/invoice" exact component={Invoice} />
-              <Route path="/pages/aboutus" exact component={Aboutus} />
-              <Route path="/pages/contactus" exact component={Contactus} />
-              <Route path="/pages/comingsoon" exact component={Comingsoon} />
-              <Route path="/pages/maintenance" exact component={Maintenance} />
-              <Route path="/pages/pricing-plan" exact component={PricingPlan} />
-            <Route path="/pages/faq" exact component={Faq} /> */}
-              <Route path="/pages/error-404" exact component={Error404} />
+          
+             
               <Route path="/pages/error-500" exact component={Error500} />
               <Route
                 path="/patient/patientregisterstep-1"
@@ -542,59 +500,7 @@ const AppContainer = function (props) {
               <Route path="/pages/privacy-policy" exact component={Policy} />
               <Route path="/patient/time-schedule" exact component={PatientTimeSchedule} />
 
-              {/* Pharmacy */}
-              {/* <Route
-                path="/Pharmacy/Pharmacy-index"
-                exact
-                component={Pharmacy}
-              />
-              <Route
-                path="/Pharmacy/Pharmacy-details"
-                exact
-                component={pharmacydetail}
-              />
-              <Route
-                path="/Pharmacy/pharmacy-search"
-                exact
-                component={PharmacySearch}
-              />
-              <Route path="/Pharmacy/product-all" exact component={Product} />
-              <Route
-                path="/Pharmacy/product-description"
-                exact
-                component={ProductDescription}
-              />
-              <Route path="/Pharmacy/cart" exact component={Cart} />
-              <Route
-                path="/Pharmacy/product-checkout"
-                exact
-                component={ProductCheckout}
-              />
-              <Route
-                path="/Pharmacy/payment-success"
-                exact
-                component={PayoutSuccess}
-              />
-              <Route
-                path="/Pharmacy/pharmacy-register"
-                exact
-                component={Pharmacyregister}
-              />
-              <Route
-                path="/Pharmacy/pharmacy-registerstep-1"
-                exact
-                component={Pharmacyregisterstepone}
-              />
-              <Route
-                path="/Pharmacy/pharmacy-registerstep-2"
-                exact
-                component={Pharmacyregistersteptwo}
-              />
-              <Route
-                path="/Pharmacy/pharmacy-registerstep-3"
-                exact
-                component={Pharmacyregisterstepthree}
-              /> */}
+            
               <Route
                 path="/editprescription"
                 exact
@@ -719,6 +625,7 @@ const AppContainer = function (props) {
               <Route path="/patientdetails" exact component={Patientdetails} />
               <Route path="/loginemail" exact component={Loginemail} />
               <Route path="/index-13" exact component={HomecareHome} />
+              
             </Switch>
           </div>
         )}

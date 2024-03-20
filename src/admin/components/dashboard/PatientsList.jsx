@@ -16,9 +16,10 @@ const PatientsListDesboard = (props) => {
       render: (text, record) => (
         <>
           <Link className="avatar mx-2" to="/admin/profile">
-            <img className="rounded-circle" src={record.image} alt={record.username} />
+            <img className="rounded-circle" src={patient1}  />
           </Link>
-          <Link to="/admin/profile">{text}</Link>
+          {/* <Link to="/admin/profile">{record.username}</Link> */}
+          <span>{record.username}</span>
         </>
       ),
       sorter: (a, b) => a.PatientName.length - b.PatientName.length,

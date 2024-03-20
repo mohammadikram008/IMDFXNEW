@@ -1,4 +1,4 @@
-import React ,{useEffect,useState}from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
@@ -36,9 +36,9 @@ const Doctors = () => {
     }
   };
   useEffect(() => {
-   
+
     fetchdoctor();
-   
+
   }, []);
   const data = [
     {
@@ -151,7 +151,9 @@ const Doctors = () => {
           <Link className="avatar mx-2" to="/admin/profile">
             <img className="rounded-circle" src={record.image} />
           </Link>
-          <Link to="/admin/profile">{text}</Link>
+          <Link to="/admin/profile" style={{
+            color: "black"
+          }}>{text}</Link>
         </>
       ),
       sorter: (a, b) => a.name.length - b.name.length,
@@ -187,7 +189,7 @@ const Doctors = () => {
               id={`rating${record?.id}`}
               className="check"
               type="checkbox"
-              //  checked={false}
+            //  checked={false}
             />
             <label
               htmlFor={`rating${record?.id}`}
@@ -239,7 +241,7 @@ const Doctors = () => {
                       columns={columns}
                       dataSource={doctor}
                       rowKey={(record) => record.id}
-                      //  onChange={this.handleTableChange}
+                    //  onChange={this.handleTableChange}
                     />
                   </div>
                 </div>

@@ -301,7 +301,7 @@ const UpcomingTab = () => {
                 </thead>
                 <tbody>
                   {loading ? <div><h4>Loading...</h4></div> :
-                    appointments.map((appointment,index) => (
+                    appointments.map((appointment, index) => (
                       <tr key={index}>
                         <td>
                           <h2 className="table-avatar">
@@ -331,11 +331,11 @@ const UpcomingTab = () => {
                           </span>
                         </td>
                         {/* <td>{appointment.appointmentDetails.bookingDate}</td> */}
-                        <td>$108</td>
+                        <td>$ {appointment.appointmentDetails.Fees}{' '}</td>
                         <td>
                           <span className={`badge rounded-pill ${appointment.status === 'Confirm' ? 'bg-success-light' : 'bg-danger-light'}`}>
                             {/* {appointment.status} */}
-                            accept
+                            pending
                           </span>
                         </td>
                         <td className="text-end">

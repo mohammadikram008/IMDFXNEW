@@ -2,30 +2,35 @@ import React from "react";
 import { Link } from "react-router-dom";
 // import IMG01 from "../../../../assets/images/patient.jpg";
 import IMG01 from "../../../../assets/images/doc1.jpg";
-import patient from "../../../../assets/images/patients.jpg";
-import nawazp from "../../../../assets/images/nazwazp.jpg";
+import patient from "../../../../assets/images/patient.jpg";
+// import nawazp from "../../../../assets/images/nazwazp.jpg";
+// import patient from "../../../../assets/images/patient.jpg";
+
 
 
 export const DashboardSidebar = ({ props }) => {
   // const {patient}=props.patient;
   console.log("patient", props);
+  // localStorage.setItem("patientname", props.username);
   const pathname = window.location.pathname;
+  // const username = localStorage.getItem('patientname');
+  
   return (
     <div style={{
-      background:"none"
+      background: "none"
     }} className="profile-sidebar h-100 ">
       <div style={{
-      background:"none"
-    }} className="widget-profile">
+        background: "none"
+      }} className="widget-profile">
         <div className="profile-info-widget">
           <Link to="#0" className="booking-doc-img ">
             <img style={{
-              border:"2px solid gray"
-            }} src={nawazp} alt="User" className="object-fit-cover " />
+              border: "2px solid gray"
+            }} src={patient} alt="User" className="object-fit-cover " />
           </Link>
           <h3 style={{
-            fontSize:"20px"
-          }} className="fw-bold text-center w-100 text-black ">Nawaz Sharif</h3>
+            fontSize: "20px"
+          }} className="fw-bold text-center w-80 text-black ">{props.username}</h3>
         </div>
       </div>
       <div className="dashboard-widget">
@@ -105,8 +110,8 @@ export const DashboardSidebar = ({ props }) => {
               }
             >
               <Link
-          
-               to="/patient/time-schedule"
+
+                to="/patient/time-schedule"
               >
                 <i className="fas fa-hourglass-start" />
                 <span>Schedule Timings</span>

@@ -9,25 +9,13 @@ const Error404 = (props) => {
     <>
       <Header {...props} />
       {/* Breadcrumb */}
-      <div className="breadcrumb-bar-two">
+      {/* <div className="breadcrumb-bar-two">
         <div className="container">
           <div className="row align-items-center inner-banner">
-            <div className="col-md-12 col-12 text-center">
-              <h2 className="breadcrumb-title">Error 404</h2>
-              <nav aria-label="breadcrumb" className="page-breadcrumb">
-                <ol className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to="/index-2">Home</Link>
-                  </li>
-                  <li className="breadcrumb-item" aria-current="page">
-                    Error 404
-                  </li>
-                </ol>
-              </nav>
-            </div>
+         
           </div>
         </div>
-      </div>
+      </div> */}
       {/* /Breadcrumb */}
       {/* Error 404 */}
       <section className="error-section">
@@ -40,7 +28,7 @@ const Error404 = (props) => {
                   <div className="error-content error-404-content">
                     <h2>Oops! That Page Can’t Be Found.</h2>
                     <p>The page you are looking for was never existed.</p>
-                    <Link to="/index" className="btn btn-primary prime-btn">
+                    <Link to="/Generalhome" className="btn btn-primary ">
                       Back to Home
                     </Link>
                   </div>

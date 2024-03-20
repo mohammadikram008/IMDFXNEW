@@ -1,16 +1,10 @@
-import React from "react";
+import React ,{useEffect,useState}from "react";
 import DashboardSidebar from "../dashboard/sidebar/sidebar.jsx";
 import StickyBox from "react-sticky-box";
 import { Link } from "react-router-dom";
-// import { Tab, Tabs, Modal } from "react-bootstrap";
-// import DoctorThumb01 from "../../../assets/images/doctors/doctor-thumb-01.jpg";
-// import DoctorThumb02 from "../../../assets/images/doctors/doctor-thumb-02.jpg";
-// import DoctorThumb03 from "../../../assets/images/doctors/doctor-thumb-03.jpg";
-// import DoctorThumb04 from "../../../assets/images/doctors/doctor-thumb-04.jpg";
-// import DoctorThumb05 from "../../../assets/images/doctors/doctor-thumb-05.jpg";
-// import DoctorThumb06 from "../../../assets/images/doctors/doctor-thumb-06.jpg";
 import Header from "../../header";
 import Footer from "../../footer";
+import axios from "axios";
 import Tablerecords from "./tablerecords.jsx";
 
 const MedicalRecords = (props) => {
@@ -19,6 +13,27 @@ const MedicalRecords = (props) => {
   // const handleChange = (date) => {
   //     setDate(date)
   // }
+  const userId = localStorage.getItem('token');
+  const [patient, setPatient] = useState([]);
+  const fetchpatientdata = async () => {
+
+      try {
+  
+  
+        const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient/${userId}`);
+        setPatient(response.data);
+       
+      } catch (error) {
+        console.error('Error fetching appointments:', error);
+     
+      }
+    };
+ ;
+ useEffect(() => {
+
+  fetchpatientdata()
+
+}, []);
 
   return (
     <div>
@@ -30,7 +45,7 @@ const MedicalRecords = (props) => {
           <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
               <StickyBox offsetTop={20} offsetBottom={20}>
-                <DashboardSidebar />{" "}
+              <DashboardSidebar props={patient} />
               </StickyBox>
             </div>
             <div className="col-md-6 col-lg-6 col-xl-6">

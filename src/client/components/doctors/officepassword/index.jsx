@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import DashboardSidebar from "../sidebar/sidebar.jsx";
+import DoctorSidebar from "../sidebar/OfficeSidebar";
 import StickyBox from "react-sticky-box";
-import Footer from "../../../footer";
 import { Link } from "react-router-dom";
-import Header from "../../../header.jsx";
+import Footer from "../../footer";
+import Header from "../../header";
 import axios from "axios";
 
 import { ToastContainer, toast } from "react-toastify";
 const Password = (props) => {
-  const userId = localStorage.getItem('token');
+  const officeId = localStorage.getItem('token');
 
   const [passwordData, setPasswordData] = useState({
     oldPassword: "",
@@ -28,7 +28,7 @@ const Password = (props) => {
     try {
       // Make API request using axios
       const response = await axios.post(
-        `https://imdfx-newserver-production.up.railway.app/api/change-user-password/${userId}`, // Replace with your actual backend URL
+        `http://localhost:3005/api/change-office-password/${officeId}`, // Replace with your actual backend URL
         passwordData
       );
       toast.success("Password change successful!");
@@ -68,7 +68,7 @@ const Password = (props) => {
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
               <StickyBox offsetTop={20} offsetBottom={20}>
-                <DashboardSidebar />
+                <DoctorSidebar />
               </StickyBox>
             </div>
 

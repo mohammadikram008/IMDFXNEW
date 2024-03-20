@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { Link } from "react-router-dom";
 import {
   IMG01,
@@ -29,14 +29,31 @@ import {
 import DoctorSidebar from "../../doctors/sidebar";
 import StickyBox from "react-sticky-box";
 import DashboardSidebar from "../dashboard/sidebar/sidebar";
-
+import axios from "axios";
 const PatientChat = (props) => {
   useEffect(() => {
     document.body.classList.add("chat-page");
 
     return () => document.body.classList.remove("chat-page");
   }, []);
+  const userId = localStorage.getItem('token');
+  const [patient, setPatient] = useState([]);
+  const fetchpatientdata = async () => {
+      try {
+        const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient/${userId}`);
+        setPatient(response.data);
+       
+      } catch (error) {
+        console.error('Error fetching appointments:', error);
+      }
+    };
+ ;
+  useEffect(() => {
 
+    fetchpatientdata()
+
+  }, []);
+  
   return (
     <div>
     <Header {...props} />
@@ -48,7 +65,7 @@ const PatientChat = (props) => {
           <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
             <StickyBox offsetTop={20} offsetBottom={20}>
             <DashboardSidebar 
-            // props={patient} 
+            props={patient} 
             />
             </StickyBox>
           </div>

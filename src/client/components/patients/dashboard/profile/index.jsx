@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import DashboardSidebar from "../sidebar/sidebar.jsx";
 import IMG01 from "../../../../assets/images/patient.jpg";
 import StickyBox from "react-sticky-box";
@@ -62,6 +62,26 @@ const Profile = (props) => {
       // Handle error, e.g., show an error message
     }
   };
+  const [patient, setPatient] = useState([]);
+  const fetchpatientdata = async () => {
+
+      try {
+  
+  
+        const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient/${userId}`);
+        setPatient(response.data);
+       
+      } catch (error) {
+        console.error('Error fetching appointments:', error);
+     
+      }
+    };
+ ;
+  useEffect(() => {
+
+    fetchpatientdata()
+
+  }, []);
   return (
     <div>
       <Header {...props} />
@@ -90,7 +110,7 @@ const Profile = (props) => {
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
               <StickyBox offsetTop={20} offsetBottom={20}>
-                <DashboardSidebar />
+                <DashboardSidebar props={patient}/>
               </StickyBox>
             </div>
 

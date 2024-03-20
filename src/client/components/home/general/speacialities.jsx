@@ -23,7 +23,8 @@ function Speacialities() {
   const fetchDoctorsBySpecialty = async (specialty) => {
     try {
       // Replace the URL with your actual backend URL
-      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doctors-by-specialty/${specialty}`);
+      // const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doctors-by-specialty/${specialty}`);
+      const response = await axios.get(`http://localhost:3005/api/doctors-by-specialty/${specialty}`);
       setDoctors(response.data);
       console.log("serachdoc", response.data);
       // history.push(`/patient/search-doctor1?specialty=${response.data}`);

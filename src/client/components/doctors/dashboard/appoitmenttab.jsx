@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   IMG01,
@@ -8,8 +8,30 @@ import {
   patient11,
   patient9,
 } from "./img";
-
+import axios from "axios";
 const AppointmentTab = () => {
+
+  const docId = localStorage.getItem('token');
+
+  const [appointments, setAppointments] = useState([]);
+
+  const fetchAppointments = async () => {
+    try {
+
+      const response = await axios.get(`http://localhost:3005/api/doc_confirm_appointments/${docId}`);
+      setAppointments(response.data);
+      console.log("doc_confirm_appointments", response.data);
+
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+
+    }
+  };
+  useEffect(() => {
+
+    fetchAppointments();
+  }, []);
+
   return (
     <>
       {/* Today Appointment Tab */}
@@ -18,18 +40,67 @@ const AppointmentTab = () => {
           <div className="card-body">
             <div className="table-responsive">
               <table className="table table-hover table-center mb-0">
-                <thead style={{borderBottom:"none"}}>
+                <thead style={{ borderBottom: "none" }}>
                   <tr>
                     <th>Patient Name</th>
                     <th>Appt Date</th>
-                    <th>Purpose</th>
-                    <th>Type</th>
+                    <th>Gender</th>
+
                     <th className="text-center">Paid Amount</th>
                     <th />
                   </tr>
                 </thead>
-                <tbody style={{borderTop:"none"}}>
-                  <tr>
+                <tbody style={{ borderTop: "none" }}>
+                  {
+                    appointments && appointments.map((item, index) => (
+                      <tr>
+                        <td>
+                          <h2 className="table-avatar">
+                            <Link
+                              to="/doctor/patient-profile"
+                              className="avatar avatar-sm me-2"
+                            >
+                              <img
+                                className="avatar-img rounded-circle"
+                                src={IMG02}
+                                alt="User Image"
+                              />
+                            </Link>
+                            <Link to="/doctor/patient-profile">
+                              {item.PatietnDetails.username}
+                            </Link>
+                          </h2>
+                        </td>
+                        {item.bookingdetails.map((app, index) => (
+                          <>
+                            <td>
+                              {app.selectedDate}
+
+                              <span className="d-block text-info">{app.selectedTimeSlot}</span>
+                            </td>
+                            <td>{app.gender}</td>
+                            <td className="text-center">${app.Fees}</td>
+                          </>
+                        ))}
+
+                        {/* <td className="text-end">
+                        <div className="table-action">
+                          <Link to="#" className="btn btn-sm bg-info-light" style={{marginRight:"5px"}}>
+                            <i className="far fa-eye" /> View
+                          </Link>
+                          <Link to="#" className="btn btn-sm bg-success-light" style={{marginRight:"5px"}}>
+                            <i className="fas fa-check" /> Accept
+                          </Link>
+                          <Link to="#" className="btn btn-sm bg-danger-light" >
+                            <i className="fas fa-times" /> Cancel
+                          </Link>
+                        </div>
+                      </td> */}
+                      </tr>
+                    ))
+
+                  }
+                  {/* <tr>
                     <td>
                       <h2 className="table-avatar">
                         <Link
@@ -262,7 +333,7 @@ const AppointmentTab = () => {
                         </Link>
                       </div>
                     </td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </table>
             </div>

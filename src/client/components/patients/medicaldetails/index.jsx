@@ -78,8 +78,24 @@ const MedicalDetails = (props) => {
       // setLoading(false);
     }
   };
+  const [patient, setPatient] = useState([]);
+  const fetchpatientdata = async () => {
+
+      try {
+  
+  
+        const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient/${userId}`);
+        setPatient(response.data);
+       
+      } catch (error) {
+        console.error('Error fetching appointments:', error);
+     
+      }
+    };
+ ;
   useEffect(() => {
     fetchmedical()
+    fetchpatientdata()
 
   }, [show]);
   const openModalForAdd = () => {
@@ -122,7 +138,7 @@ const MedicalDetails = (props) => {
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
               <StickyBox offsetTop={20} offsetBottom={20}>
-                <DashboardSidebar />
+                <DashboardSidebar  props={patient} />
               </StickyBox>
             </div>
             <div className="col-md-6 col-lg-6 col-xl-6 mt-5">

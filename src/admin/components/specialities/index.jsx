@@ -75,7 +75,7 @@ const Specialities = () => {
           <Link className="avatar mx-2" to="/admin/profile">
             <img src={record.image} />
           </Link>
-          <Link to="/admin/profile">{text}</Link>
+          <Link to="/admin/profile" style={{ color: "black" }}>{text}</Link> {/* Inline CSS here */}
         </>
       ),
       sorter: (a, b) => a.Specialities.length - b.Specialities.length,

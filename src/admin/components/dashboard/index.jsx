@@ -199,8 +199,8 @@ const Dashboard = () => {
 
             <div className="row">
               <DoctorListDesboard props={Doctor} />
-              <PatientsListDesboard  props={patient}/>
             </div>
+              <PatientsListDesboard  props={patient}/>
             {/* Today’s  Appointment */}
             <div className="row">
               <AppointmentList props={Appointmentswithdetail} />

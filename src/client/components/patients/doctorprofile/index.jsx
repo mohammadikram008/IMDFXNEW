@@ -10,10 +10,13 @@ import BookingModal from "../Model/TimeModel";
 import IMG01 from "../../../assets/images/doc1.jpg";
 import doc_cover from '../../../assets/images/doccover.png'
 import TimeModel from "../Model/TimeModel";
+
+import { ToastContainer, toast } from "react-toastify";
 const DoctorProfile = (props) => {
   const { id } = props.location.state;
   console.log("iddd", id);
   const docId = id;
+  const loginId = localStorage.getItem('token');
   const [show, setShow] = useState(false);
   const [videocall, setvideocall] = useState(false);
   const [isOpen, setisOpen] = useState(false);
@@ -22,10 +25,13 @@ const DoctorProfile = (props) => {
 
   const [TimePop, setTimePop] = useState(false);
   const doctorlogin = localStorage.getItem("doctorlogin")
+  
   console.log("d", doctorlogin);
   const handleToggleModal = () => {
-    if (doctorlogin) {
-      alert("Login as a patient");
+    if (doctorlogin || !loginId) {
+    
+      toast.error("Login as a patient");
+      // alert("Login as a patient");
     } else {
 
       setTimePop(!TimePop);
@@ -110,6 +116,7 @@ const DoctorProfile = (props) => {
       )} */}
       <TimeModel doctorDetail={doctorDetail} TimePop={TimePop} setTimePop={setTimePop}  doctorTimeDetails={doctorTimeDetail.doctorAvailability}/>
       <Footer {...props} />
+      <ToastContainer/>
     </Fragment>
   );
 };

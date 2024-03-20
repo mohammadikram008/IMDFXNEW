@@ -35,7 +35,8 @@ const Patients = () => {
     try {
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient`);
       setPatient(response.data);
-      // console.log("setDoctor", response.data);
+      
+      console.log("setDoctor", response.data);
       // setLoading(false);
     } catch (error) {
       console.error('Error fetching getDoctorDetail:', error);
@@ -228,37 +229,25 @@ const Patients = () => {
           <Link className="avatar mx-2" to="/admin/profile">
             <img className="rounded-circle" src={record.image} />
           </Link>
-          <Link to="/admin/profile">{text}</Link>
+          <Link to="/admin/profile" style={{
+            color: "black"
+          }}>{text}</Link>
         </>
       ),
       sorter: (a, b) => a.PatientName.length - b.PatientName.length,
     },
     {
-      title: "Age",
-      dataIndex: "Age",
+      title: "Email",
+      dataIndex: "email",
       render: (text) => <>{text}</>,
-      sorter: (a, b) => a.Age.length - b.Age.length,
+      sorter: (a, b) => a.email.length - b.email.length,
     },
     {
-      title: "Address",
-      dataIndex: "Address",
-      sorter: (a, b) => a.Address.length - b.Address.length,
+      title: "ID",
+      dataIndex: "_id",
+      sorter: (a, b) => a._id.length - b._id.length,
     },
-    {
-      title: "Phone",
-      dataIndex: "Phone",
-      sorter: (a, b) => a.Phone.length - b.Phone.length,
-    },
-    {
-      title: "Last Visit",
-      dataIndex: "VisitLast",
-      sorter: (a, b) => a.VisitLast.length - b.VisitLast.length,
-    },
-    {
-      title: "Paid",
-      dataIndex: "Paid",
-      sorter: (a, b) => a.Paid.length - b.Paid.length,
-    },
+    
   ];
   return (
     <>
