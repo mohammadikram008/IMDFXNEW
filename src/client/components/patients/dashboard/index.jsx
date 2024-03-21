@@ -43,6 +43,7 @@ const Dashboard = (props) => {
   const [loading, setLoading] = useState(true);
   const [mypatient, setMyPatient] = useState([]);
   const userId = localStorage.getItem('token');
+  const [patientStatus, setPatientStatus] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedAmount, setSelectedAmount] = useState(null);
   const [medicalrecords, setMedicalRecord] = useState([]);
@@ -110,19 +111,20 @@ const Dashboard = (props) => {
     }
   };
   const fetchpatientdata = async () => {
-
     try {
-
-
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient/${userId}`);
       setPatient(response.data);
       console.log("patient", response.data);
+      const pateintdata=response.data
+      // console.log("status", pateintdata.status);
+      setPatientStatus(pateintdata.status);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching appointments:', error);
       setLoading(false);
     }
   };
+  localStorage.setItem("status",patientStatus)
   const fetchdoctorappointment = async () => {
 
     try {
@@ -227,6 +229,8 @@ const Dashboard = (props) => {
       {/* <!-- /Breadcrumb -->     */}
       <div className="content">
         <div className="container-fluid">
+        {
+        patientStatus && patientStatus?
           <div className="row">
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
 
@@ -778,6 +782,20 @@ const Dashboard = (props) => {
 
             </div>
           </div>
+          :
+          <div className="row">
+          <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
+
+          </div>
+        
+          <div className="col-md-6 col-lg-6 col-xl-6 mt-5">
+           <h2>Your Account has been suspended Please Contact Admin,Thank You!</h2>
+          </div>
+          <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
+
+          </div>
+        </div>
+          }
         </div>
       </div>
       <Footer {...props} />

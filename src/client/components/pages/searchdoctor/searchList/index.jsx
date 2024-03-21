@@ -7,13 +7,15 @@ import MyComponent from "./mycomponent";
 import { doc_1 } from "./img";
 import { FaHeart } from "react-icons/fa6"; import { AiOutlineCheckCircle } from "react-icons/ai";
 import TimeModel from "../../../patients/Model/TimeModel";
+
+import { ToastContainer, toast } from "react-toastify";
 const SearchList = (props) => {
   const history = useHistory()
   const imageUrl = `http://localhost:3005`;
   const doctorsData = [
     // Existing data remains unchanged
   ];
-  console.log("props.props",props.props);
+  console.log("props.props", props.props);
   const [doctorsApiData, setDoctorsApiData] = useState(props.props);
   const [TimePop, setTimePop] = useState(false);
   const [docDetail, setDocDetail] = useState();
@@ -24,8 +26,8 @@ const SearchList = (props) => {
   const [combinedData, setCombinedData] = useState(props.props);
 
   const loginId = localStorage.getItem('token');
-
-
+  const status = localStorage.getItem('status');
+  console.log("status", status);
   const fetchDoctorAvaibleTimeDetail = async (docId) => {
     try {
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/get-doc_avaibletime/${docId}`);
@@ -35,8 +37,8 @@ const SearchList = (props) => {
       console.error('Error fetching doctor Time details:', error);
     }
   };
- 
- 
+
+
   const fetchCombinedData = async () => {
     try {
       const doc_id_list = doctorsApiData.map((doctor) => doctor._id);
@@ -108,7 +110,7 @@ const SearchList = (props) => {
   //   fetchData();
   // }, [props]);
   const handleChangeViewProfile = (props) => {
-    
+
     const id = props
     history.push({
       pathname: "/patient/doctor-profile",
@@ -118,15 +120,19 @@ const SearchList = (props) => {
   }
   const handleTimePop = (id) => {
     console.log("i", id);
-    if(loginId){
+    if (loginId) {
+      if (status ==="false") {
+        toast.error("Your Account has been suspended");
+      } else {
 
-      setDocDetail(doctorsApiData.filter((item) => item._id === id)[0])
-      setTimePop(!TimePop)
-      fetchDoctorAvaibleTimeDetail(id)
-    }else{
+        setDocDetail(doctorsApiData.filter((item) => item._id === id)[0])
+        setTimePop(!TimePop)
+        fetchDoctorAvaibleTimeDetail(id)
+      }
+    } else {
       history.push({
         pathname: "/login",
-     });
+      });
     }
   }
 
@@ -189,7 +195,7 @@ const SearchList = (props) => {
               <div className="doctor-widget justify-content-between  ">
                 <div className="doc-info-left">
                   <div className="doctor-img rounded-circle position-relative ">
-                 
+
                     {/* <img src={`http://localhost:3005/uploads//dafb82ac1615a4fcec977ac6db88bb61`} className="img-fluid" alt="User" /> */}
                     {/* <img src={`${imageUrl}/${doctor.image}`} className="img-fluid" alt="User" /> */}
                     <img src={doc_1} className="img-fluid rounded-circle" alt="User" />
@@ -299,7 +305,7 @@ const SearchList = (props) => {
                       <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
                         <h4 className="fs-5 fw-normal ">
                           {/* Inetgrate medical Hospital DHA */}
-                          Employee at {doctor.officeDetail.name} Hospital
+                          Employee at {doctor.officeDetail.officename} Hospital
                         </h4>
                         <div className="d-flex my-4 justify-content-center align-items-center">
                           <p className="text-gray-600">  <i className="fas fa-map-marker-alt"></i> <span className="mx-1">{doctor.officeDetail.city}, {doctor.officeDetail.country} {""}</span></p>
@@ -315,7 +321,7 @@ const SearchList = (props) => {
                           Pay online and get up to 50% off
                         </div>
                       </div>
-                      
+
 
                     </div>
                   </div>
@@ -344,9 +350,9 @@ const SearchList = (props) => {
                         Pay online and get up to 50% off
                       </div>
                     </div>
-                    {/* <div className="position-relative border border-secondary  mx-2 rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
+                    <div className="position-relative border border-secondary  mx-2 rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
                 <h4 className="fs-5 fw-normal ">
-                Individual 
+                Online Vedio consultant  
                 </h4>
                 <div className="d-flex my-4 justify-content-center align-items-center">
                   <p className="text-gray-600">  <i className="fas fa-map-marker-alt"></i>Rawalpinid, pakistan {""}</p>
@@ -361,7 +367,7 @@ const SearchList = (props) => {
                 }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
                   Pay online and get up to 50% off
                 </div>
-              </div> */}
+              </div>
 
 
                   </div>
@@ -377,7 +383,7 @@ const SearchList = (props) => {
         )
       }
       <TimeModel doctorDetail={docDetail} TimePop={TimePop} setTimePop={setTimePop} doctorTimeDetails={doctorTimeDetail.doctorAvailability} />
-
+      <ToastContainer />
     </div>
   );
 };

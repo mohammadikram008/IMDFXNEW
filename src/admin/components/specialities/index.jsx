@@ -92,41 +92,41 @@ const Specialities = () => {
       dataIndex: "Specialities",
       render: (text, record) => (
         <>
-          <Link className="avatar mx-2" to="/admin/profile">
+          <div className="avatar mx-2 pointer" onClick={()=>fetchDoctorsBySpecialty(text)}>
             <img src={record.image} />
-          </Link>
+          </div>
           {/* <Link to="/admin/profile" style={{ color: "black" }}>{text}</Link>  */}
-          <span onClick={()=>fetchDoctorsBySpecialty(text)}>{text}</span> 
+          <span  onClick={()=>fetchDoctorsBySpecialty(text)}>{text}</span> 
         </>
       ),
       sorter: (a, b) => a.Specialities.length - b.Specialities.length,
     },
-    {
-      title: "Action",
-      className: "text-end",
-      dataIndex: "",
-      render: () => (
-        <div className="text-end">
-          <a
-            href="#"
-            className="me-1 btn btn-sm bg-success-light "
-            data-bs-toggle="modal"
-            data-bs-target="#edit_specialities_details"
-          >
-            <i className="fe fe-pencil"></i> Edit
-          </a>
-          <a
-            href="#"
-            className="me-1 btn btn-sm bg-danger-light"
-            data-bs-toggle="modal"
-            data-bs-target="#delete_modal"
-          >
-            <i className="fe fe-trash"></i> Delete
-          </a>
-        </div>
-      ),
-      sorter: (a, b) => a.length - b.length,
-    },
+    // {
+    //   title: "Action",
+    //   className: "text-end",
+    //   dataIndex: "",
+    //   render: () => (
+    //     <div className="text-end">
+    //       <a
+    //         href="#"
+    //         className="me-1 btn btn-sm bg-success-light "
+    //         data-bs-toggle="modal"
+    //         data-bs-target="#edit_specialities_details"
+    //       >
+    //         <i className="fe fe-pencil"></i> Edit
+    //       </a>
+    //       <a
+    //         href="#"
+    //         className="me-1 btn btn-sm bg-danger-light"
+    //         data-bs-toggle="modal"
+    //         data-bs-target="#delete_modal"
+    //       >
+    //         <i className="fe fe-trash"></i> Delete
+    //       </a>
+    //     </div>
+    //   ),
+    //   sorter: (a, b) => a.length - b.length,
+    // },
   ];
 
   return (

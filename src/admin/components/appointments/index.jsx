@@ -189,9 +189,9 @@ const Appointments = () => {
       dataIndex: "doctorDetail",
       render: (text, record) => (
         <>
-          <Link className="avatar mx-2" to="/admin/profile">
-            <img className="rounded-circle" src={record.image} />
-          </Link>
+          <div className="avatar mx-2">
+            <img className="rounded-circle" src={doctor_thumb_05} />
+          </div>
           {/* <Link to="/admin/profile" className="text-decoration-none">
             {text.name}
           </Link> */}
@@ -223,9 +223,9 @@ const Appointments = () => {
       dataIndex: "userDetail",
       render: (text, record) => (
         <>
-          <Link className="avatar mx-2" to="/admin/profile">
+          <div className="avatar mx-2" >
             <img className="rounded-circle" src={patient4} />
-          </Link>
+          </div>
           {/* <Link to="/admin/profile">{text.username}</Link> */}
           <span to="/admin/profile">{text.username}</span>
         </>

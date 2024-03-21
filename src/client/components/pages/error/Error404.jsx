@@ -18,9 +18,9 @@ const Error404 = (props) => {
       </div> */}
       {/* /Breadcrumb */}
       {/* Error 404 */}
-      <section className="error-section">
+      <section className="error-section ">
         <div className="container">
-          <div className="row justify-content-center">
+          <div className="row justify-content-center m-5">
             <div className="col-lg-8 col-md-12 text-center">
               <div className="error-info">
                 <div className="error-404-img">
@@ -28,7 +28,7 @@ const Error404 = (props) => {
                   <div className="error-content error-404-content">
                     <h2>Oops! That Page Can’t Be Found.</h2>
                     <p>The page you are looking for was never existed.</p>
-                    <Link to="/Generalhome" className="btn btn-primary ">
+                    <Link to="/" className="btn btn-primary ">
                       Back to Home
                     </Link>
                   </div>

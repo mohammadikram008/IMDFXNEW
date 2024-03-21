@@ -17,6 +17,7 @@ const DoctorProfile = (props) => {
   console.log("iddd", id);
   const docId = id;
   const loginId = localStorage.getItem('token');
+  const status = localStorage.getItem('status');
   const [show, setShow] = useState(false);
   const [videocall, setvideocall] = useState(false);
   const [isOpen, setisOpen] = useState(false);
@@ -25,16 +26,20 @@ const DoctorProfile = (props) => {
 
   const [TimePop, setTimePop] = useState(false);
   const doctorlogin = localStorage.getItem("doctorlogin")
-  
+
   console.log("d", doctorlogin);
   const handleToggleModal = () => {
     if (doctorlogin || !loginId) {
-    
+
       toast.error("Login as a patient");
       // alert("Login as a patient");
     } else {
+      if (status==="false") {
+        toast.error("Your Account has been suspended");
+      } else {
+        setTimePop(!TimePop);
 
-      setTimePop(!TimePop);
+      }
     }
   };
   const handleModalClose = () => {
@@ -114,9 +119,9 @@ const DoctorProfile = (props) => {
           doctorDetail={doctorDetail}
         />
       )} */}
-      <TimeModel doctorDetail={doctorDetail} TimePop={TimePop} setTimePop={setTimePop}  doctorTimeDetails={doctorTimeDetail.doctorAvailability}/>
+      <TimeModel doctorDetail={doctorDetail} TimePop={TimePop} setTimePop={setTimePop} doctorTimeDetails={doctorTimeDetail.doctorAvailability} />
       <Footer {...props} />
-      <ToastContainer/>
+      <ToastContainer />
     </Fragment>
   );
 };

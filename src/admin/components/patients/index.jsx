@@ -215,6 +215,21 @@ const Patients = () => {
       image: patient15,
     },
   ];
+  const handleCheckboxChange = async (id, checked) => {
+    try {
+      // Make API call to update patient status
+      const response = await axios.put(`http://localhost:3005/api/update-patient-status/${id}`, { status: checked });
+      // Update patient status in the state based on the response
+      console.log("afterstatusresponse",response.data);
+      setPatient((prevPatients) =>
+        prevPatients.map((patient) =>
+          patient._id === id ? { ...patient, Status: response.data.status } : patient
+        )
+      );
+    } catch (error) {
+      console.error(`Error updating status for patient with ID ${id}:`, error);
+    }
+  };
   const columns = [
     // {
     //   title: "Patient ID",
@@ -226,12 +241,12 @@ const Patients = () => {
       dataIndex: "username",
       render: (text, record) => (
         <>
-          <Link className="avatar mx-2" to="/admin/profile">
-            <img className="rounded-circle" src={patient10} />
-          </Link>
-          <Link to="/admin/profile" style={{
+          <div className="avatar mx-2" >
+            <img className="rounded-circle" src={patient6} />
+          </div>
+          {/* <Link to="/admin/profile" style={{
             color: "black"
-          }}>{text}</Link>
+          }}>{text}</Link> */}
             <span
           >{text}</span>
         </>
@@ -251,26 +266,21 @@ const Patients = () => {
     },
     {
       title: "Status",
-      dataIndex: "Status",
-      render: (text, record) => {
-        return (
-          <div className="status-toggle">
-            <input
-              id={`rating${record?.id}`}
-              className="check"
-              type="checkbox"
-              defaultChecked="false"
-            />
-            <label
-              htmlFor={`rating${record?.id}`}
-              className="checktoggle checkbox-bg"
-            >
-              checkbox
-            </label>
-          </div>
-        );
-      },
-      sorter: (a, b) => a.Status.length - b.Status.length,
+      dataIndex: "status",
+      render: (text, record) => (
+        <div className="status-toggle">
+          <input
+            id={`rating${record?._id}`}
+            className="check"
+            type="checkbox"
+            checked={text}
+            onChange={(e) => handleCheckboxChange(record._id, e.target.checked)}
+          />
+          <label htmlFor={`rating${record?._id}`} className="checktoggle checkbox-bg">
+            
+          </label>
+        </div>
+      ),
     },
     
   ];

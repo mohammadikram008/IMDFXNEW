@@ -15,6 +15,7 @@ const DoctorDashboard = (props) => {
 
   const [appointments, setAppointments] = useState([]);
   const [mypatient, setMyPatient] = useState([]);
+  const [doctorStatus, setDoctorStatus] = useState(false);
 
   const [todayappointments, setTodayAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,7 +51,10 @@ const DoctorDashboard = (props) => {
     try {
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getDoctorDetail/${docId}`);
       setDoctor(response.data);
-      // console.log("setDoctor", response.data);
+      const doctordata=response.data
+      setDoctorStatus(doctordata.status);
+      // console.log("status", doctordata.status);
+
       setLoading(false);
     } catch (error) {
       console.error('Error fetching getDoctorDetail:', error);
@@ -90,6 +94,8 @@ const DoctorDashboard = (props) => {
       {/* <Breadcrumbs /> */}
       <div className="content">
         <div className="container-fluid">
+        {
+        doctorStatus && doctorStatus?
           <div className="row mt-5">
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
@@ -272,8 +278,44 @@ const DoctorDashboard = (props) => {
             </div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
           </div>
+           :
+           <div className="row mt-5">
+           <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
+           <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
+             
+           </div>
+           <div className="col-md-6 col-lg-6 col-xl-6">
+             <div className="row">
+               <div className="col-md-12">
+                 <div className="card dash-card">
+                   <div className="card-body">
+                     <div className="row">
+                       <div className="col-md-12 col-lg-4">
+                         
+                       </div>
+                       <div className="col-md-12 col-lg-4">
+                       
+                       </div>
+                       <div className="col-md-12 col-lg-4">
+                        
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+             <div className="row">
+               <div className="col-md-12">
+               <h2>Your Account has been suspended Please Contact Admin,Thank You!</h2>
+               </div>
+             </div>
+           </div>
+           <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
+         </div>
+          }
         </div>
       </div>
+      
       <Footer {...props} />
     </div>
   );

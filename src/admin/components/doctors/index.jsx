@@ -22,9 +22,10 @@ import axios from "axios";
 const Doctors = () => {
   const location = useLocation();
   // console.log("Dloc",location.state.key);
-  const doctors= location ?location.state:'';
-  console.log("Admindoctors",doctors.doctors);
-  const [doctor, setDoctor] = useState(doctors.doctors);
+  const doctors = location ? location.state : '';
+
+  const [doctor, setDoctor] = useState(doctors && doctors?doctors.doctors:[]);
+  // const [doctor, setDoctor] = useState([]);
   const fetchdoctor = async () => {
     try {
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doctorpersnoldetails`);
@@ -37,12 +38,27 @@ const Doctors = () => {
     }
   };
   useEffect(() => {
-if(!doctors){
+    if (!doctors) {
 
-  fetchdoctor();
-}
+      fetchdoctor();
+    }
 
   }, []);
+  const handleCheckboxChange = async (id, checked) => {
+    try {
+      // Make API call to update patient status
+      const response = await axios.put(`http://localhost:3005/api/update-doctor-status/${id}`, { status: checked });
+      // Update patient status in the state based on the response
+      console.log("afterstatusresDoctor",response.data);
+      setDoctor((prevDoctor) =>
+      prevDoctor.map((doctor) =>
+        doctor._id === id ? { ...doctor, Status: response.data.status } : doctor
+        )
+      );
+    } catch (error) {
+      console.error(`Error updating status for patient with ID ${id}:`, error);
+    }
+  };
   const data = [
     {
       id: 1,
@@ -157,11 +173,11 @@ if(!doctors){
           <Link to="/admin/doctor-list" style={{
             color: "black"
           }}>{text}</Link> */}
-             
-             <div className="avatar mx-2">
-             <img className="rounded-circle" src={doctor_thumb_04} />
-            </div>
-            {text}
+
+          <div className="avatar mx-2">
+            <img className="rounded-circle" src={doctor_thumb_04} />
+          </div>
+          {text}
         </>
       ),
       sorter: (a, b) => a.name.length - b.name.length,
@@ -188,27 +204,22 @@ if(!doctors){
     //   sorter: (a, b) => a.Earned.length - b.Earned.length,
     // },
     {
-      title: "Account Status",
-      dataIndex: "AccountStatus",
-      render: (text, record) => {
-        return (
-          <div className="status-toggle">
-            <input
-              id={`rating${record?.id}`}
-              className="check"
-              type="checkbox"
-            //  checked={false}
-            />
-            <label
-              htmlFor={`rating${record?.id}`}
-              className="checktoggle checkbox-bg"
-            >
-              checkbox
-            </label>
-          </div>
-        );
-      },
-      // sorter: (a, b) => a.AccountStatus.length - b.AccountStatus.length,
+      title: "Status",
+      dataIndex: "status",
+      render: (text, record) => (
+        <div className="status-toggle">
+          <input
+            id={`rating${record?._id}`}
+            className="check"
+            type="checkbox"
+            checked={text}
+            onChange={(e) => handleCheckboxChange(record._id, e.target.checked)}
+          />
+          <label htmlFor={`rating${record?._id}`} className="checktoggle checkbox-bg">
+            
+          </label>
+        </div>
+      ),
     },
   ];
   return (

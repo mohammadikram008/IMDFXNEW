@@ -428,6 +428,7 @@ const AppContainer = function (props) {
                 component={AvailableTiming}
               />
               <Route path="/doctor/account" exact component={Accounts} />
+              <Route path="*" exact component={Error404} />
               <Route path="/office/account" exact component={OfficeAccounts} />
               <Route
                 path="/doctor/doctor-change-password"
