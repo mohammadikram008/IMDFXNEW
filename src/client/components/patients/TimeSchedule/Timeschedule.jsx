@@ -152,37 +152,7 @@ const Timeschedule = (props) => {
                                                                     id="slot_monday"
                                                                     className="tab-pane fade show active"
                                                                 >
-                                                                    {/* <h4 className="card-title d-flex justify-content-between">
-                                                                        <span>Time Slots</span>
-                                                                    </h4>
-                                                                    {docAppointment &&
-                                                                        docAppointment.map((item, index) => (
-                                                                            <div className="doc-times" key={index}>
-                                                                                <div className="doc-slot-list">
-                                                                                    <h5 className="d-flex">
-                                                                                        Dr.{item.doctorDetails && item.doctorDetails.name}
-                                                                                        <p className="mx-4">
-                                                                                            Date: {item.appointmentDetails.selectedDate + "/ Time " + item.appointmentDetails.selectedTimeSlot}
-                                                                                        </p>
-                                                                                    </h5>
-                                                                                    <div className="d-flex">
-                                                                                        <div
-
-                                                                                            // className="delete_schedule mx-3"
-                                                                                            className={`delete_schedule mx-3 ${isCallDisabled(item.appointmentDetails.selectedDate + ' ' + item.appointmentDetails.selectedTimeSlot) ? 'disabled' : ''}`}
-                                                                                            onClick={() =>
-                                                                                                handleCall(item.appointmentDetails.selectedDate + ' ' + item.appointmentDetails.selectedTimeSlot)
-                                                                                            }
-                                                                                        >
-                                                                                            <i className="fa fa-video"></i>
-                                                                                        </div>
-                                                                                        <Link to="patient/patient-chat" className="delete_schedule">
-                                                                                            <i className="fa fa-message"></i>
-                                                                                        </Link>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        ))} */}
+                                                                 
                                                                     <h4 className="card-title d-flex justify-content-between">
                                                                         <span>Your Appointments</span>
                                                                     </h4>

@@ -22,13 +22,14 @@ import axios from "axios";
 const Doctors = () => {
   const location = useLocation();
   // console.log("Dloc",location.state.key);
-  // const doctor= location ?location.state.key:'';
-  const [doctor, setDoctor] = useState([]);
+  const doctors= location ?location.state:'';
+  console.log("Admindoctors",doctors.doctors);
+  const [doctor, setDoctor] = useState(doctors.doctors);
   const fetchdoctor = async () => {
     try {
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doctorpersnoldetails`);
       setDoctor(response.data);
-      // console.log("setDoctor", response.data);
+      console.log("setDoctor", response.data);
       // setLoading(false);
     } catch (error) {
       console.error('Error fetching getDoctorDetail:', error);
@@ -36,8 +37,10 @@ const Doctors = () => {
     }
   };
   useEffect(() => {
+if(!doctors){
 
-    fetchdoctor();
+  fetchdoctor();
+}
 
   }, []);
   const data = [
@@ -148,12 +151,17 @@ const Doctors = () => {
       dataIndex: "name",
       render: (text, record) => (
         <>
-          <Link className="avatar mx-2" to="/admin/profile">
-            <img className="rounded-circle" src={record.image} />
+          {/* <Link className="avatar mx-2" to="/admin/doctor-list">
+            <img className="rounded-circle" src={doctor_thumb_04} />
           </Link>
-          <Link to="/admin/profile" style={{
+          <Link to="/admin/doctor-list" style={{
             color: "black"
-          }}>{text}</Link>
+          }}>{text}</Link> */}
+             
+             <div className="avatar mx-2">
+             <img className="rounded-circle" src={doctor_thumb_04} />
+            </div>
+            {text}
         </>
       ),
       sorter: (a, b) => a.name.length - b.name.length,
@@ -200,7 +208,7 @@ const Doctors = () => {
           </div>
         );
       },
-      sorter: (a, b) => a.AccountStatus.length - b.AccountStatus.length,
+      // sorter: (a, b) => a.AccountStatus.length - b.AccountStatus.length,
     },
   ];
   return (

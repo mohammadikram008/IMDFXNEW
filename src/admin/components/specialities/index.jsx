@@ -11,9 +11,12 @@ import {
   specialities_04,
   specialities_05,
 } from "../imagepath";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
+import { useHistory } from "react-router-dom";
 const Specialities = () => {
+  const history = useHistory();
   const data = [
     {
       id: 1,
@@ -61,6 +64,23 @@ const Specialities = () => {
       image: specialities_05,
     },
   ];
+  const fetchDoctorsBySpecialty = async (specialty) => {
+    try {
+      // Replace the URL with your actual backend URL
+      // const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doctors-by-specialty/${specialty}`);
+      const response = await axios.get(`http://localhost:3005/api/doctors-by-specialty/${specialty}`);
+      // setDoctors(response.data);
+      console.log("serachdoc", response.data);
+      // history.push(`/patient/search-doctor1?specialty=${response.data}`);
+
+      history.push({
+        pathname: "/admin/doctor-list",
+        state: { doctors: response.data },
+      });
+    } catch (error) {
+      console.error('Error fetching doctors:', error);
+    }
+  };
   const columns = [
     {
       title: "#",
@@ -75,7 +95,8 @@ const Specialities = () => {
           <Link className="avatar mx-2" to="/admin/profile">
             <img src={record.image} />
           </Link>
-          <Link to="/admin/profile" style={{ color: "black" }}>{text}</Link> {/* Inline CSS here */}
+          {/* <Link to="/admin/profile" style={{ color: "black" }}>{text}</Link>  */}
+          <span onClick={()=>fetchDoctorsBySpecialty(text)}>{text}</span> 
         </>
       ),
       sorter: (a, b) => a.Specialities.length - b.Specialities.length,
@@ -125,7 +146,7 @@ const Specialities = () => {
                   <li className="breadcrumb-item active">Specialities</li>
                 </ul>
               </div>
-              <div className="col-sm-5 col">
+              {/* <div className="col-sm-5 col">
                 <a
                   href="#Add_Specialities_details"
                   data-bs-toggle="modal"
@@ -133,7 +154,7 @@ const Specialities = () => {
                 >
                   Add
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
           {/* /Page Header */}
@@ -155,7 +176,7 @@ const Specialities = () => {
                       columns={columns}
                       dataSource={data}
                       rowKey={(record) => record.id}
-                      //  onChange={this.handleTableChange}
+                    //  onChange={this.handleTableChange}
                     />
                   </div>
                 </div>
@@ -210,7 +231,7 @@ const Specialities = () => {
         </div>
       </div>
 
-      <div
+      {/* <div
         className="modal fade"
         id="delete_modal"
         aria-hidden="true"
@@ -236,8 +257,8 @@ const Specialities = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div
+      </div> */}
+      {/* <div
         className="modal fade"
         id="Add_Specialities_details"
         aria-hidden="true"
@@ -277,7 +298,7 @@ const Specialities = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

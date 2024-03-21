@@ -1,10 +1,10 @@
-import React ,{useEffect,useState}from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
 import { itemRender, onShowSizeChange } from "../paginationfunction";
 import SidebarNav from "../sidebar";
-import axios from "axios"; 
+import axios from "axios";
 import {
   doctor_thumb_01,
   doctor_thumb_02,
@@ -35,7 +35,7 @@ const Appointments = () => {
   // const location = useLocation();
   // console.log("Aloc", location.state.key);
   // const Appointment = location.state.key;
-  const [Appointmentswithdetail, setAppointmentsWithDetail] = useState([]);     
+  const [Appointmentswithdetail, setAppointmentsWithDetail] = useState([]);
   const fetchAppointmentswithalldetail = async () => {
     try {
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/appointment-alldetails`);
@@ -48,7 +48,7 @@ const Appointments = () => {
     }
   };
   useEffect(() => {
-   
+
     fetchAppointmentswithalldetail();
   }, []);
   const data = [
@@ -192,9 +192,12 @@ const Appointments = () => {
           <Link className="avatar mx-2" to="/admin/profile">
             <img className="rounded-circle" src={record.image} />
           </Link>
-          <Link to="/admin/profile" className="text-decoration-none">
+          {/* <Link to="/admin/profile" className="text-decoration-none">
             {text.name}
-          </Link>
+          </Link> */}
+          <span to="/admin/profile" className="text-decoration-none">
+            {text.name}
+          </span>
         </>
       ),
       sorter: (a, b) => a.bookingDetail.doctorDetail.name.length - b.bookingDetail.doctorDetail.name.length,
@@ -213,7 +216,7 @@ const Appointments = () => {
       ),
       sorter: (a, b) => a.doctorDetail.specialization.length - b.doctorDetail.specialization.length,
     },
- 
+
 
     {
       title: "Patient Name",
@@ -221,9 +224,10 @@ const Appointments = () => {
       render: (text, record) => (
         <>
           <Link className="avatar mx-2" to="/admin/profile">
-            <img className="rounded-circle" src={record.images1} />
+            <img className="rounded-circle" src={patient4} />
           </Link>
-          <Link to="/admin/profile">{text.username}</Link>
+          {/* <Link to="/admin/profile">{text.username}</Link> */}
+          <span to="/admin/profile">{text.username}</span>
         </>
       ),
       sorter: (a, b) => a.userDetail.username.length - b.userDetail.username.length,
@@ -237,41 +241,48 @@ const Appointments = () => {
         <>
 
 
-          {text.bookingDate }
+          {text.selectedDate}
 
         </>
       ),
-      sorter: (a, b) => a.bookingDetail.bookingFor.length - b.bookingDetail.bookingFor.length,
+      sorter: (a, b) => a.bookingDetail.selectedDate.length - b.bookingDetail.selectedDate.length,
 
     },
     {
-      title: "Status",
-      dataIndex: "Status",
-      render: (text, record) => {
-        return (
-          <div className="status-toggle">
-            <input
-              id={`rating${record?.id}`}
-              className="check"
-              type="checkbox"
-              defaultChecked="false"
-            />
-            <label
-              htmlFor={`rating${record?.id}`}
-              className="checktoggle checkbox-bg"
-            >
-              checkbox
-            </label>
-          </div>
-        );
-      },
-      sorter: (a, b) => a.Status.length - b.Status.length,
-    },
-    {
       title: "Amount",
-      dataIndex: "Amount",
-      sorter: (a, b) => a.Amount.length - b.Amount.length,
+      dataIndex: "bookingDetail",
+      render: (text, record) => (
+        <>
+          {text.Fees}
+
+        </>
+      ),
+      sorter: (a, b) => a.bookingDetail.Fees.length - b.bookingDetail.Fees.length,
     },
+    // {
+    //   title: "Status",
+    //   dataIndex: "Status",
+    //   render: (text, record) => {
+    //     return (
+    //       <div className="status-toggle">
+    //         <input
+    //           id={`rating${record?.id}`}
+    //           className="check"
+    //           type="checkbox"
+    //           defaultChecked="false"
+    //         />
+    //         <label
+    //           htmlFor={`rating${record?.id}`}
+    //           className="checktoggle checkbox-bg"
+    //         >
+    //           checkbox
+    //         </label>
+    //       </div>
+    //     );
+    //   },
+    //   sorter: (a, b) => a.Status.length - b.Status.length,
+    // },
+    
   ];
   return (
     <>

@@ -49,7 +49,7 @@ const Dashboard = () => {
   };
   const fetchAppointmentswithalldetail = async () => {
     try {
-      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/appointment-alldetails`);
+      const response = await axios.get(`http://localhost:3005/api/appointment-alldetails`);
       setAppointmentsWithDetail(response.data);
       console.log("setAppointmentsWithDetail", response.data);
       // setLoading(false);

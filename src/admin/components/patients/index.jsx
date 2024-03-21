@@ -227,11 +227,13 @@ const Patients = () => {
       render: (text, record) => (
         <>
           <Link className="avatar mx-2" to="/admin/profile">
-            <img className="rounded-circle" src={record.image} />
+            <img className="rounded-circle" src={patient10} />
           </Link>
           <Link to="/admin/profile" style={{
             color: "black"
           }}>{text}</Link>
+            <span
+          >{text}</span>
         </>
       ),
       sorter: (a, b) => a.PatientName.length - b.PatientName.length,
@@ -246,6 +248,29 @@ const Patients = () => {
       title: "ID",
       dataIndex: "_id",
       sorter: (a, b) => a._id.length - b._id.length,
+    },
+    {
+      title: "Status",
+      dataIndex: "Status",
+      render: (text, record) => {
+        return (
+          <div className="status-toggle">
+            <input
+              id={`rating${record?.id}`}
+              className="check"
+              type="checkbox"
+              defaultChecked="false"
+            />
+            <label
+              htmlFor={`rating${record?.id}`}
+              className="checktoggle checkbox-bg"
+            >
+              checkbox
+            </label>
+          </div>
+        );
+      },
+      sorter: (a, b) => a.Status.length - b.Status.length,
     },
     
   ];
