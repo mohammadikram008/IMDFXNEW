@@ -15,7 +15,7 @@ const Checkout = (props) => {
   const history = useHistory()
   console.log("pro", props);
   const { selectedDateData, selectedTimeSlot, doctorDetail } = props.location.state;
-  console.log("selectedDateData",selectedDateData,"selectedTimeSlot",selectedTimeSlot,"doctorDetail",doctorDetail);
+  // console.log("selectedDateData",selectedDateData,"selectedTimeSlot",selectedTimeSlot,"doctorDetail",doctorDetail);
   const selectedDate = selectedDateData;
   const [selectedMethod, setSelectedMethod] = useState("payPal");
   const navigate = async () => {
@@ -65,6 +65,13 @@ const Checkout = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // Adjusting the state to include specific fields
 
+// const Fees = doctorDetail.once.map(item => parseInt(item.consultationfees));
+
+const Fees = parseInt(doctorDetail.once[0].consultationfees);
+// const Fees = [parseInt(doctorDetail.once[0].consultationfees)];
+
+console.log("Fees",Fees);
+
   const userId = localStorage.getItem('token');
   const [modelform, setModelForm] = useState({
     gender: '',
@@ -76,9 +83,9 @@ const Checkout = (props) => {
     selectedTimeSlot: selectedTimeSlot,
     bookingDate: bookingDate,
     userId, userId,
-    Fees:"100",
+    Fees:Fees,
   });
-console.log("newfom",modelform);
+// console.log("newfom",modelform);
   useEffect(() => {
     // Set isModalOpen to true after 2 seconds
     const timeoutId = setTimeout(() => {
@@ -97,14 +104,14 @@ console.log("newfom",modelform);
     console.log("modelform", modelform);
     try {
       // Make your API request using Axios
-      const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/bookappointment', modelform);
+      const response = await axios.post('http://localhost:3005/api/bookappointment', modelform);
       // Add any further logic here based on the API response
       toast.success("Payment Add SuccessFully");
-      console.log('API response:', response.data);
+      // console.log('API response:', response.data);
       history.push(`/patient/booking-success`)
 
     } catch (error) {
-      toast.error("Login failed. Please try again.");
+      toast.error("Booking failed. Please try again.");
       console.error('Error making API request:', error);
     }
   };
@@ -290,12 +297,12 @@ const handlechangeModel=()=>{
                           <p>{doctorDetail.education}</p>
                         </div>
                       </div>
-                      <div className="booking-doctor-right">
+                      {/* <div className="booking-doctor-right">
                         <p>
                           <i className="fas fa-circle-check" />
                           <Link to="/doctor/profile-setting">Edit</Link>
                         </p>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -343,17 +350,17 @@ const handlechangeModel=()=>{
                       <div className="booking-date-list consultation-date-list">
                         <ul>
                           <li>
-                            Consultation Fee: <span>$150.00</span>
+                            Consultation Fee: <span>${Fees}</span>
                           </li>
                           <li>
-                            Booking Fee: <span>$8.00</span>
+                            Booking Fee: <span>$00.00</span>
                           </li>
                           <li>
-                            Tax: <span>$5.00</span>
+                            Tax: <span>$00.00</span>
                           </li>
                           <li>
                             <span className="total-amount" />
-                            Total <span>$163.00</span>
+                            Total <span>${Fees}</span>
                           </li>
                         </ul>
                       </div>

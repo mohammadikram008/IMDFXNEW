@@ -2,8 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../../header";
 import Footer from "../../footer";
-import { error404 } from "../../imagepath";
-
+// import { error404 } from "../../imagepath";
+import error404 from '../../../assets/images/bg/404page.png'
 const Error404 = (props) => {
   return (
     <>
@@ -24,7 +24,7 @@ const Error404 = (props) => {
             <div className="col-lg-8 col-md-12 text-center">
               <div className="error-info">
                 <div className="error-404-img">
-                  <img src={error404} className="img-fluid" alt="" />
+                  <img src={error404} className="img-fluid error-image" alt=""  />
                   <div className="error-content error-404-content">
                     <h2>Oops! That Page Can’t Be Found.</h2>
                     <p>The page you are looking for was never existed.</p>

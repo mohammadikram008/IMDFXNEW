@@ -887,7 +887,7 @@
 /* Adjust the styles as needed */
 .inetgrate-card {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     gap: 3;
 
@@ -917,7 +917,7 @@
 
 .inetgrate-card {
     width: 100%;
-    justify-content: start;
+    justify-content: center;
 }
 
 .inetgrate-card-inner {
@@ -927,7 +927,7 @@
 .inetgrate-card-main {
     width: 100%;
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
 }
 
@@ -978,10 +978,19 @@ width: 100%;
   .disable-join-btn{
     background-color: #8fa7a0;
   }
+  .error-image{
+width: 60%;
+  }
+  .error-404-content Link{
+margin-bottom: 3rem;
+  }
 
 @media (max-width: 1440px) {
     .alldoctor-profiles {
         width: 100%;
+    }
+    .intercard{
+        margin-top: 1rem;
     }
 }
 @media (max-width: 767.98px) {

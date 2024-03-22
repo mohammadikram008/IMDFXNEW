@@ -34,6 +34,8 @@ import Header from "../../header.jsx";
 import WalletPaypal from "../checkout/WalletPaypal.jsx";
 
 const Dashboard = (props) => {
+  const userId = localStorage.getItem('token');
+
   const [count, setCount] = useState(1, 2, 3, 4);
   const [appointments, setAppointments] = useState([]);
   const [todayappointments, setTodayAppointments] = useState([]);
@@ -42,7 +44,6 @@ const Dashboard = (props) => {
   const [docAppointment, setDocAppointment] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mypatient, setMyPatient] = useState([]);
-  const userId = localStorage.getItem('token');
   const [patientStatus, setPatientStatus] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedAmount, setSelectedAmount] = useState(null);
@@ -125,6 +126,7 @@ const Dashboard = (props) => {
     }
   };
   localStorage.setItem("status",patientStatus)
+
   const fetchdoctorappointment = async () => {
 
     try {
@@ -140,9 +142,9 @@ const Dashboard = (props) => {
   const fetchpaymet = async () => {
 
     try {
-      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/mypayments/${userId}`);
+      const response = await axios.get(`http://localhost:3005/api/mypayments/${userId}`);
       setPayments(response.data);
-      console.log("setDocAppointment", response.data);
+      console.log("payment", response.data);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching appointments:', error);
@@ -172,7 +174,7 @@ const Dashboard = (props) => {
   // Calculate total fees and update each entry
   const totalFees = payment.reduce((total, entry) => {
     // Parse the fee amount as a number and add it to the total
-    const fees = Number(entry.Fees);
+    const fees = Number(entry.Amount);
     total += fees;
 
     // Add the fees property to each entry

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory ,Link} from "react-router-dom";
 
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 const WaitingPage = () => {
@@ -46,43 +46,64 @@ const WaitingPage = () => {
     }, [selectedDateTime]); // Run effect when selectedDateTime changes
 
     const staticRoomID = 'yourStaticRoomID';
-
-    function randomID(len) {
+    const APP_ID = 2137259645;
+    const SERVER_SECRET = "ee104c1fbf40ac2fc78e322a2356d319";
+    const [channelID, setChannelID] = useState(generateUniqueChannelID());
+    const [joined, setJoined] = useState(false);
+    const [error, setError] = useState(null);
+    function generateUniqueChannelID() {
+        const timestamp = Date.now();
+        return `dynamic-channel-${timestamp}`;
+      }
+      function randomID(len) {
         let result = '';
         if (result) return result;
         var chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP',
-            maxPos = chars.length,
-            i;
+          maxPos = chars.length,
+          i;
         len = len || 5;
         for (i = 0; i < len; i++) {
-            result += chars.charAt(Math.floor(Math.random() * maxPos));
+          result += chars.charAt(Math.floor(Math.random() * maxPos));
         }
         return result;
-    }
+      }
     const myMeeting = async (element) => {
-        // generate Kit Token
-        const appID = 2137259645;
-        const serverSecret = "ee104c1fbf40ac2fc78e322a2356d319";
-        const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-            appID,
-            serverSecret,
-            staticRoomID, // Use the static room ID
-            randomID(5),
-            randomID(5)
-        );
-
-        // Create instance object from Kit Token.
-        const zp = ZegoUIKitPrebuilt.create(kitToken);
-
-        // Start the call
-        zp.joinRoom({
+        const userId = randomID(5)// Generate a random user ID
+        const roomId = randomID(5) // Generate a random nonce
+        console.log("userId", userId)
+        console.log("roomId", roomId)
+        try {
+          // Generate Kit Token using the dynamic channel ID
+          const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+            APP_ID,
+            SERVER_SECRET,
+            "UM2Zb",
+            userId,
+            userId,
+            100000,
+          );
+          // Create ZegoUIKitPrebuilt instance
+          const zp = ZegoUIKitPrebuilt.create(kitToken);
+    
+          // Start the call
+    
+          zp.joinRoom({
             container: element,
-            // Remove sharedLinks code
+            showRoomTimer: true,
+            showPreJoinView: false,
+            enableCustomCallInvitationWaitingPage:true,
+            enableCustomCallInvitationDialog:true,
+            enableNotifyWhenAppRunningInBackgroundOrQuit:true,
             scenario: {
-                mode: ZegoUIKitPrebuilt.OneONoneCall,
+              mode: ZegoUIKitPrebuilt.OneONoneCall,
             },
-        });
-    };
+          });
+    
+          setJoined(true);
+        } catch (error) {
+          setError(error);
+        }
+      };
     const isCallDisabled = (selectedDateTime) => {
         const currentDateTime = new Date();
         const appointmentDateTime = new Date(selectedDateTime);
@@ -117,12 +138,13 @@ const WaitingPage = () => {
                 </div>
 
                 <div className="d-flex gap-2 justify-content-center align-items-center ">
-                    <button
+                    <Link
                         className={`px-4 py-2 bg-white text-black rounded-2 border text-uppercase`}
-                        disabled={timerCompleted} // Disable the button if timer is not completed
+                        to="/patient/time-schedule"
+                        // disabled={timerCompleted} // Disable the button if timer is not completed
                     >
                         Back to Home
-                    </button>
+                    </Link>
 
                     {/* <button 
                         className={`px-4 py-2 bg-primary text-white rounded-2 border text-uppercase`} 

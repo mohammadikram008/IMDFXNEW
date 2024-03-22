@@ -20,11 +20,11 @@ const ButtonWrapper = ({ showSpinner, setIsModalOpen, formdata }) => {
     const [{ isPending }] = usePayPalScriptReducer();
     const history = useHistory()
     // console.log("MdF",modelform);
+    console.log("MdF", formdata);
 
     const userId = localStorage.getItem('token');
     const handleFormData = async () => {
         try {
-            console.log("MdF", formdata);
             const message = "Your Transection is Successfull.your appointment has Booked"
             // Make your API request using Axios
             const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/bookappointment', formdata);
@@ -60,13 +60,13 @@ const ButtonWrapper = ({ showSpinner, setIsModalOpen, formdata }) => {
                     // like product ids and quantities
                     body: JSON.stringify({
                         intent: "CAPTURE",
-                        description: "hello oye ya kia hn",
-                        soft_descriptor: "Hii Its",
+                        description: "complete Transaction",
+                        soft_descriptor: "done",
                         purchase_units: [
                             {
                                 amount: {
                                     currency_code: "USD",
-                                    value: 100.00,
+                                    value:`${formdata.Fees}`,
                                 },
                             },
                         ],
@@ -94,7 +94,8 @@ const ButtonWrapper = ({ showSpinner, setIsModalOpen, formdata }) => {
                 }
             );
             const response = await res.json();
-            console.log(response);
+            // const amount=response.purchase_units.map((item)=>item.payments.map((newitem)=>newitem.captures))
+            // console.log("account Responce",amount);
             handleFormData()
             setIsModalOpen(true)
             // const timeoutId = setTimeout(() => {

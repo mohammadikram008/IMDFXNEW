@@ -132,7 +132,7 @@ const DoctorSidebar = ({ props }) => {
                   <span>Reviews</span>
                 </Link>
               </li> */}
-              <li
+              {/* <li
                 className={
                   pathnames.includes("/doctor/chat-doctor") ? "active bg" : ""
                 }
@@ -142,7 +142,7 @@ const DoctorSidebar = ({ props }) => {
                   <span>Message</span>
                   <small className="unread-msg">23</small>
                 </Link>
-              </li>
+              </li> */}
               <li
                 className={pathnames.includes("/medicalrecords") ? "active bg" : ""}
               >

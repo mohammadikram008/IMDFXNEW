@@ -27150,8 +27150,8 @@ input:checked+.tog-slider:before {
 
 .error-404-content {
   width: 100%;
-  position: absolute;
-  bottom: 30px;
+  /* position: absolute; */
+  /* bottom: 30px; */
 }
 
 @media (max-width: 1399.98px) {

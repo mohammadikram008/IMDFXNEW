@@ -166,11 +166,11 @@ const SearchDoctor = (props) => {
             </div>
             <div className="col-md-12 col-lg-10 col-xl-10 mt-5">
               <SearchList  props={state.doctors}/>
-              <div className="load-more text-center">
+              {/* <div className="load-more text-center">
                 <Link to="#" className="btn btn-primary btn-sm">
                   Load More
                 </Link>
-              </div>
+              </div> */}
             </div>
             <div className="col-md-0 col-lg-1 col-xl-1 ">
 

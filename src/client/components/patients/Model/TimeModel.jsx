@@ -171,7 +171,6 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
       <div
         key={index}
         className={`time-slot-container mt-3  md:flex flex-col items-center justify-center md:mx-3   w-44  `}
-      // onClick={() => handleTimeSlotClick(timeSlot)}
       >
         <button
           onClick={() => handleTimeSlotClick(timeSlot.session1.startTime)}
@@ -184,12 +183,6 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
           onClick={() => handleTimeSlotClick(timeSlot.session1.endTime)}
           className={` ${selectedTimeSlot === timeSlot.session1.endTime ? "  btn-slot-click mt-2" : " btn-slot-select mt-2"}`}
         >
-          {/* <p>Date: {timeSlot.date}</p> */}
-          {/* <p>Doctor ID: {timeSlot.doc_id}</p>
-               <p>Session 1 Start Time: {timeSlot.session1.startTime}</p>
-               <p>Session 1 End Time: {timeSlot.session1.endTime}</p>
-               <p>Session 2 Start Time: {timeSlot.session2.startTime}</p>
-               <p>Session 2 End Time: {timeSlot.session2.endTime}</p> */}
           <p> {timeSlot.session1.endTime?timeSlot.session1.endTime:"Doctor is not Avaible in this Time"}</p>
         </button>
       </div>
@@ -206,12 +199,6 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
           onClick={() => handleTimeSlotClick(timeSlot.session2.startTime)}
           className={` ${selectedTimeSlot === timeSlot.session2.startTime ? "  btn-slot-click" : " btn-slot-select "}`}
         >
-          {/* <p>Date: {timeSlot.date}</p> */}
-          {/* <p>Doctor ID: {timeSlot.doc_id}</p>
-               <p>Session 1 Start Time: {timeSlot.session1.startTime}</p>
-               <p>Session 1 End Time: {timeSlot.session1.endTime}</p>
-               <p>Session 2 Start Time: {timeSlot.session2.startTime}</p>
-               <p>Session 2 End Time: {timeSlot.session2.endTime}</p> */}
           <p> {timeSlot.session2.startTime?timeSlot.session2.startTime:"Doctor is not Avaible in this Time"}</p>
         </button>
         <button

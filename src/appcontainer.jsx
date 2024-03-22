@@ -384,6 +384,7 @@ const AppContainer = function (props) {
                 component={PatientAccounts}
               />
               <Route path="/patient/orders" exact component={Orders} />
+              <Route path="/patient/time-schedule" exact component={PatientTimeSchedule} />
               <Route
                 path="/patient/medicalrecords"
                 exact
@@ -428,7 +429,7 @@ const AppContainer = function (props) {
                 component={AvailableTiming}
               />
               <Route path="/doctor/account" exact component={Accounts} />
-              <Route path="*" exact component={Error404} />
+            
               <Route path="/office/account" exact component={OfficeAccounts} />
               <Route
                 path="/doctor/doctor-change-password"
@@ -461,12 +462,13 @@ const AppContainer = function (props) {
                 exact
                 component={ProfileSetting}
               />
-              <Route path="/doctor/review" exact component={Review} />
-              <Route
+                 <Route
                 path="/doctor/doctor-register"
                 exact
                 component={DoctorRegister}
               />
+              <Route path="/doctor/review" exact component={Review} />
+           
                <Route
                 path="/doctor/medicalrecords"
                 exact
@@ -499,7 +501,7 @@ const AppContainer = function (props) {
               />
               <Route path="/pages/terms" exact component={Terms} />
               <Route path="/pages/privacy-policy" exact component={Policy} />
-              <Route path="/patient/time-schedule" exact component={PatientTimeSchedule} />
+     
 
             
               <Route
@@ -626,7 +628,7 @@ const AppContainer = function (props) {
               <Route path="/patientdetails" exact component={Patientdetails} />
               <Route path="/loginemail" exact component={Loginemail} />
               <Route path="/index-13" exact component={HomecareHome} />
-              
+                <Route path="*" exact component={Error404} />
             </Switch>
           </div>
         )}

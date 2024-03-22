@@ -57,7 +57,8 @@ const Timeschedule = (props) => {
         fetchpatientdata()
 
     }, []);
-    const handleCall = (selectedDateTime) => {
+    const handleCall = (selectedDateTime,time) => {
+        
         const currentDateTime = new Date();
         const appointmentDateTime = new Date(selectedDateTime);
 
@@ -83,51 +84,77 @@ const Timeschedule = (props) => {
     //     myMeeting();
     // }
 
-    // Use a static room ID for all calls
-    const staticRoomID = 'yourStaticRoomID';
-
-    function randomID(len) {
-        let result = '';
-        if (result) return result;
-        var chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP',
-            maxPos = chars.length,
-            i;
-        len = len || 5;
-        for (i = 0; i < len; i++) {
-            result += chars.charAt(Math.floor(Math.random() * maxPos));
-        }
-        return result;
+    const APP_ID = 2137259645;
+    const SERVER_SECRET = "ee104c1fbf40ac2fc78e322a2356d319";
+    
+    // Function to generate a unique channel ID based on current timestamp
+    function generateUniqueChannelID() {
+      const timestamp = Date.now();
+      return `dynamic-channel-${timestamp}`;
     }
-    const myMeeting = async (element) => {
-        // generate Kit Token
-        const appID = 2137259645;
-        const serverSecret = "ee104c1fbf40ac2fc78e322a2356d319";
-        const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-            appID,
-            serverSecret,
-            staticRoomID, // Use the static room ID
-            randomID(5),
-            randomID(5)
-        );
-
-        // Create instance object from Kit Token.
-        const zp = ZegoUIKitPrebuilt.create(kitToken);
-
-        // Start the call
-        zp.joinRoom({
-            container: element,
-            // Remove sharedLinks code
-            scenario: {
-                mode: ZegoUIKitPrebuilt.OneONoneCall,
-            },
-        });
-    };
     const isCallDisabled = (selectedDateTime) => {
         const currentDateTime = new Date();
         const appointmentDateTime = new Date(selectedDateTime);
 
         return appointmentDateTime > currentDateTime;
     };
+    const [channelID, setChannelID] = useState(generateUniqueChannelID());
+    const [joined, setJoined] = useState(false);
+    const [error, setError] = useState(null);
+  
+    const myMeeting = async (element) => {
+
+      const userId = randomID(5)// Generate a random user ID
+      const roomId = randomID(5) // Generate a random nonce
+      console.log("userId", userId)
+      console.log("roomId", roomId)
+     
+      try {
+        // Generate Kit Token using the dynamic channel ID
+        const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+          APP_ID,
+          SERVER_SECRET,
+          "UM2Zb",
+          userId,
+          userId,
+          100000,
+        );
+        // Create ZegoUIKitPrebuilt instance
+        const zp = ZegoUIKitPrebuilt.create(kitToken);
+  
+        // Start the call
+  
+        zp.joinRoom({
+          container: element,
+          showRoomTimer: true,
+          showPreJoinView: false,
+          enableCustomCallInvitationWaitingPage:true,
+          enableCustomCallInvitationDialog:true,
+          enableNotifyWhenAppRunningInBackgroundOrQuit:true,
+          scenario: {
+            mode: ZegoUIKitPrebuilt.OneONoneCall,
+          },
+        });
+  
+        setJoined(true);
+      } catch (error) {
+        setError(error);
+      }
+    };
+    function randomID(len) {
+      let result = '';
+      if (result) return result;
+      var chars = '12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP',
+        maxPos = chars.length,
+        i;
+      len = len || 5;
+      for (i = 0; i < len; i++) {
+        result += chars.charAt(Math.floor(Math.random() * maxPos));
+      }
+      return result;
+    }
+    const time=docAppointment.map((item)=>item.appointmentDetails.selectedTimeSlot)
+    console.log("Time",time);
     return (
         <div>
             <Header {...props} />
@@ -175,8 +202,10 @@ const Timeschedule = (props) => {
                                                                                 <div className="d-flex justify-content-between align-self-end  align-items-center gap-2">
                                                                                     <button className="px-4 py-2 bg-white text-dark rounded-2 border">Cancel</button>
                                                                                     <button onClick={() =>
-                                                                                        handleCall(item.appointmentDetails.selectedDate)
-                                                                                    } className={`px-4 py-2 bg-primary  text-white rounded-2 border delete_schedule mx-3 ${isCallDisabled(item.appointmentDetails.selectedDate + ' ' + item.appointmentDetails.selectedTimeSlot) ? 'disabled' : ''}`}>Start</button>
+                                                                                        handleCall(item.appointmentDetails.selectedDate,item.appointmentDetails.selectedTimeSlot)
+                                                                                    } className={`px-4 py-2 bg-primary  text-white rounded-2 border delete_schedule mx-3 ${isCallDisabled(item.appointmentDetails.selectedDate + ' ' + item.appointmentDetails.selectedTimeSlot) ? 'disabled' : ''}`}>
+                                                                                        Start</button>
+                                                                                        
                                                                                 </div>
                                                                             </div>
                                                                         ))}

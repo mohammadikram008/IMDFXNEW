@@ -130,7 +130,7 @@ const AppointmentList = (props) => {
             <img className="rounded-circle" src={patient2} />
           </Link>
           {/* <Link to="/admin/profile">{text.username}</Link> */}
-          <p>{text.username}</p>
+          <p>{record.username}</p>
         </>
       ),
       sorter: (a, b) => a.userDetail.username.length - b.userDetail.username.length,

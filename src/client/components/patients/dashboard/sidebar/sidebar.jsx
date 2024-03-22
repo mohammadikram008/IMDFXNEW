@@ -69,13 +69,13 @@ export const DashboardSidebar = ({ props }) => {
             </li>
             */
             }
-            <li className={pathname.includes("/patient-chat") ? "active bg " : ""}>
+            {/* <li className={pathname.includes("/patient-chat") ? "active bg " : ""}>
               <Link to="/patient/patient-chat">
                 <i className="fas fa-comments"></i>
                 <span>Message</span>
                 <small className="unread-msg">23</small>
               </Link>
-            </li>
+            </li> */}
             {
               /*
               

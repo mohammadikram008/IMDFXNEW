@@ -121,7 +121,7 @@ const SearchList = (props) => {
   const handleTimePop = (id) => {
     console.log("i", id);
     if (loginId) {
-      if (status ==="false") {
+      if (status === "false") {
         toast.error("Your Account has been suspended");
       } else {
 
@@ -350,24 +350,24 @@ const SearchList = (props) => {
                         Pay online and get up to 50% off
                       </div>
                     </div>
-                    <div className="position-relative border border-secondary  mx-2 rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
-                <h4 className="fs-5 fw-normal ">
-                Online Vedio consultant  
-                </h4>
-                <div className="d-flex my-4 justify-content-center align-items-center">
-                  <p className="text-gray-600">  <i className="fas fa-map-marker-alt"></i>Rawalpinid, pakistan {""}</p>
-                  <p className="mx-4">   <i className="fas fa-envelope"></i>IMDFX@gmail.com</p>
-                </div>
-  
-                <div style={{
-                  backgroundColor: "blue",
-                  left: '0px',
-                  right: '0px',
-                  bottom: '0px',
-                }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
-                  Pay online and get up to 50% off
-                </div>
-              </div>
+                    <div className="position-relative border border-secondary intercard  mx-2 rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
+                      <h4 className="fs-5 fw-normal ">
+                        Online Video consultant
+                      </h4>
+                      <div className="d-flex my-4 justify-content-center align-items-center">
+                        <p className="mx-4 text-success" >   <i className=" success"></i>Time:Available Today {""}    </p>
+                        <p className="text-gray-600">  <i className=""></i>Fees:$200</p>
+                      </div>
+
+                      <div style={{
+                        backgroundColor: "blue",
+                        left: '0px',
+                        right: '0px',
+                        bottom: '0px',
+                      }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
+                        Pay online and get up to 50% off
+                      </div>
+                    </div>
 
 
                   </div>

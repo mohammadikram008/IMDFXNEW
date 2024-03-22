@@ -3,11 +3,12 @@ import {
     PayPalButtons,
     usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import React, { useState } from "react";
 import { generateAccessToken } from "./generateAccessToken";
 import Modal from "./Modal";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 // This value is from the props in the UI
 const style = { layout: "vertical" };
@@ -17,6 +18,7 @@ const ButtonWrapper = ({ showSpinner, setIsModalOpen, pricing, setSelectedAmount
     const [{ isPending }] = usePayPalScriptReducer();
     const history = useHistory()
 
+    const userId = localStorage.getItem('token');
     async function createOrder() {
         try {
             const accessToken = await generateAccessToken();
@@ -47,6 +49,7 @@ const ButtonWrapper = ({ showSpinner, setIsModalOpen, pricing, setSelectedAmount
                 }
             );
             const response = await res.json();
+            console.log("create",response);
             return response.id;
         } catch (error) {
             console.log(error);
@@ -67,8 +70,15 @@ const ButtonWrapper = ({ showSpinner, setIsModalOpen, pricing, setSelectedAmount
                 }
             );
             const response = await res.json();
-            console.log(response);
+            console.log("onApprove",response);
+            const message = "Your Transection Add Successfull"
+            // Make your API request using Axios
 
+           const Amount=pricing;
+            const resp = await axios.post(`http://localhost:3005/api/addpaymentwallet/${userId}`, {Amount});
+            // const notify = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/usertransectionnotification/${userId}`, { message });
+            // console.log("walet topup",response);
+            toast.success("Payment Add SuccessFully");
 
             setIsModalOpen(true)
             const timeoutId = setTimeout(() => {
