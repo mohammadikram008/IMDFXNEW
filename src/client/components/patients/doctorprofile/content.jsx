@@ -2,8 +2,8 @@ import React from "react";
 import { IMG01, IMG02, IMG03, IMG04, IMG07, IMG08 } from "./img";
 import { patient, patient1, patient2 } from "../../Pharmacy/image";
 import { Link } from "react-router-dom";
-const Content = ({doctorDetail}) => {
-  console.log("con",doctorDetail);
+const Content = ({ doctorDetail }) => {
+  console.log("con", doctorDetail);
   return (
     <div>
       <div className="card doctor-profile-overview">
@@ -35,14 +35,14 @@ const Content = ({doctorDetail}) => {
                   Reviews
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   className="nav-link"
                   to="#doc_business_hours"
                   data-bs-toggle="tab">
                   Business Hours
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </nav>
           {/* /Tab Menu */}
@@ -83,12 +83,12 @@ const Content = ({doctorDetail}) => {
                           <div className="experience-content">
                             <div className="timeline-content">
                               <Link to="#/" className="name">
-                              {doctorDetail.college}
+                                {doctorDetail.college}
                                 {/* American Dental Medical University */}
                               </Link>
                               <div>
-                              {doctorDetail.education}
-</div>
+                                {doctorDetail.education}
+                              </div>
                               {/* <span className="time">1998 - 2003</span> */}
                             </div>
                           </div>
@@ -126,7 +126,7 @@ const Content = ({doctorDetail}) => {
                                 Glowing Smiles Family Dental Clinic
                               </Link>
                               <span className="time">
-                             {doctorDetail.yearofexperience}
+                                {doctorDetail.yearofexperience}
                               </span>
                             </div>
                           </div>
@@ -599,7 +599,7 @@ const Content = ({doctorDetail}) => {
               {/* Write Review */}
               <div className="write-review">
                 <h4>
-                  Write a review for <strong>Dr. Darren Elder</strong>
+                  Write a review for <strong>{doctorDetail.name}</strong>
                 </h4>
                 {/* Write Review Form */}
                 <form>

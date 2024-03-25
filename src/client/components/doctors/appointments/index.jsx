@@ -150,13 +150,13 @@ const Appointments = (props) => {
                           </div>
                         </div>
                         <div className="appointment-action">
-                          <Link
+                          {/* <Link
                             to="#0"
                             className="btn btn-sm bg-info-light"
                             onClick={handleShow}
                           >
                             <i className="far fa-eye"></i> View
-                          </Link>
+                          </Link> */}
                           <button className="btn btn-sm bg-success-light" onClick={() => handleAcceptChange(item.appointmentDetails)}>
                             <i className="fas fa-check"></i> Accept
                           </button>

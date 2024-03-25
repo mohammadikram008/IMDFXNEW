@@ -57,7 +57,7 @@ const AppointmentTab = () => {
                         <td>
                           <h2 className="table-avatar">
                             <Link
-                              to="/doctor/patient-profile"
+                              to="/doctor/*"
                               className="avatar avatar-sm me-2"
                             >
                               <img
@@ -66,9 +66,9 @@ const AppointmentTab = () => {
                                 alt="User Image"
                               />
                             </Link>
-                            <Link to="/doctor/patient-profile">
+                           
                               {item.PatietnDetails.username}
-                            </Link>
+                       
                           </h2>
                         </td>
                         {item.bookingdetails.map((app, index) => (

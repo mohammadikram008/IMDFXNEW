@@ -6467,7 +6467,7 @@ html.menu-opened body {
 }
 @media (max-width: 767.98px) {
   .nav-tabs.nav-justified > li > a.active {
-    border-color: transparent transparent transparent #20c0f3;
+    /* border-color: transparent transparent transparent #20c0f3; */
     border-left-width: 2px !important;
   }
 }

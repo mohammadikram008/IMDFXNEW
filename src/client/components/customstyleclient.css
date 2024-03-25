@@ -349,7 +349,11 @@
 .premium-div h2 {
     font-style: normal;
     font-size: medium;
+    width: 9rem;
 
+}
+.time-card{
+    border: 1px solid black !important;
 }
 
 .text-div {
@@ -363,7 +367,13 @@
     text-align: center;
     margin: 0px;
 }
-
+.calling-btn{
+    margin-top: -2rem;
+    width: 12rem;
+}
+.calling-btn button{
+    width: 12rem;
+}
 .view-proflie-btn {
     width: 40%;
     border: none;
@@ -942,21 +952,23 @@
 .modal-footer {
     margin-top: 1rem;
 }
-.doctor-widget{
-width: 100%;
+
+.doctor-widget {
+    width: 100%;
 }
-.report-main-div{
+
+.report-main-div {
     flex-direction: column;
 }
 
 .clinic-services-timer {
     display: flex;
-  }
-  
-  .timer-box {
+}
+
+.timer-box {
     display: flex;
     /* flex-direction: column; */
-    align-items:center;
+    align-items: center;
     justify-content: center;
     border: 1px solid black;
     padding: .5rem;
@@ -964,35 +976,86 @@ width: 100%;
     width: 7rem;
     height: 5rem;
     margin-right: 10px;
-  }
-  
-  .timer-text {
-    font-size: 28px; /* Adjust the font size as needed */
-    text-shadow: 1px 1px 2px rgba(7, 7, 7, 0.5); /* Add shadow */
-  }
-  
-  .timer-box p {
-    margin: 0; /* Remove default margin */
-    font-size: 20px; /* Adjust the font size as needed */
-  }
-  .disable-join-btn{
+}
+
+.timer-text {
+    font-size: 28px;
+    /* Adjust the font size as needed */
+    text-shadow: 1px 1px 2px rgba(7, 7, 7, 0.5);
+    /* Add shadow */
+}
+
+.timer-box p {
+    margin: 0;
+    /* Remove default margin */
+    font-size: 20px;
+    /* Adjust the font size as needed */
+}
+
+.disable-join-btn {
     background-color: #8fa7a0;
-  }
-  .error-image{
-width: 60%;
-  }
-  .error-404-content Link{
-margin-bottom: 3rem;
-  }
+}
+
+.error-image {
+    width: 60%;
+}
+
+.error-404-content Link {
+    margin-bottom: 3rem;
+}
+
+.single-innner-card {
+    /* width: 19rem; */
+    height: 5rem;
+
+
+}
+
+.fees-text {
+    font-weight: 800;
+    color: black;
+}
+
+.single-innner-card h6 {
+    font-weight: 800;
+    color: black;
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
+
+.single-innner-card-2nd {
+    height: 6.4rem;
+}
+
+.single-innner-card-2nd-once {
+    width: 19rem;
+    height: 6.5rem;
+}
+
+.single-innner-card-2nd-once h6 {
+    font-weight: 800;
+    color: black;
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
+
+.single-innner-card-2nd h6 {
+    font-weight: 800;
+    color: black;
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
 
 @media (max-width: 1440px) {
     .alldoctor-profiles {
         width: 100%;
     }
-    .intercard{
+
+    .intercard {
         margin-top: 1rem;
     }
 }
+
 @media (max-width: 767.98px) {
     .header .header-nav .logo img {
         height: 30px;
@@ -1052,12 +1115,13 @@ margin-bottom: 3rem;
         align-items: center;
     }
 
-    .doctor-widget{
+    .doctor-widget {
         width: 100%;
-        }
-        .alldoctor-profiles {
-            width: 100%;
-        }
+    }
+
+    .alldoctor-profiles {
+        width: 100%;
+    }
 }
 
 .doctor-information-inner-div h1 {

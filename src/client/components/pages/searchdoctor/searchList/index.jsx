@@ -7,6 +7,7 @@ import MyComponent from "./mycomponent";
 import { doc_1 } from "./img";
 import { FaHeart } from "react-icons/fa6"; import { AiOutlineCheckCircle } from "react-icons/ai";
 import TimeModel from "../../../patients/Model/TimeModel";
+import { IoMdVideocam } from "react-icons/io";
 
 import { ToastContainer, toast } from "react-toastify";
 const SearchList = (props) => {
@@ -190,12 +191,11 @@ const SearchList = (props) => {
       </style>
       {combinedData && combinedData.length > 0 ?
         (combinedData.map((doctor, index) => (
-          <div key={index} className="h-auto p-5  background-box mb-4  alldoctor-profiles ">
+          <div key={index} className="h-auto   background-box mb-4  alldoctor-profiles ">
             <div className="card-body d-flex flex-column  justify-content-center align-items-center gap-5">
               <div className="doctor-widget justify-content-between  ">
                 <div className="doc-info-left">
                   <div className="doctor-img rounded-circle position-relative ">
-
                     {/* <img src={`http://localhost:3005/uploads//dafb82ac1615a4fcec977ac6db88bb61`} className="img-fluid" alt="User" /> */}
                     {/* <img src={`${imageUrl}/${doctor.image}`} className="img-fluid" alt="User" /> */}
                     <img src={doc_1} className="img-fluid rounded-circle" alt="User" />
@@ -204,9 +204,9 @@ const SearchList = (props) => {
                   </div>
                   <div className="basic-data">
                     <div className="d-flex gap-2 justify-content-start align-items-center  premium-div">
-                      <h2 className=" mb-1">{doctor.name}
+                      <h2 className="fw-bold mb-1" >{doctor.name}
                       </h2>
-                      <div className="text-success d-flex gap-1 ">
+                      <div className=" d-flex gap-1 " style={{color:"#008000"}}>
 
                         Active
                       </div>
@@ -217,8 +217,8 @@ const SearchList = (props) => {
                         </div>
                       </div>
                     </div>
-                    <p className="">Specialization: {doctor.specialization}</p>
-                    <h5 className="">{doctor.education}</h5>
+                    <span className=" py-4">Specialization: {doctor.specialization}</span>
+                    <span className="py-4">{doctor.education}</span>
                     {/* Rating Stars */}
                     <div className="rating">
                       {/* Include your rating stars here */}
@@ -228,7 +228,7 @@ const SearchList = (props) => {
                       <div className=" d-flex flex-column align-items-start gap-1" >
                         <h1 style={{
                           fontSize: "15px"
-                        }} className="  fw-medium text-secondary">Under 15 minutes</h1>
+                        }} className="  fw-bold ">Under 15 minutes</h1>
                         <h5>WAIT TIME</h5>
                       </div>
                       <div
@@ -239,7 +239,7 @@ const SearchList = (props) => {
                       <div className=" d-flex flex-column align-items-start gap-1 ">
                         <h1 style={{
                           fontSize: "15px"
-                        }} className="   fw-medium text-secondary">
+                        }} className="   fw-bold">
                           {doctor.yearofexperience} years
                         </h1>
                         <h5>EXPERIENCE</h5>
@@ -252,7 +252,7 @@ const SearchList = (props) => {
                       <div className=" d-flex flex-column align-items-start gap-1 ">
                         <h1 style={{
                           fontSize: "15px"
-                        }} className=" fw-medium text-secondary">
+                        }} className=" fw-bold">
                           98% (542)
                         </h1>
                         <h5>SATISFIED</h5>
@@ -301,15 +301,16 @@ const SearchList = (props) => {
                 <>
                   <div className="inetgrate-card-main">
                     <div className="  inetgrate-card ">
+
                       {/* Inner Card */}
-                      <div className="position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
+                      {/* <div className="single-innner-card   position-relative border border-secondary  rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
                         <h4 className="fs-5 fw-normal ">
-                          {/* Inetgrate medical Hospital DHA */}
+                  
                           Employee at {doctor.officeDetail.officename} Hospital
                         </h4>
                         <div className="d-flex my-4 justify-content-center align-items-center">
                           <p className="text-gray-600">  <i className="fas fa-map-marker-alt"></i> <span className="mx-1">{doctor.officeDetail.city}, {doctor.officeDetail.country} {""}</span></p>
-                          {/* <p className="mx-4">   <i className="fas fa-envelope"></i>{doctor.officeDetail.email}</p> */}
+                   
                           <p className="mx-2">Fees:{doctor.once.map((item, i) => (item.consultationfees))}</p>
                         </div>
                         <div style={{
@@ -320,22 +321,40 @@ const SearchList = (props) => {
                         }} className="text-white btn-effect position-absolute rounded-bottom d-flex justify-content-center align-items-center">
                           Pay online and get up to 50% off
                         </div>
+                      </div> */}
+                      <div className="single-innner-card   position-relative border border-secondary  rounded-4 d-flex flex-column   rounded-md  ">
+                        <h6 className=" ">
+                  
+                          Employee at {doctor.officeDetail.officename} Hospital
+                        </h6>
+                        <div className="d-flex  mx-3">
+                          <p className="text-gray-600 " style={{color:"#008000"}}>  <i className="fas fa-map-marker-alt"></i> <span className="mx-1">{doctor.officeDetail.city}, {doctor.officeDetail.country} {""}</span></p>
+                   
+                          <p className="mx-2 fees-text">Fees:{doctor.once.map((item, i) => (item.consultationfees))}</p>
+                        </div>
+                        {/* <div style={{
+                          backgroundColor: "blue",
+                          left: '0px',
+                          right: '0px',
+                          bottom: '0px',
+                        }} className="text-white btn-effect position-absolute rounded-bottom-4 d-flex justify-content-center align-items-center">
+                          Pay online and get up to 50% off
+                        </div> */}
                       </div>
-
 
                     </div>
                   </div>
                 </>
                 :
-                <div className="inetgrate-card-main">
+                <div className="inetgrate-card-main ">
                   <div className="  inetgrate-card ">
 
                     {/* Inner Card */}
-                    <div className="position-relative border border-secondary    rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
-                      <h4 className="fs-5 fw-normal ">
+                    <div className="single-innner-card-2nd  position-relative border border-secondary    rounded-2 d-flex flex-column   rounded-md  ">
+                      <h6 className=" ">
                         Self Employee
-                      </h4>
-                      <div className="d-flex my-4 justify-content-center align-items-center">
+                      </h6>
+                      <div className="d-flex mx-3">
                         <p className="text-gray-600">Condition treatment: {" "}{doctor.conditionstreated} </p>
                         {/* <p className="mx-4">   <i className="fas fa-envelope"></i>{doctor.email}</p> */}
                         <p className="mx-2">Fees:{doctor.once.map((item, i) => (item.consultationfees))}</p>
@@ -350,12 +369,12 @@ const SearchList = (props) => {
                         Pay online and get up to 50% off
                       </div>
                     </div>
-                    <div className="position-relative border border-secondary intercard  mx-2 rounded-2 d-flex flex-column justify-content-center align-items-center  rounded-md px-3 py-2 ">
-                      <h4 className="fs-5 fw-normal ">
-                        Online Video consultant
-                      </h4>
-                      <div className="d-flex my-4 justify-content-center align-items-center">
-                        <p className="mx-4 text-success" >   <i className=" success"></i>Time:Available Today {""}    </p>
+                    <div className="single-innner-card-2nd-once mx-3 position-relative border border-secondary   rounded-2 d-flex flex-column   rounded-md ">
+                      <h6 className=" ">
+                      <IoMdVideocam  size={22} color="green"/> Online Video consultant
+                      </h6>
+                      <div className="d-flex ">
+                        <p className="mx-3 color-green" style={{color:"#008000"}} >    <i className=" success"></i>Time:Available Today {""}    </p>
                         <p className="text-gray-600">  <i className=""></i>Fees:$200</p>
                       </div>
 

@@ -7262,7 +7262,7 @@ html.menu-opened body {
 
 @media (max-width: 767.98px) {
   .nav-tabs.nav-justified>li>a.active {
-    border-color: transparent transparent transparent #20c0f3;
+    /* border-color: transparent transparent transparent #20c0f3; */
     border-left-width: 2px !important;
   }
 }
@@ -7310,11 +7310,11 @@ html.menu-opened body {
 }
 
 .nav-tabs.nav-tabs-bottom>li>a.active,
-.nav-tabs.nav-tabs-bottom>li>a.active:hover,
+
 .nav-tabs.nav-tabs-bottom>li>a.active:focus {
   border-bottom-width: 2px;
   border-color: transparent;
-  border-bottom-color: #20c0f3;
+  border-bottom-color: black;
   background-color: transparent;
   -webkit-transition: none 0s ease 0s;
   -ms-transition: none 0s ease 0s;
@@ -7324,9 +7324,9 @@ html.menu-opened body {
 @media (max-width: 767.98px) {
 
   .nav-tabs.nav-tabs-bottom>li>a.active,
-  .nav-tabs.nav-tabs-bottom>li>a.active:hover,
+  
   .nav-tabs.nav-tabs-bottom>li>a.active:focus {
-    background-color: #f5f5f5;
+    background-color: black;
   }
 }
 
@@ -7389,8 +7389,8 @@ html.menu-opened body {
 .nav-tabs.nav-tabs-solid>li a.active,
 .nav-tabs.nav-tabs-solid>li a.active:hover,
 .nav-tabs.nav-tabs-solid>li a.active:focus {
-  background-color: #20c0f3;
-  border-color: #20c0f3;
+  background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
+  /* border-color: #20c0f3; */
   color: #ffffff;
 }
 
@@ -7412,16 +7412,16 @@ html.menu-opened body {
 .nav-tabs.nav-tabs-solid>li>a.active,
 .nav-tabs.nav-tabs-solid>li>a.active:hover,
 .nav-tabs.nav-tabs-solid>li>a.active:focus {
-  background-color: #20c0f3;
-  border-color: #20c0f3;
+  background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
+  /* border-color: #20c0f3; */
   color: #ffffff;
 }
 
 .nav-tabs.nav-tabs-solid .active>a,
 .nav-tabs.nav-tabs-solid .active a:hover,
 .nav-tabs.nav-tabs-solid .active a:focus {
-  background-color: #20c0f3;
-  border-color: #20c0f3;
+  background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%);
+  /* border-color: #20c0f3; */
   color: #ffffff;
 }
 
@@ -13537,7 +13537,7 @@ call-btn:focus {
 
 .user-tabs .nav-tabs>li>a:hover {
   background-color: unset;
-  color: #20c0f3;
+  color: black;
 }
 
 @media (max-width: 767.98px) {
@@ -13569,19 +13569,19 @@ call-btn:focus {
 }
 
 .user-tabs .nav-tabs.nav-tabs-bottom>li>a.active,
-.user-tabs .nav-tabs.nav-tabs-bottom>li>a.active:hover,
+
 .user-tabs .nav-tabs.nav-tabs-bottom>li>a.active:focus {
   border-bottom-width: 3px;
-  color: #20c0f3;
+  color: black;
 }
 
 @media (max-width: 767.98px) {
 
   .user-tabs .nav-tabs.nav-tabs-bottom>li>a.active,
-  .user-tabs .nav-tabs.nav-tabs-bottom>li>a.active:hover,
+
   .user-tabs .nav-tabs.nav-tabs-bottom>li>a.active:focus {
     border-left-width: 2px;
-    color: #20c0f3;
+    color: black;
   }
 }
 

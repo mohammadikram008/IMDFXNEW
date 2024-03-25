@@ -36,7 +36,7 @@ const DoctorDashboard = (props) => {
   const fetchmypatient = async () => {
     try {
 
-
+      setLoading(true);
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/mypatient/${docId}`);
       setMyPatient(response.data);
       // console.log("setMyPatient",response.data);
@@ -49,9 +49,10 @@ const DoctorDashboard = (props) => {
   const fetchpatientdata = async () => {
 
     try {
+      setLoading(true);
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getDoctorDetail/${docId}`);
       setDoctor(response.data);
-      const doctordata=response.data
+      const doctordata = response.data
       setDoctorStatus(doctordata.status);
       // console.log("status", doctordata.status);
 
@@ -63,6 +64,7 @@ const DoctorDashboard = (props) => {
   };
   const fetchTodayAppointments = async () => {
     try {
+      setLoading(true);
       // const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/gettodayappointments/${userId}`);
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/gettodayappointments/${userId}`);
       setTodayAppointments(response.data);
@@ -79,6 +81,11 @@ const DoctorDashboard = (props) => {
     fetchmypatient();
     fetchTodayAppointments();
   }, []);
+
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
+
   console.log("appointments", appointments);
   // Get current date in the format "DD, MMM YYYY"
   const currentDate = new Date().toLocaleDateString('en-US', {
@@ -94,228 +101,238 @@ const DoctorDashboard = (props) => {
       {/* <Breadcrumbs /> */}
       <div className="content">
         <div className="container-fluid">
-        {
-        doctorStatus && doctorStatus?
-          <div className="row mt-5">
-            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
-            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
-              <StickyBox offsetTop={20} offsetBottom={20}>
-                <DoctorSidebar props={Doctor} />
-              </StickyBox>
-            </div>
-            <div className="col-md-6 col-lg-6 col-xl-6">
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="card dash-card">
-                    <div className="card-body">
-                      <div className="row">
-                        <div className="col-md-12 col-lg-4">
-                          <div className="dash-widget dct-border-rht">
-                            <ProgressBar
-                              width={8}
-                              radius={40}
-                              progress={75}
-                              rotate={-183}
-                              strokeWidth={6}
-                              strokeColor="#da3f81"
-                              strokeLinecap="square"
-                              trackStrokeWidth={8}
-                              trackStrokeColor="#e6e6e6"
-                              trackStrokeLinecap="square"
-                              pointerRadius={0}
-                              initialAnimation={true}
-                              transition="1.5s ease 0.5s"
-                              trackTransition="0s ease"
-                            >
-                              <div className="indicator-volume">
-                                <img
-                                  src={Icon01}
-                                  className="img-fluid "
-                                  alt="Patient"
-                                  style={{
-                                    position: "relative",
-                                    top: "-83px",
-                                    left: "45px",
-                                  }}
-                                />
+          {
+            loading && loading ? "Loading ...." :
+              <>
+
+               { doctorStatus && doctorStatus ?
+                <div className="row mt-5">
+                  <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
+                  <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
+                    <StickyBox offsetTop={20} offsetBottom={20}>
+                      <DoctorSidebar props={Doctor} />
+                    </StickyBox>
+                  </div>
+                  <div className="col-md-6 col-lg-6 col-xl-6">
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="card dash-card">
+                          <div className="card-body">
+                            <div className="row">
+                              <div className="col-md-12 col-lg-4">
+                                <div className="dash-widget dct-border-rht">
+                                  <ProgressBar
+                                    width={8}
+                                    radius={40}
+                                    progress={75}
+                                    rotate={-183}
+                                    strokeWidth={6}
+                                    strokeColor="#da3f81"
+                                    strokeLinecap="square"
+                                    trackStrokeWidth={8}
+                                    trackStrokeColor="#e6e6e6"
+                                    trackStrokeLinecap="square"
+                                    pointerRadius={0}
+                                    initialAnimation={true}
+                                    transition="1.5s ease 0.5s"
+                                    trackTransition="0s ease"
+                                  >
+                                    <div className="indicator-volume">
+                                      <img
+                                        src={Icon01}
+                                        className="img-fluid "
+                                        alt="Patient"
+                                        style={{
+                                          position: "relative",
+                                          top: "-83px",
+                                          left: "45px",
+                                        }}
+                                      />
+                                    </div>
+                                  </ProgressBar>
+                                  <div
+                                    className="dash-widget-info"
+                                    style={{ position: "relative", top: "-18px" }}
+                                  >
+                                    <h6>Total Patient</h6>
+                                    <h3>{mypatient && mypatient.length}</h3>
+                                    <p className="text-muted">Till Today</p>
+                                  </div>
+                                </div>
                               </div>
-                            </ProgressBar>
-                            <div
-                              className="dash-widget-info"
-                              style={{ position: "relative", top: "-18px" }}
-                            >
-                              <h6>Total Patient</h6>
-                              <h3>{mypatient && mypatient.length}</h3>
-                              <p className="text-muted">Till Today</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-md-12 col-lg-4">
-                          <div className="dash-widget dct-border-rht">
-                            <ProgressBar
-                              width={8}
-                              radius={40}
-                              progress={65}
-                              rotate={-183}
-                              strokeWidth={6}
-                              strokeColor="#68dda9"
-                              strokeLinecap="square"
-                              trackStrokeWidth={8}
-                              trackStrokeColor="#e6e6e6"
-                              trackStrokeLinecap="square"
-                              pointerRadius={0}
-                              initialAnimation={true}
-                              transition="1.5s ease 0.5s"
-                              trackTransition="0s ease"
-                            >
-                              <div className="indicator-volume">
-                                <img
-                                  src={Icon02}
-                                  className="img-fluid"
-                                  alt="Patient"
-                                  style={{
-                                    position: "relative",
-                                    top: "-83px",
-                                    left: "45px",
-                                  }}
-                                />
+                              <div className="col-md-12 col-lg-4">
+                                <div className="dash-widget dct-border-rht">
+                                  <ProgressBar
+                                    width={8}
+                                    radius={40}
+                                    progress={65}
+                                    rotate={-183}
+                                    strokeWidth={6}
+                                    strokeColor="#68dda9"
+                                    strokeLinecap="square"
+                                    trackStrokeWidth={8}
+                                    trackStrokeColor="#e6e6e6"
+                                    trackStrokeLinecap="square"
+                                    pointerRadius={0}
+                                    initialAnimation={true}
+                                    transition="1.5s ease 0.5s"
+                                    trackTransition="0s ease"
+                                  >
+                                    <div className="indicator-volume">
+                                      <img
+                                        src={Icon02}
+                                        className="img-fluid"
+                                        alt="Patient"
+                                        style={{
+                                          position: "relative",
+                                          top: "-83px",
+                                          left: "45px",
+                                        }}
+                                      />
+                                    </div>
+                                  </ProgressBar>
+                                  <div
+                                    className="dash-widget-info"
+                                    style={{ position: "relative", top: "-18px" }}
+                                  >
+                                    <h6>Today Patient</h6>
+                                    <h3>
+                                      {todayAppointmentsFiltered ? todayAppointmentsFiltered.length : "0"}
+                                    </h3>
+                                    {/* <p className="text-muted"> { todayAppointmentsFiltered ? todayAppointmentsFiltered : "12 mar 2019"}</p> */}
+                                    <p className="text-muted"> {currentDate}</p>
+                                  </div>
+                                </div>
                               </div>
-                            </ProgressBar>
-                            <div
-                              className="dash-widget-info"
-                              style={{ position: "relative", top: "-18px" }}
-                            >
-                              <h6>Today Patient</h6>
-                              <h3>
-                                {todayAppointmentsFiltered ? todayAppointmentsFiltered.length : "0"}
-                              </h3>
-                              {/* <p className="text-muted"> { todayAppointmentsFiltered ? todayAppointmentsFiltered : "12 mar 2019"}</p> */}
-                              <p className="text-muted"> {currentDate}</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-md-12 col-lg-4">
-                          <div className="dash-widget">
-                            <ProgressBar
-                              width={8}
-                              radius={40}
-                              progress={50}
-                              rotate={-183}
-                              strokeWidth={6}
-                              strokeColor="#1b5a90"
-                              strokeLinecap="square"
-                              trackStrokeWidth={8}
-                              trackStrokeColor="#e6e6e6"
-                              trackStrokeLinecap="square"
-                              pointerRadius={0}
-                              initialAnimation={true}
-                              transition="1.5s ease 0.5s"
-                              trackTransition="0s ease"
-                            >
-                              <div className="indicator-volume">
-                                <img
-                                  src={Icon03}
-                                  className="img-fluid"
-                                  alt="Patient"
-                                  style={{
-                                    position: "relative",
-                                    top: "-83px",
-                                    left: "45px",
-                                  }}
-                                />
+                              <div className="col-md-12 col-lg-4">
+                                <div className="dash-widget">
+                                  <ProgressBar
+                                    width={8}
+                                    radius={40}
+                                    progress={50}
+                                    rotate={-183}
+                                    strokeWidth={6}
+                                    strokeColor="#1b5a90"
+                                    strokeLinecap="square"
+                                    trackStrokeWidth={8}
+                                    trackStrokeColor="#e6e6e6"
+                                    trackStrokeLinecap="square"
+                                    pointerRadius={0}
+                                    initialAnimation={true}
+                                    transition="1.5s ease 0.5s"
+                                    trackTransition="0s ease"
+                                  >
+                                    <div className="indicator-volume">
+                                      <img
+                                        src={Icon03}
+                                        className="img-fluid"
+                                        alt="Patient"
+                                        style={{
+                                          position: "relative",
+                                          top: "-83px",
+                                          left: "45px",
+                                        }}
+                                      />
+                                    </div>
+                                  </ProgressBar>
+                                  <div
+                                    className="dash-widget-info"
+                                    style={{ position: "relative", top: "-18px" }}
+                                  >
+                                    <h6>Total Appoinments</h6>
+                                    <h3>{appointments && appointments.length}</h3>
+                                    <p className="text-muted">{currentDate}</p>
+                                  </div>
+                                </div>
                               </div>
-                            </ProgressBar>
-                            <div
-                              className="dash-widget-info"
-                              style={{ position: "relative", top: "-18px" }}
-                            >
-                              <h6>Total Appoinments</h6>
-                              <h3>{appointments && appointments.length}</h3>
-                              <p className="text-muted">{currentDate}</p>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <h4 className="mb-4">Patient Appoinment</h4>
-                  <div className="appointment-tab">
-                    {/* Appointment Tab */}
-                    <ul className="nav nav-tabs nav-tabs-solid nav-tabs-rounded">
-                      <li className="nav-item">
-                        <Link
-                          className="nav-link active"
-                          to="#upcoming-appointments"
-                          data-bs-toggle="tab"
-                        >
-                          Pending Appointments
-                        </Link>
-                      </li>
-                      <li className="nav-item">
-                        <Link
-                          className="nav-link"
-                          to="#today-appointments"
-                          data-bs-toggle="tab"
-                        >
-                          Confirm Appointments
-                        </Link>
-                      </li>
-                    </ul>
-                    {/* /Appointment Tab */}
-                    <div className="tab-content">
-                      {/* Upcoming Appointment Tab */}
-                      <UpcomingTab />
-                      {/* Today Appointment Tab */}
-                      <AppointmentTab />
+                    <div className="row">
+                      <div className="col-md-12">
+                        <h4 className="mb-4">Patient Appoinment</h4>
+                        <div className="appointment-tab">
+                          {/* Appointment Tab */}
+                          <ul className="nav nav-tabs nav-tabs-solid nav-tabs-rounded">
+                            <li className="nav-item">
+                              <Link
+                                className="nav-link active"
+                                to="#upcoming-appointments"
+                                data-bs-toggle="tab"
+                              >
+                                Pending Appointments
+                              </Link>
+                            </li>
+                            <li className="nav-item">
+                              <Link
+                                className="nav-link"
+                                to="#today-appointments"
+                                data-bs-toggle="tab"
+                              >
+                                Confirm Appointments
+                              </Link>
+                            </li>
+                          </ul>
+                          {/* /Appointment Tab */}
+                          <div className="tab-content">
+                            {/* Upcoming Appointment Tab */}
+                            <UpcomingTab />
+                            {/* Today Appointment Tab */}
+                            <AppointmentTab />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                  <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
                 </div>
-              </div>
-            </div>
-            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
-          </div>
-           :
-           <div className="row mt-5">
-           <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
-           <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
-             
-           </div>
-           <div className="col-md-6 col-lg-6 col-xl-6">
-             <div className="row">
-               <div className="col-md-12">
-                 <div className="card dash-card">
-                   <div className="card-body">
-                     <div className="row">
-                       <div className="col-md-12 col-lg-4">
-                         
-                       </div>
-                       <div className="col-md-12 col-lg-4">
-                       
-                       </div>
-                       <div className="col-md-12 col-lg-4">
-                        
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-               </div>
-             </div>
-             <div className="row">
-               <div className="col-md-12">
-               <h2>Your Account has been suspended Please Contact Admin,Thank You!</h2>
-               </div>
-             </div>
-           </div>
-           <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
-         </div>
+
+                : 
+                <>
+                  <div className="row mt-5">
+                    <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
+                    <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
+                    </div>
+                    <div className="col-md-6 col-lg-6 col-xl-6">
+                      <div className="row">
+                        <div className="col-md-12">
+                          <div className="card dash-card">
+                            <div className="card-body">
+                              <div className="row">
+                                <div className="col-md-12 col-lg-4">
+
+                                </div>
+                                <div className="col-md-12 col-lg-4">
+
+                                </div>
+                                <div className="col-md-12 col-lg-4">
+
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <h2>Your Account has been suspended Please Contact Admin,Thank You!</h2>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
+                  </div>
+
+                </>
+}
+              </>
+                                      
           }
+
         </div>
       </div>
-      
+
       <Footer {...props} />
     </div>
   );

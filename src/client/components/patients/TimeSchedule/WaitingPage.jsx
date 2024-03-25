@@ -140,7 +140,7 @@ const WaitingPage = () => {
                 <div className="d-flex gap-2 justify-content-center align-items-center ">
                     <Link
                         className={`px-4 py-2 bg-white text-black rounded-2 border text-uppercase`}
-                        to="/patient/time-schedule"
+                        to="/"
                         // disabled={timerCompleted} // Disable the button if timer is not completed
                     >
                         Back to Home

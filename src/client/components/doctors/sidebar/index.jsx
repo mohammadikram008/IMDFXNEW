@@ -76,16 +76,7 @@ const DoctorSidebar = ({ props }) => {
                   <span>My Patients</span>
                 </Link>
               </li>
-              <li
-                className={
-                  pathnames.includes("/doctor/account") ? "active bg" : ""
-                }
-              >
-                <Link to="/doctor/account">
-                  <i className="fas fa-wallet" />
-                  <span>Wallet</span>
-                </Link>
-              </li>
+            
               <li
                 className={
                   pathnames.includes("/doctor/schedule-timing") ? "active bg" : ""
@@ -93,7 +84,7 @@ const DoctorSidebar = ({ props }) => {
               >
                 <Link to="/doctor/schedule-timing">
                   <i className="fas fa-hourglass-start" />
-                  <span>Schedule Timings</span>
+                  <span>Booking Timing</span>
                 </Link>
               </li>
               <li
@@ -103,7 +94,7 @@ const DoctorSidebar = ({ props }) => {
               >
                 <Link to="/doctor/available-timing">
                   <i className="fas fa-clock" />
-                  <span>Available Timings</span>
+                  <span>Timing Slot</span>
                 </Link>
               </li>
               {/* <li
@@ -143,7 +134,7 @@ const DoctorSidebar = ({ props }) => {
                   <small className="unread-msg">23</small>
                 </Link>
               </li> */}
-              <li
+              {/* <li
                 className={pathnames.includes("/medicalrecords") ? "active bg" : ""}
               >
                 <Link
@@ -152,7 +143,7 @@ const DoctorSidebar = ({ props }) => {
                   <i className="fas fa-file-medical-alt"></i>
                   <span>Medical Report</span>
                 </Link>
-              </li>
+              </li> */}
               <li
                 className={pathnames.includes("/joindoctorinoffice") ? "active bg" : ""}
               >
@@ -160,10 +151,19 @@ const DoctorSidebar = ({ props }) => {
                   to="/doctor/joindoctorinoffice"
                 >
                   <i className="fas fa-user"></i>
-                  <span>Join  Office</span>
+                  <span>Join as Office</span>
                 </Link>
               </li>
-              
+              <li
+                className={
+                  pathnames.includes("/doctor/account") ? "active bg" : ""
+                }
+              >
+                <Link to="/doctor/account">
+                  <i className="fas fa-wallet" />
+                  <span>Wallet</span>
+                </Link>
+              </li>
               {/* <li
                 className={
                   pathnames.includes("/doctor/profile-setting") ? "active bg" : ""

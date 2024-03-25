@@ -91,18 +91,7 @@ console.log("docId",docId);
                                     // min="2021-05-21"
                                     />
                                   </div>
-                                  {/* <div className="search-time-mobile">
-                                    <input
-                                      type="submit"
-                                      name="submit"
-                                      value="Search"
-                                      className="btn btn-primary h-100"
-                                      onClick={(e) => {
-                                        e.preventDefault();
-                                        handleSave();
-                                      }}
-                                    />
-                                  </div> */}
+                                 
                                 </form>
                               </div>
                             </div>
@@ -150,14 +139,14 @@ console.log("docId",docId);
                                     </span>
                                   </label>
                                 </div>
-                                {/* Add more checkboxes as needed */}
+                            
                               </div>
                             </div>
                           </div>
                           <div className="row">
                             <div className="col-lg-12">
                               <h3 className="h3 text-center book-btn2 mt-3 px-5 py-1 mx-3 rounded">
-                                {/* 2<sup>nd</sup> Session */}Evening
+                               Evening
                               </h3>
                               <div className="text-center mt-3">
                                 <h4 className="h4 mb-2">Start Time </h4>
@@ -195,7 +184,7 @@ console.log("docId",docId);
                                     </span>
                                   </label>
                                 </div>
-                                {/* Add more checkboxes as needed */}
+                         
                               </div>
                             </div>
                           </div>

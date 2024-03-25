@@ -144,11 +144,11 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
                     <p className="doc-speciality">
                       {doctorDetail.education}
                     </p>
-                    <p className="doc-department">
+                    {/* <p className="doc-department">
                       <img src={IMG02} className="img-fluid" alt="Speciality" />
                       {doctorDetail.conditionstreated}
-                    </p>
-                    <div className="rating">
+                    </p> */}
+                    {/* <div className="rating">
                       <i className="fas fa-star filled" />
                       <i className="fas fa-star filled" />
                       <i className="fas fa-star filled" />
@@ -157,16 +157,17 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
                       <span className="d-inline-block average-rating ms-1">
                         (35)
                       </span>
-                    </div>
+                    </div> */}
                     <div className="clinic-details">
                       <p className="doc-location">
-                        <i className="fas fa-map-marker-alt"></i> Newyork, USA -
+                        <i className="fas fa-map-marker-alt"></i> Newyork, USA
                       </p>
 
 
                     </div>
                     <div className="clinic-services">
-                      <span>Dental Fillings</span>
+                      <span>{doctorDetail.specialization}</span>
+                      <span>Pediatric Orthopedic</span>
                       <span>Teeth Whitneing</span>
                     </div>
                   </div>
@@ -174,7 +175,7 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
                 <div className="">
                   <div className="review-heading ">
                     {/* <MdStars size={32} className="" /> */}
-                    <h1>{doctorData.name} Reviews (158)</h1>
+                    <h1>{doctorDetail.name} Reviews (0)</h1>
                   </div>
 
                   <div className="row mt-5">
@@ -299,12 +300,12 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
                 <div className="cards-div ">
 
 
-                  <div  className="   pagecontent-2nd-col-main-div ">
+                  <div className="   pagecontent-2nd-col-main-div ">
                     <div style={{
                       backgroundColor: " #e9e9e6"
                     }} className="px-5 py-5 rounded-3">
                       <div className="d-flex justify-content-between  align-items-center gap-4  bg-transparent">
-                        <FaVideo size={25} />
+                        <FaVideo size={32} />
 
                         <div className="fw-bold">{doctorDetail.name}</div>
                         <style jsx>
@@ -316,6 +317,7 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
             color: rgb(255, 255, 255);
             background: #111;
             cursor: pointer;
+           width:50%;
             position: relative;
             z-index: 0;
             border-radius: 10px;
@@ -389,19 +391,21 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
                         </style>
                         <p style={{
                           fontSize: "8px"
-                        }} className="bn5 px-5 mt-2 ">
+                        }} className="bn5  mt-2 ">
                           Save fuel <br /> and time!
                         </p>
                       </div>
 
                       <div className="booking-card-body-main">
                         <div className="booking-card-body-inner-div gap-4  d-flex">
-                          <p>Fees:</p> <p>{doctorDetail.once.map((items,index)=>(
+                          <p>Fees:</p> <p>{doctorDetail.once.map((items, index) => (
                             items.consultationfees
                           ))}</p>
                         </div>
                         <div className="booking-card-body-inner-div">
-                          <p> Address:</p> <p> Use phone/laptop </p>
+                          <p> Address:</p> <p className="doc-location">
+                            <i className="fas fa-map-marker-alt"></i> Newyork, USA
+                          </p>
                         </div>
                         <div className=" booking-card-body-inner-div d-flex items-center gap-4  justify-content-between mb-4 " onClick={toggleDropdown} >
                           <span><FaClock /></span>
@@ -499,7 +503,7 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
                 </div>
               </div>
               <div>
-                <Content doctorDetail={doctorDetail}/>
+                <Content doctorDetail={doctorDetail} />
               </div>
             </div>
 

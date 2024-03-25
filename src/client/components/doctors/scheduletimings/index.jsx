@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Footer from "../../footer";
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 // import { Modal } from "react-bootstrap";
+import IMG01 from './doctorAi.jpg'
 import Header from "../../header";
 import axios from "axios";
 const ScheduleTiming = (props) => {
@@ -13,7 +14,7 @@ const ScheduleTiming = (props) => {
   const docId = localStorage.getItem('token');
   const fetchAppointments = async () => {
     try {
-      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/mypatient/${docId}`);
+      const response = await axios.get(`http://localhost:3005/api/mypatient/${docId}`);
       setAppointments(response.data);
       console.log("mypatient", response.data)
       setLoading(false);
@@ -38,18 +39,90 @@ const ScheduleTiming = (props) => {
     listEmp.splice(index, 1);
     setAddListEmp(listEmp);
   };
-  const handleCall = () => {
-    console.log("call");
-    myMeeting();
-  }
+  const handleCall = (selectedDateTime,time) => {
+        console.log("selectedDateTime",selectedDateTime);
+    const currentDateTime = new Date();
+    const appointmentDateTime = new Date(selectedDateTime);
+
+    if (appointmentDateTime > currentDateTime) {
+        const timeDifference = appointmentDateTime - currentDateTime;
+        const remainingMinutes = Math.floor(timeDifference / (1000 * 60));
+
+        // props.history.push(`/patient/waiting-page/${selectedDateTime}`); 
+        props.history.push({
+            pathname: `/patient/waiting-page`,
+            state: { selectedDateTime }
+          });
+        
+        // Use props.history.push
+        //   props.history.push(`/patient/waiting-page`);  // Use props.history.push
+    } else {
+        console.log("call");
+        myMeeting();
+    }
+};
   const handleMessage = () => {
     console.log("message");
   }
 
 
-  // Use a static room ID for all calls
-  const staticRoomID = 'yourStaticRoomID';
+  const APP_ID = 2137259645;
+  const SERVER_SECRET = "ee104c1fbf40ac2fc78e322a2356d319";
 
+  // Function to generate a unique channel ID based on current timestamp
+  function generateUniqueChannelID() {
+    const timestamp = Date.now();
+    return `dynamic-channel-${timestamp}`;
+  }
+  const isCallDisabled = (selectedDateTime) => {
+    const currentDateTime = new Date();
+    const appointmentDateTime = new Date(selectedDateTime);
+
+    return appointmentDateTime > currentDateTime;
+  };
+  const [channelID, setChannelID] = useState(generateUniqueChannelID());
+  const [joined, setJoined] = useState(false);
+  const [error, setError] = useState(null);
+
+  const myMeeting = async (element) => {
+
+    const userId = randomID(5)// Generate a random user ID
+    const roomId = randomID(5) // Generate a random nonce
+    console.log("userId", userId)
+    console.log("roomId", roomId)
+
+    try {
+      // Generate Kit Token using the dynamic channel ID
+      const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+        APP_ID,
+        SERVER_SECRET,
+        "UM2Zb",
+        userId,
+        userId,
+        100000,
+      );
+      // Create ZegoUIKitPrebuilt instance
+      const zp = ZegoUIKitPrebuilt.create(kitToken);
+
+      // Start the call
+
+      zp.joinRoom({
+        container: element,
+        showRoomTimer: true,
+        showPreJoinView: false,
+        enableCustomCallInvitationWaitingPage: true,
+        enableCustomCallInvitationDialog: true,
+        enableNotifyWhenAppRunningInBackgroundOrQuit: true,
+        scenario: {
+          mode: ZegoUIKitPrebuilt.OneONoneCall,
+        },
+      });
+
+      setJoined(true);
+    } catch (error) {
+      setError(error);
+    }
+  };
   function randomID(len) {
     let result = '';
     if (result) return result;
@@ -62,56 +135,11 @@ const ScheduleTiming = (props) => {
     }
     return result;
   }
-  const myMeeting = async (element) => {
-    // generate Kit Token
-    const appID = 2137259645;
-    const serverSecret = "ee104c1fbf40ac2fc78e322a2356d319";
-    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-      appID,
-      serverSecret,
-      staticRoomID, // Use the static room ID
-      randomID(5),
-      randomID(5)
-    );
-
-    // Create instance object from Kit Token.
-    const zp = ZegoUIKitPrebuilt.create(kitToken);
-
-    // Start the call
-    zp.joinRoom({
-      container: element,
-      // Remove sharedLinks code
-      scenario: {
-        mode: ZegoUIKitPrebuilt.OneONoneCall,
-      },
-    });
-  };
 
   return (
     <div>
       <Header {...props} />
 
-      {/* Breadcrumb */}
-      {/* <div className="breadcrumb-bar-two">
-        <div className="container">
-          <div className="row align-items-center inner-banner">
-            <div className="col-md-12 col-12 text-center">
-              <h2 className="breadcrumb-title">Schedule Timings</h2>
-              <nav aria-label="breadcrumb" className="page-breadcrumb">
-                <ol className="breadcrumb">
-                  <li className="breadcrumb-item">
-                    <Link to="/index-2">Home</Link>
-                  </li>
-                  <li className="breadcrumb-item" aria-current="page">
-                    Schedule Timings
-                  </li>
-                </ol>
-              </nav>
-            </div>
-          </div>
-        </div>
-      </div> */}
-      {/* /Breadcrumb */}
       <div className="content">
         <div className="container">
           <div className="row mt-5">
@@ -119,274 +147,58 @@ const ScheduleTiming = (props) => {
             <div className="col-md-5 col-lg-4 col-xl-3  theiaStickySidebar">
               <DoctorSidebar />
             </div>
+
             <div className="col-md-7 col-lg-8 col-xl-9">
               <div className="row">
                 <div className="col-sm-12">
                   <div className="card">
                     <div className="card-body">
-                      <h4 className="card-title">Schedule Timings</h4>
                       <div className="profile-box">
-                        {/* <div className="row">
-                          <div className="col-lg-4">
-                            <div className="form-group">
-                              <label>Timing Slot Duration</label>
-                              <select className="form-select form-control">
-                                <option>30 mins</option>
-                                <option>15 mins</option>
-                                <option defaultValue="defaultValue">
-                                  30 mins
-                                </option>
-                                <option>45 mins</option>
-                                <option>1 Hour</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div> */}
                         <div className="row">
                           <div className="col-md-12">
                             <div className="card schedule-widget mb-0">
-                              {/* <!-- Schedule Header --> */}
-                              <div className="schedule-header">
-                                {/* <!-- Schedule Nav --> */}
-                                <div className="schedule-nav">
-                                  <ul className="nav nav-tabs nav-justified">
-                                    <li className="nav-item">
-                                      <Link
-                                        className="nav-link"
-                                        // data-bs-toggle="tab"
-                                        to="#slot_sunday"
-                                      >
-                                        Sunday
-                                      </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                      <Link
-                                        className="nav-link active"
-                                        data-bs-toggle="tab"
-                                        to="#slot_monday"
-                                      >
-                                        Monday
-                                      </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                      <Link
-                                        className="nav-link"
-                                        data-bs-toggle="tab"
-                                        to="#slot_tuesday"
-                                      >
-                                        Tuesday
-                                      </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                      <Link
-                                        className="nav-link"
-                                        data-bs-toggle="tab"
-                                        to="#slot_wednesday"
-                                      >
-                                        Wednesday
-                                      </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                      <Link
-                                        className="nav-link"
-                                        data-bs-toggle="tab"
-                                        to="#slot_thursday"
-                                      >
-                                        Thursday
-                                      </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                      <Link
-                                        className="nav-link"
-                                        data-bs-toggle="tab"
-                                        to="#slot_friday"
-                                      >
-                                        Friday
-                                      </Link>
-                                    </li>
-                                    <li className="nav-item">
-                                      <Link
-                                        className="nav-link"
-                                        data-bs-toggle="tab"
-                                        to="#slot_saturday"
-                                      >
-                                        Saturday
-                                      </Link>
-                                    </li>
-                                  </ul>
-                                </div>
-                                {/* <!-- /Schedule Nav --> */}
-                              </div>
-                              {/* <!-- /Schedule Header -->
-															
-															<!-- Schedule Content --> */}
+                              <div className="schedule-header"></div>
                               <div className="tab-content schedule-cont">
-                                {/* <!-- Sunday Slot --> */}
-                                <div id="slot_sunday" className="tab-pane fade">
+                                <div
+                                  id="slot_monday"
+                                  className="tab-pane fade show active"
+                                >
+
                                   <h4 className="card-title d-flex justify-content-between">
-                                    <span>Time Slots</span>
-                                    <Link
-                                      className="edit-link"
-                                      data-bs-toggle="modal"
-                                      to="#add_time_slot"
-                                    >
-                                      <i className="fa fa-plus-circle"></i> Add
-                                      Slot
-                                    </Link>
+                                    <span>Your Appointments</span>
                                   </h4>
-                                  <p className="text-muted mb-0">
-                                    Not Available
-                                  </p>
-                                </div>
-                                {/* <!-- /Sunday Slot -->
-
-																<!-- Monday Slot --> */}
-                                {
-                                  appointments && appointments.map((item, index) => (
-
-                                    <div className="doc-times" key={index}>
-                                      <div className="doc-slot-list d-flex">
-                                       <h5 className="d-flex "> 
-                                         {item.PatietnDetails && item.PatietnDetails.username} 
-                                          <p className="mx-4">
-                                         Time:  8:00 pm - 11:30 pm
-                                          </p>
-                                        </h5>
-                                        {/* <Link to="#" className="delete_schedule">
-                                         <i className="fa fa-times"></i>
-                                       </Link> */}
-                                       <div className="d-flex">
-
-                                        <div to="#" className="delete_schedule mx-3"  onClick={() => handleCall()}>
-                                          <i className="fa fa-video"></i>
+                                  {appointments &&
+                                    appointments.map((item, index) => (
+                                      <div className="d-flex justify-content-between gap-3 my-3 border p-4 rounded-2  flex-column time-card " key={index}>
+                                        <div className="d-flex justify-content-between align-items-center gap-2">
+                                          <div>
+                                            <h3> {item.PatietnDetails && item.PatietnDetails.username}</h3>
+                                            <p>Date: {item.appointmentDetails[0].selectedDate + "/ Time " + item.appointmentDetails[0].selectedTimeSlot}</p>
+                                            <p>Gender: {item.appointmentDetails[0].gender} </p>
+                                            <p>PatientAge: {item.appointmentDetails[0].patientAge} </p>
+                                            <p>BookingFor: {item.appointmentDetails[0].bookingFor} </p>
+                                            <p>Detail: {item.appointmentDetails[0].details} </p>
+                                          </div>
+                                          <div>
+                                            <img src={IMG01} style={{
+                                              width: "200px",
+                                              height: "150px",
+                                              borderRadius: "10px"
+                                            }} />
+                                          </div>
                                         </div>
-                                        {/* <div
-                                          className="myCallContainer"
-                                          ref={myMeeting}
-                                          style={{ width: '100px', height: '10px' }}
-                                        ></div> */}
-                                        <Link to="/doctor/chat-doctor" className="delete_schedule "
-                                        //  onClick={() => handleMessage()}
-                                         >
-                                          <i className="fa fa-message"></i>
-                                        </Link>
+                                        <div className="d-flex justify-content-between align-self-end  align-items-center gap-2 calling-btn">
+                                          {/* <button className="px-4 py-2 bg-white text-dark rounded-2 border">Cancel</button> */}
+                                          <button onClick={() =>
+                                            handleCall(item.appointmentDetails[0].selectedDate, item.appointmentDetails[0].selectedTimeSlot)
+                                          } className={`px-4 py-2 bg-primary  text-white rounded-2 border delete_schedule mx-3 ${isCallDisabled(item.appointmentDetails[0].selectedDate + ' ' + item.appointmentDetails[0].selectedTimeSlot) ? 'disabled' : ''}`}>
+                                            Start</button>
+
                                         </div>
                                       </div>
-
-                                    </div>
-                                  ))
-
-                                }
-                                {/* <!-- /Monday Slot -->
-
-																<!-- Tuesday Slot --> */}
-                                <div
-                                  id="slot_tuesday"
-                                  className="tab-pane fade"
-                                >
-                                  <h4 className="card-title d-flex justify-content-between">
-                                    <span>Time Slots</span>
-                                    <Link
-                                      className="edit-link"
-                                      data-bs-toggle="modal"
-                                      to="#add_time_slot"
-                                    >
-                                      <i className="fa fa-plus-circle"></i> Add
-                                      Slot
-                                    </Link>
-                                  </h4>
-                                  <p className="text-muted mb-0">
-                                    Not Available
-                                  </p>
+                                    ))}
                                 </div>
-                                {/* <!-- /Tuesday Slot -->
-
-																<!-- Wednesday Slot --> */}
-                                <div
-                                  id="slot_wednesday"
-                                  className="tab-pane fade"
-                                >
-                                  <h4 className="card-title d-flex justify-content-between">
-                                    <span>Time Slots</span>
-                                    <Link
-                                      className="edit-link"
-                                      data-bs-toggle="modal"
-                                      to="#add_time_slot"
-                                    >
-                                      <i className="fa fa-plus-circle"></i> Add
-                                      Slot
-                                    </Link>
-                                  </h4>
-                                  <p className="text-muted mb-0">
-                                    Not Available
-                                  </p>
-                                </div>
-                                {/* <!-- /Wednesday Slot --> */}
-
-                                {/* <!-- Thursday Slot --> */}
-                                <div
-                                  id="slot_thursday"
-                                  className="tab-pane fade"
-                                >
-                                  <h4 className="card-title d-flex justify-content-between">
-                                    <span>Time Slots</span>
-                                    <Link
-                                      className="edit-link"
-                                      data-bs-toggle="modal"
-                                      to="#add_time_slot"
-                                    >
-                                      <i className="fa fa-plus-circle"></i> Add
-                                      Slot
-                                    </Link>
-                                  </h4>
-                                  <p className="text-muted mb-0">
-                                    Not Available
-                                  </p>
-                                </div>
-                                {/* <!-- /Thursday Slot --> */}
-
-                                {/* <!-- Friday Slot --> */}
-                                <div id="slot_friday" className="tab-pane fade">
-                                  <h4 className="card-title d-flex justify-content-between">
-                                    <span>Time Slots</span>
-                                    <Link
-                                      className="edit-link"
-                                      data-bs-toggle="modal"
-                                      to="#add_time_slot"
-                                    >
-                                      <i className="fa fa-plus-circle"></i> Add
-                                      Slot
-                                    </Link>
-                                  </h4>
-                                  <p className="text-muted mb-0">
-                                    Not Available
-                                  </p>
-                                </div>
-                                {/* <!-- /Friday Slot --> */}
-
-                                {/* <!-- Saturday Slot --> */}
-                                <div
-                                  id="slot_saturday"
-                                  className="tab-pane fade"
-                                >
-                                  <h4 className="card-title d-flex justify-content-between">
-                                    <span>Time Slots</span>
-                                    <Link
-                                      className="edit-link"
-                                      data-bs-toggle="modal"
-                                      to="#add_time_slot"
-                                    >
-                                      <i className="fa fa-plus-circle"></i> Add
-                                      Slot
-                                    </Link>
-                                  </h4>
-                                  <p className="text-muted mb-0">
-                                    Not Available
-                                  </p>
-                                </div>
-                                {/* <!-- /Saturday Slot --> */}
                               </div>
-                              {/* <!-- /Schedule Content --> */}
                             </div>
                           </div>
                         </div>
@@ -404,7 +216,7 @@ const ScheduleTiming = (props) => {
       <Footer {...props} />
 
       {/* <!-- Add Time Slot Modal --> */}
-      <div className="modal fade custom-modal" id="add_time_slot">
+      {/* <div className="modal fade custom-modal" id="add_time_slot">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
@@ -483,11 +295,11 @@ const ScheduleTiming = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* <!-- /Add Time Slot Modal -->
 		
 		<!-- Edit Time Slot Modal --> */}
-      <div
+      {/* <div
         className="modal fade custom-modal"
         id="edit_time_slot"
         style={{ marginTop: "50px" }}
@@ -638,7 +450,7 @@ const ScheduleTiming = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
