@@ -80,6 +80,8 @@
     "react-toastify": "^10.0.3",
     "react-type-animation": "^3.2.0",
     "slick-carousel": "^1.8.1",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "style-loader": "^3.3.1",
     "styled-components": "^6.0.7",
     "swiper": "^8.4.7",

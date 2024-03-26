@@ -45,10 +45,10 @@ const Password = (props) => {
       <Header {...props} />
       <ToastContainer />
       <div className="content">
-        <div className="container-fluid">
-          <div className="row">
+        <div className="container-fluid mt-5">
+          <div className="row mt-5">
             <div className="col-md-2 col-lg-2 col-xl-2"></div>
-            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
               <DashboardSidebar />
             </div>
 

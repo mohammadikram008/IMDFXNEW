@@ -103,17 +103,17 @@ const Appointments = (props) => {
       </div> */}
       {/* /Breadcrumb */}
       <div className="content ">
-        <div className="container ">
+        <div className="container-fluid ">
           <div className="row mt-5">
-            {/* <div className="col-md-1 col-lg-1 col-xl-1 theiaStickySidebar "></div> */}
-            <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
               <StickyBox offsetTop={50} offsetBottom={20}>
                 <div className="appointments">
                   <DoctorSidebar />
                 </div>
               </StickyBox>
             </div>
-            <div className="col-md-7 col-lg-8 col-xl-9">
+            <div className="col-md-6 col-lg-6 col-xl-6">
               <div className="appointments">
                 {
                   appointments && appointments.length > 0 ?
@@ -649,7 +649,7 @@ const Appointments = (props) => {
                 </div> */}
               </div>
             </div>
-            {/* <div className="col-md-1 col-lg-1 col-xl-1 theiaStickySidebar "></div> */}
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
           </div>
         </div>
       </div>

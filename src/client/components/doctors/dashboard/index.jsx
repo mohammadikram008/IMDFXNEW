@@ -15,7 +15,7 @@ const DoctorDashboard = (props) => {
 
   const [appointments, setAppointments] = useState([]);
   const [mypatient, setMyPatient] = useState([]);
-  const [doctorStatus, setDoctorStatus] = useState(false);
+  const [doctorStatus, setDoctorStatus] = useState(true);
 
   const [todayappointments, setTodayAppointments] = useState([]);
   const [loading, setLoading] = useState(true);

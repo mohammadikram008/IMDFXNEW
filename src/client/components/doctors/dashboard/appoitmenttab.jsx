@@ -18,7 +18,7 @@ const AppointmentTab = () => {
   const fetchAppointments = async () => {
     try {
 
-      const response = await axios.get(`http://localhost:3005/api/doc_confirm_appointments/${docId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doc_confirm_appointments/${docId}`);
       setAppointments(response.data);
       console.log("doc_confirm_appointments", response.data);
 

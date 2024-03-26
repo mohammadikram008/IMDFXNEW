@@ -4,7 +4,7 @@ import axios from "axios";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import { MdStars } from "react-icons/md";
 import MyComponent from "./mycomponent";
-import { doc_1 } from "./img";
+import { doc_1 ,doc_2,IMG01,doc_4} from "./img";
 import { FaHeart } from "react-icons/fa6"; import { AiOutlineCheckCircle } from "react-icons/ai";
 import TimeModel from "../../../patients/Model/TimeModel";
 import { IoMdVideocam } from "react-icons/io";
@@ -12,7 +12,7 @@ import { IoMdVideocam } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
 const SearchList = (props) => {
   const history = useHistory()
-  const imageUrl = `http://localhost:3005`;
+  const imageUrl = `https://imdfx-newserver-production.up.railway.app`;
   const doctorsData = [
     // Existing data remains unchanged
   ];
@@ -196,9 +196,9 @@ const SearchList = (props) => {
               <div className="doctor-widget justify-content-between  ">
                 <div className="doc-info-left">
                   <div className="doctor-img rounded-circle position-relative ">
-                    {/* <img src={`http://localhost:3005/uploads//dafb82ac1615a4fcec977ac6db88bb61`} className="img-fluid" alt="User" /> */}
+                    {/* <img src={`https://imdfx-newserver-production.up.railway.app/uploads//dafb82ac1615a4fcec977ac6db88bb61`} className="img-fluid" alt="User" /> */}
                     {/* <img src={`${imageUrl}/${doctor.image}`} className="img-fluid" alt="User" /> */}
-                    <img src={doc_1} className="img-fluid rounded-circle" alt="User" />
+                    <img src={doc_4} className="img-fluid rounded-circle doc-profil-img" alt="User" />
 
 
                   </div>

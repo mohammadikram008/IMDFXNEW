@@ -6,8 +6,8 @@ const DoctorSidebar = ({ props }) => {
   let pathnames = window.location.pathname;
   console.log("proDoc",props);
   const imageUrl = `https://imdfx-newserver-production.up.railway.app/api`;
-  // const imageUrl = `http://localhost:3005/api/`;
-  // const imageUrl = props.image ? `http://localhost:3005/${props.image.replace(/\\/g, '/')}` : '';
+  // const imageUrl = `https://imdfx-newserver-production.up.railway.app/api/`;
+  // const imageUrl = props.image ? `https://imdfx-newserver-production.up.railway.app/${props.image.replace(/\\/g, '/')}` : '';
   console.log("img",imageUrl);
   return (
     <>

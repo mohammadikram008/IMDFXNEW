@@ -7,19 +7,38 @@ import axios from "axios";
 // import { Modal } from "react-bootstrap";
 import Footer from "../../footer";
 
+import { ToastContainer, toast } from "react-toastify";
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import Header from "../../header.jsx";
+import io from "socket.io-client";
+const ENDPOINT = "https://imdfx-newserver-production.up.railway.app";
 // import { IMG01 } from "../doctorprofile/img.jsx";
 import IMG01 from "./doctorAi.jpg";
 const Timeschedule = (props) => {
     console.log("ppppppppp", props);
     const [addListEmp, setAddListEmp] = useState([""]);
+    const [notification, setNotification] = useState(null);
     const [docAppointment, setDocAppointment] = useState([]);
     const userId = localStorage.getItem('token');
     const handelAddEmp = () => {
         setAddListEmp([...addListEmp, " "]);
     };
+  
     useEffect(() => { }, []);
+    useEffect(() => {
+        const socket = io("https://imdfx-newserver-production.up.railway.app",{transports:["websocket"]});
+    
+       
+        // Listen for doctor's notification
+        socket.on("doctorOnlineNotification", (message) => {
+            toast.success(message);
+            // console.log("message", message);
+            // setNotification(message);
+        });
+
+        // return () => socket.disconnect();
+    }, []);
+
 
     const handelRemoveEmp = (index) => {
         const listEmp = [...addListEmp];
@@ -84,8 +103,8 @@ const Timeschedule = (props) => {
     //     myMeeting();
     // }
 
-    const APP_ID = 2137259645;
-    const SERVER_SECRET = "ee104c1fbf40ac2fc78e322a2356d319";
+    const APP_ID = 1049140173;
+    const SERVER_SECRET = "80f3b1250528f24162893ff96e2c4809";
 
     // Function to generate a unique channel ID based on current timestamp
     function generateUniqueChannelID() {
@@ -158,63 +177,61 @@ const Timeschedule = (props) => {
     return (
         <div>
             <Header {...props} />
+            {/* {notification && (
+                <div className="notification">
+                    <p>New Notification: {notification}</p>
+                </div>
+            )} */}
             <div className="content">
-                <div className="container">
+                <div className="container-fluid ">
                     <div className="row mt-5">
-                        <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+                        <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar"></div>
+                        <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
                             <DashboardSidebar props={patient} />
                         </div>
-                        <div className="col-md-7 col-lg-8 col-xl-9">
-                            <div className="row">
-                                <div className="col-sm-12">
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <div className="profile-box">
-                                                <div className="row">
-                                                    <div className="col-md-12">
-                                                        <div className="card schedule-widget mb-0">
-                                                            <div className="schedule-header"></div>
-                                                            <div className="tab-content schedule-cont">
-                                                                <div
-                                                                    id="slot_monday"
-                                                                    className="tab-pane fade show active"
-                                                                >
+                        <div className="col-md-6 col-lg-6 col-xl-6">
+                            <div className="card">
+                                <div className="card-body">
+                                    <div className="profile-box">
+                                        <div className="card schedule-widget mb-0">
+                                            <div className="schedule-header"></div>
+                                            <div className="tab-content schedule-cont">
+                                                <div
+                                                    id="slot_monday"
+                                                    className="tab-pane fade show active"
+                                                >
 
-                                                                    <h4 className="card-title d-flex justify-content-between">
-                                                                        <span>Your Appointments</span>
-                                                                    </h4>
-                                                                    {docAppointment &&
-                                                                        docAppointment.map((item, index) => (
-                                                                            <div className="d-flex justify-content-between gap-3 my-3 border p-4 rounded-2  flex-column time-card " key={index}>
-                                                                                <div className="d-flex justify-content-between align-items-center gap-2">
-                                                                                    <div>
-                                                                                        <h3> Dr.{item.doctorDetails && item.doctorDetails.name}</h3>
-                                                                                        <p>Email: {item.doctorDetails.email }</p>
-                                                                                        <p>Specialization: {item.doctorDetails.specialization }</p>
-                                                                                        <p>Date: {item.appointmentDetails.selectedDate + "/ Time " + item.appointmentDetails.selectedTimeSlot}</p>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <img src={IMG01} style={{
-                                                                                            width: "200px",
-                                                                                            height: "150px",
-                                                                                            borderRadius: "10px"
-                                                                                        }} />
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div className="d-flex justify-content-between align-self-end  align-items-center gap-2 calling-btn">
-                                                                                    {/* <button className="px-4 py-2 bg-white text-dark rounded-2 border">Cancel</button> */}
-                                                                                    <button onClick={() =>
-                                                                                        handleCall(item.appointmentDetails.selectedDate, item.appointmentDetails.selectedTimeSlot)
-                                                                                    } className={`px-4 py-2 bg-primary  text-white rounded-2 border delete_schedule mx-3  mt-5 ${isCallDisabled(item.appointmentDetails.selectedDate + ' ' + item.appointmentDetails.selectedTimeSlot) ? 'disabled' : ''}`}>
-                                                                                        Start</button>
+                                                    <h4 className="card-title d-flex justify-content-between">
+                                                        <span>Your Appointments</span>
+                                                    </h4>
+                                                    {docAppointment &&
+                                                        docAppointment.map((item, index) => (
+                                                            <div className="d-flex justify-content-between gap-3 my-3 border p-4 rounded-2  flex-column time-card " key={index}>
+                                                                <div className="d-flex justify-content-between align-items-center gap-2">
+                                                                    <div>
+                                                                        <h3> Dr.{item.doctorDetails && item.doctorDetails.name}</h3>
+                                                                        <p>Email: {item.doctorDetails.email}</p>
+                                                                        <p>Specialization: {item.doctorDetails.specialization}</p>
+                                                                        <p>Date: {item.appointmentDetails.selectedDate + "/ Time " + item.appointmentDetails.selectedTimeSlot}</p>
+                                                                    </div>
+                                                                    <div>
+                                                                        <img src={IMG01} style={{
+                                                                            width: "200px",
+                                                                            height: "150px",
+                                                                            borderRadius: "10px"
+                                                                        }} />
+                                                                    </div>
+                                                                </div>
+                                                                <div className="d-flex justify-content-between align-self-end  align-items-center gap-2 calling-btn">
+                                                                    {/* <button className="px-4 py-2 bg-white text-dark rounded-2 border">Cancel</button> */}
+                                                                    <button onClick={() =>
+                                                                        handleCall(item.appointmentDetails.selectedDate, item.appointmentDetails.selectedTimeSlot)
+                                                                    } className={`px-4 py-2 bg-primary  text-white rounded-2 border delete_schedule mx-3  mt-5 ${isCallDisabled(item.appointmentDetails.selectedDate + ' ' + item.appointmentDetails.selectedTimeSlot) ? 'disabled' : ''}`}>
+                                                                        Start</button>
 
-                                                                                </div>
-                                                                            </div>
-                                                                        ))}
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
+                                                        ))}
                                                 </div>
                                             </div>
                                         </div>
@@ -222,10 +239,13 @@ const Timeschedule = (props) => {
                                 </div>
                             </div>
                         </div>
+
+                        <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar"></div>
                     </div>
                 </div>
             </div>
             <Footer {...props} />
+            <ToastContainer />
         </div>
     )
 }

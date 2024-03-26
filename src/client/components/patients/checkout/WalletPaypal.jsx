@@ -75,7 +75,7 @@ const ButtonWrapper = ({ showSpinner, setIsModalOpen, pricing, setSelectedAmount
             // Make your API request using Axios
 
            const Amount=pricing;
-            const resp = await axios.post(`http://localhost:3005/api/addpaymentwallet/${userId}`, {Amount});
+            const resp = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/addpaymentwallet/${userId}`, {Amount});
             // const notify = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/usertransectionnotification/${userId}`, { message });
             // console.log("walet topup",response);
             toast.success("Payment Add SuccessFully");

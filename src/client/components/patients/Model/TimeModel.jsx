@@ -81,7 +81,7 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
   const fetchDoctorBookingTime = async (timeSlot) => {
     console.log("selectedDate",selectedDateData);
     try {
-      const response = await axios.get(`http://localhost:3005/api/check-doctor-availability/${doc_id}/${timeSlot}/${selectedDateData}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/check-doctor-availability/${doc_id}/${timeSlot}/${selectedDateData}`);
       // setDoctorTimeDetail(response.data.available);
       console.log("BookingAV",response.data.available);
       const avaible=response.data.available;

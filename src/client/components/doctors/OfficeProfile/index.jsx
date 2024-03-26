@@ -56,7 +56,7 @@ const Profile = (props) => {
     try {
       // Make API request using axios
       const response = await axios.post(
-        `http://localhost:3005/api/update-office-profile/${officeId}`, data,
+        `https://imdfx-newserver-production.up.railway.app/api/update-office-profile/${officeId}`, data,
 
       );
       console.log("API response:", response.data);
@@ -71,7 +71,7 @@ const Profile = (props) => {
 
   const fetchHospital = async () => {
     try {
-      const response = await axios.get(`http://localhost:3005/api/getofficeDetail/${officeId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getofficeDetail/${officeId}`);
       setOffices(response.data);
       console.log("Office", response.data);
 

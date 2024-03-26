@@ -82,7 +82,7 @@ function Homebanner() {
     e.preventDefault();
     try {
     console.log("location",locationCity);
-      const response = await axios.get(`http://localhost:3005/api/search-location?query=${locationCity}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/search-location?query=${locationCity}`);
       setSearchResults(response.data);
       history.push({
         pathname: "/patient/search-doctor1",

@@ -104,7 +104,7 @@ console.log("Fees",Fees);
     console.log("modelform", modelform);
     try {
       // Make your API request using Axios
-      const response = await axios.post('http://localhost:3005/api/bookappointment', modelform);
+      const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/bookappointment', modelform);
       // Add any further logic here based on the API response
       toast.success("Payment Add SuccessFully");
       // console.log('API response:', response.data);

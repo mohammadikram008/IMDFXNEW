@@ -7,14 +7,19 @@ import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import IMG01 from './doctorAi.jpg'
 import Header from "../../header";
 import axios from "axios";
+
+import io from "socket.io-client";
+const ENDPOINT = "https://imdfx-newserver-production.up.railway.app";
+
 const ScheduleTiming = (props) => {
   const [addListEmp, setAddListEmp] = useState([""]);
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const docId = localStorage.getItem('token');
+  const [notification, setNotification] = useState(null);
   const fetchAppointments = async () => {
     try {
-      const response = await axios.get(`http://localhost:3005/api/mypatient/${docId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/mypatient/${docId}`);
       setAppointments(response.data);
       console.log("mypatient", response.data)
       setLoading(false);
@@ -29,6 +34,16 @@ const ScheduleTiming = (props) => {
     fetchAppointments();
     // fetchpatientdata();
   }, []);
+  // useEffect(() => {
+  //   const socket = socketIOClient(ENDPOINT);
+
+  //   // Connect to Socket.IO server and join room with doctor's ID
+  //   socket.on("connect", () => {
+  //     socket.emit("doctorJoinRoom", docId, userId);
+  //   });
+
+  //   return () => socket.disconnect();
+  // }, [docId, userId]);
   const handelAddEmp = () => {
     setAddListEmp([...addListEmp, " "]);
   };
@@ -39,35 +54,37 @@ const ScheduleTiming = (props) => {
     listEmp.splice(index, 1);
     setAddListEmp(listEmp);
   };
-  const handleCall = (selectedDateTime,time) => {
-        console.log("selectedDateTime",selectedDateTime);
+  const handleCall = (selectedDateTime, time, userId) => {
+    console.log("userId", userId);
     const currentDateTime = new Date();
     const appointmentDateTime = new Date(selectedDateTime);
 
     if (appointmentDateTime > currentDateTime) {
-        const timeDifference = appointmentDateTime - currentDateTime;
-        const remainingMinutes = Math.floor(timeDifference / (1000 * 60));
+      const timeDifference = appointmentDateTime - currentDateTime;
+      const remainingMinutes = Math.floor(timeDifference / (1000 * 60));
 
-        // props.history.push(`/patient/waiting-page/${selectedDateTime}`); 
-        props.history.push({
-            pathname: `/patient/waiting-page`,
-            state: { selectedDateTime }
-          });
-        
-        // Use props.history.push
-        //   props.history.push(`/patient/waiting-page`);  // Use props.history.push
+      // props.history.push(`/patient/waiting-page/${selectedDateTime}`); 
+      props.history.push({
+        pathname: `/patient/waiting-page`,
+        state: { selectedDateTime }
+      });
+
+      // Use props.history.push
+      //   props.history.push(`/patient/waiting-page`);  // Use props.history.push
     } else {
-        console.log("call");
-        myMeeting();
+      
+      const socket = io("https://imdfx-newserver-production.up.railway.app",{transports:["websocket"]});
+     
+      const res = socket.emit("doctorJoinRoom", docId, userId);
+      console.log("RES", res);
+      myMeeting();
     }
-};
+  };
   const handleMessage = () => {
     console.log("message");
   }
-
-
-  const APP_ID = 2137259645;
-  const SERVER_SECRET = "ee104c1fbf40ac2fc78e322a2356d319";
+  const APP_ID = 1049140173;
+  const SERVER_SECRET = "80f3b1250528f24162893ff96e2c4809";
 
   // Function to generate a unique channel ID based on current timestamp
   function generateUniqueChannelID() {
@@ -139,16 +156,22 @@ const ScheduleTiming = (props) => {
   return (
     <div>
       <Header {...props} />
-
+      <div>
+        {/* {notification && (
+          <div className="notification">
+            <p>New Notification: {notification}</p>
+          </div>
+        )} */}
+      </div>
       <div className="content">
-        <div className="container">
+        <div className="container-fluid">
           <div className="row mt-5">
-            {/* <div className="col-md-2 col-lg-2 col-xl-2 "></div> */}
-            <div className="col-md-5 col-lg-4 col-xl-3  theiaStickySidebar">
+            <div className="col-md-2 col-lg-2 col-xl-2 "></div>
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
               <DoctorSidebar />
             </div>
 
-            <div className="col-md-7 col-lg-8 col-xl-9">
+            <div className="col-md-6 col-lg-6 col-xl-6">
               <div className="row">
                 <div className="col-sm-12">
                   <div className="card">
@@ -190,7 +213,7 @@ const ScheduleTiming = (props) => {
                                         <div className="d-flex justify-content-between align-self-end  align-items-center gap-2 calling-btn">
                                           {/* <button className="px-4 py-2 bg-white text-dark rounded-2 border">Cancel</button> */}
                                           <button onClick={() =>
-                                            handleCall(item.appointmentDetails[0].selectedDate, item.appointmentDetails[0].selectedTimeSlot)
+                                            handleCall(item.appointmentDetails[0].selectedDate, item.appointmentDetails[0].selectedTimeSlot, item.PatietnDetails._id)
                                           } className={`px-4 py-2 bg-primary  text-white rounded-2 border delete_schedule mx-3 ${isCallDisabled(item.appointmentDetails[0].selectedDate + ' ' + item.appointmentDetails[0].selectedTimeSlot) ? 'disabled' : ''}`}>
                                             Start</button>
 
@@ -208,7 +231,7 @@ const ScheduleTiming = (props) => {
                 </div>
               </div>
             </div>
-            {/* <div className="col-md-2 col-lg-2 col-xl-2  "></div> */}
+            <div className="col-md-2 col-lg-2 col-xl-2  "></div>
           </div>
         </div>
       </div>

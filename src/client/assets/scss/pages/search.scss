@@ -294,7 +294,7 @@
 .doctor-img {
     -ms-flex: 0 0 150px;
     flex: 0 0 150px;
-    margin-right: 20px;
+    // margin-right: 20px;
     width: 150px;
     @include respond-below(custom767) {
     	@include margin-padding(0 auto 20px, null);
@@ -775,7 +775,7 @@
 	.doctor-img {
 		-ms-flex: 0 0 164px;
 		flex: 0 0 164px;
-		margin-right: 20px;
+		// margin-right: 20px;
 		width: 164px;
 		height: 164px;
 		border-radius: 10px;

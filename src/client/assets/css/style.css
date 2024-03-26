@@ -16491,7 +16491,7 @@ span.call-duration.float-end {
 .doctor-img {
   -ms-flex: 0 0 150px;
   flex: 0 0 150px;
-  margin-right: 20px;
+  /* margin-right: 20px; */
   width: 150px;
 }
 @media (max-width: 767.98px) {

@@ -85,7 +85,45 @@
 
 
 }
-
+.doc-profil-img{
+    width: 8rem;
+    height: 8rem;
+    object-fit:cover;
+    border: 1px solid;
+    
+}
+.card-inner-body{
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    background: #c7c6c6;
+    color: black;
+    height: 5rem;
+    width: 40rem;
+    border-radius: 10px;
+}
+.blood-card-heading{
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    margin-left: 2rem;
+    flex-direction: column;
+}
+.blood-card-image-div{
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 4rem;
+    height: 4rem;
+    padding: 2px;
+    display: flex;
+    background: #ffffff;
+    justify-content: center;
+    align-items: center;
+}
+.blood-card-image-div img{ 
+    width: 3rem;
+    height: 3rem;
+}
 .badge {
     /* padding: .5rem; */
     height: 1.5rem;

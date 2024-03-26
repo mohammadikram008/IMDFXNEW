@@ -19,7 +19,7 @@ const DoctorDashboard = (props) => {
 
   const fetchHospital = async () => {
     try {
-      const response = await axios.get(`http://localhost:3005/api/getofficeDetail/${officeId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getofficeDetail/${officeId}`);
       setOffices(response.data);
     } catch (error) {
       console.error('Error fetching office details:', error);

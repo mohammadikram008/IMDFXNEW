@@ -44,7 +44,7 @@ const Dashboard = (props) => {
   const [docAppointment, setDocAppointment] = useState([]);
   const [loading, setLoading] = useState(true);
   const [mypatient, setMyPatient] = useState([]);
-  const [patientStatus, setPatientStatus] = useState(false);
+  const [patientStatus, setPatientStatus] = useState(true);
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedAmount, setSelectedAmount] = useState(null);
   const [medicalrecords, setMedicalRecord] = useState([]);
@@ -146,7 +146,7 @@ const Dashboard = (props) => {
 
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:3005/api/mypayments/${userId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/mypayments/${userId}`);
       setPayments(response.data);
       console.log("payment", response.data);
       setLoading(false);
@@ -201,6 +201,7 @@ const Dashboard = (props) => {
   //   this.handleSelect = this.handleSelect.bind(this);
   // }
   console.log("loading", loading);
+  console.log("patientStatus", patientStatus);
   // Get current date in the format "DD, MMM YYYY"
   const currentDate = new Date().toLocaleDateString('en-US', {
     day: 'numeric',

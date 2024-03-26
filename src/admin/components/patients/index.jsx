@@ -218,7 +218,7 @@ const Patients = () => {
   const handleCheckboxChange = async (id, checked) => {
     try {
       // Make API call to update patient status
-      const response = await axios.put(`http://localhost:3005/api/update-patient-status/${id}`, { status: checked });
+      const response = await axios.put(`https://imdfx-newserver-production.up.railway.app/api/update-patient-status/${id}`, { status: checked });
       // Update patient status in the state based on the response
       console.log("afterstatusresponse",response.data);
       setPatient((prevPatients) =>

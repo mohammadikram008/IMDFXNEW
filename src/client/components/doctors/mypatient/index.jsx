@@ -69,15 +69,15 @@ const MypPatient = (props) => {
       </>
 
       <div className="content">
-        <div className="container">
+        <div className="container-fluid">
           <div className="row mt-5">
-            {/* <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div> */}
-            <div className="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
               <StickyBox offsetTop={20} offsetBottom={20}>
                 <DoctorSidebar />
               </StickyBox>
             </div>
-            <div className="col-md-7 col-lg-8 col-xl-9">
+            <div className="col-md-6 col-lg-6 col-xl-6">
               <div className="row row-grid">
                 {
                   appointments.map((item, index) => (
@@ -503,7 +503,7 @@ const MypPatient = (props) => {
                 </div> */}
               </div>
             </div>
-            {/* <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div> */}
+            <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
           </div>
         </div>
       </div>
