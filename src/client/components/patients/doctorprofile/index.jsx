@@ -73,52 +73,14 @@ const DoctorProfile = (props) => {
 
   return (
     <Fragment>
-
-
       <Header {...props} />
-
       <div className={`col-md-12 col-12 ${TimePop ? 'modal-overlay' : ''}`}>
-
-        {/* <div className="breadcrumb-bar-two">
-          <div className="container">
-            <div className="row heading-book align-items-center inner-banner">
-              <div className="col-md-12 col-12 ">
-                <div
-                  className="cover-image mt-2"
-                  style={{
-                    width: "100%",
-                    backgroundImage: `url(${doc_cover})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                  }}
-                ></div>
-              </div>
-          
-            </div>
-          </div>
-        </div> */}
         <div className="content">
           <div className="container mt-5">
             <Pagecontent toggleModal={handleToggleModal} TimePop={TimePop} doctorDetail={doctorDetail} />
-            {/* <div className="content-div">
-
-              <Content />
-            </div> */}
-
-
           </div>
         </div>
-
-
       </div>
-      {/* {TimePop && (
-        <BookingModal
-          TimePop={TimePop}
-          handleModalClose={handleModalClose}
-          doctorDetail={doctorDetail}
-        />
-      )} */}
       <TimeModel doctorDetail={doctorDetail} TimePop={TimePop} setTimePop={setTimePop} doctorTimeDetails={doctorTimeDetail.doctorAvailability} />
       <Footer {...props} />
       <ToastContainer />

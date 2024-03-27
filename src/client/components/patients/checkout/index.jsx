@@ -14,7 +14,7 @@ const bookingDate = new Date();
 const Checkout = (props) => {
   const history = useHistory()
   console.log("pro", props);
-  const { selectedDateData, selectedTimeSlot, doctorDetail } = props.location.state;
+  const { selectedDateData, selectedTimeSlot, doctorDetail } = props.location && props.location.state;
   // console.log("selectedDateData",selectedDateData,"selectedTimeSlot",selectedTimeSlot,"doctorDetail",doctorDetail);
   const selectedDate = selectedDateData;
   const [selectedMethod, setSelectedMethod] = useState("payPal");
@@ -65,12 +65,12 @@ const Checkout = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   // Adjusting the state to include specific fields
 
-// const Fees = doctorDetail.once.map(item => parseInt(item.consultationfees));
+  // const Fees = doctorDetail.once.map(item => parseInt(item.consultationfees));
 
-const Fees = parseInt(doctorDetail.once[0].consultationfees);
-// const Fees = [parseInt(doctorDetail.once[0].consultationfees)];
+  const Fees = parseInt(doctorDetail.once[0].consultationfees);
+  // const Fees = [parseInt(doctorDetail.once[0].consultationfees)];
 
-console.log("Fees",Fees);
+  console.log("Fees", Fees);
 
   const userId = localStorage.getItem('token');
   const [modelform, setModelForm] = useState({
@@ -83,9 +83,9 @@ console.log("Fees",Fees);
     selectedTimeSlot: selectedTimeSlot,
     bookingDate: bookingDate,
     userId, userId,
-    Fees:Fees,
+    Fees: Fees,
   });
-// console.log("newfom",modelform);
+  // console.log("newfom",modelform);
   useEffect(() => {
     // Set isModalOpen to true after 2 seconds
     const timeoutId = setTimeout(() => {
@@ -99,36 +99,37 @@ console.log("Fees",Fees);
     const { name, value } = event.target;
     setModelForm(prev => ({ ...prev, [name]: value }));
   };
-  const handleSubmitmodel = async (event) => {
-    event.preventDefault();
-    console.log("modelform", modelform);
-    try {
-      // Make your API request using Axios
-      const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/bookappointment', modelform);
-      // Add any further logic here based on the API response
-      toast.success("Payment Add SuccessFully");
-      // console.log('API response:', response.data);
-      history.push(`/patient/booking-success`)
+  // const handleSubmitmodel = async (event) => {
+  //   event.preventDefault();
+  //   console.log("modelform", modelform);
+  //   try {
+  //     // Make your API request using Axios
+  //     // const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/bookappointment', modelform);
+  //     // Add any further logic here based on the API response
+  //     // toast.success("Payment Add SuccessFully");
+  //     // console.log('API response:', response.data);
+  //     history.push(`/patient/booking-success`)
 
-    } catch (error) {
-      toast.error("Booking failed. Please try again.");
-      console.error('Error making API request:', error);
-    }
-  };
-  const handleSubmit= async()=>{
+  //   } catch (error) {
+  //     toast.error("Booking failed. Please try again.");
+  //     console.error('Error making API request:', error);
+  //   }
+  // };
+  const handleSubmit = async () => {
     // const message="Your Transection is Successfull."
     // const notify = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/usertransectionnotification/${userId}`,{message} );
     setIsModalOpen(false)
   }
-const handlechangeModel=()=>{
-  if (!modelform.gender || !modelform.bookingFor || !modelform.patientAge || !modelform.details) {
-    toast.error('Please fill all Form Feild');
-  }else{
+  const handlechangeModel = () => {
+    if (!modelform.gender || !modelform.bookingFor || !modelform.patientAge || !modelform.details) {
+      toast.error('Please fill all Form Feild');
+    } else {
 
-    setIsModalOpen(false);
+      setIsModalOpen(false);
+    }
+
   }
-
-}
+  console.log("fommmm",modelform);
   return (
     <Fragment>
       <Header {...props} />
@@ -258,7 +259,7 @@ const handlechangeModel=()=>{
                         //     />
                         //   </button>
                         // </div>
-                        <Paypal  modelform={modelform} />
+                        <Paypal modelform={modelform} />
                       )}
                       {selectedMethod === "wallet" && (
                         <div
@@ -369,9 +370,9 @@ const handlechangeModel=()=>{
                 </div>
                 {selectedMethod === "wallet" && <div className="booking-btn proceed-btn">
                   <button
-                    onClick={(e) => {
-                      handleSubmitmodel(e)
-                    }}
+                    // onClick={(e) => {
+                    //   handleSubmitmodel(e)
+                    // }}
                     className="btn btn-primary prime-btn"
                   >
                     Proceed to Pay $163.00
@@ -440,13 +441,13 @@ const handlechangeModel=()=>{
           </div>
 
           <button className="btn btn-primary"
-          //  onClick={() => {
-            
-          //   setIsModalOpen(false)
-          //   console.log(modelform)
-          // }} 
-          onClick={()=>handlechangeModel()}
-          type="text">Submit</button>
+            //  onClick={() => {
+
+            //   setIsModalOpen(false)
+            //   console.log(modelform)
+            // }} 
+            onClick={() => handlechangeModel()}
+            type="text">Submit</button>
         </div>
       </ModalComponent>
 

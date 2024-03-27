@@ -14,6 +14,7 @@ const ENDPOINT = "https://imdfx-newserver-production.up.railway.app";
 const ScheduleTiming = (props) => {
   const [addListEmp, setAddListEmp] = useState([""]);
   const [appointments, setAppointments] = useState([]);
+  const [meetingId, setMeetingId] = useState();
   const [loading, setLoading] = useState(true);
   const docId = localStorage.getItem('token');
   const [notification, setNotification] = useState(null);
@@ -54,8 +55,10 @@ const ScheduleTiming = (props) => {
     listEmp.splice(index, 1);
     setAddListEmp(listEmp);
   };
-  const handleCall = (selectedDateTime, time, userId) => {
-    console.log("userId", userId);
+  const handleCall = (selectedDateTime, time, id,doctorname) => {
+    console.log("userId", id);
+    setMeetingId(id);
+    
     const currentDateTime = new Date();
     const appointmentDateTime = new Date(selectedDateTime);
 
@@ -72,11 +75,12 @@ const ScheduleTiming = (props) => {
       // Use props.history.push
       //   props.history.push(`/patient/waiting-page`);  // Use props.history.push
     } else {
-      
+      const userId=id;
       const socket = io("https://imdfx-newserver-production.up.railway.app",{transports:["websocket"]});
      
       const res = socket.emit("doctorJoinRoom", docId, userId);
       console.log("RES", res);
+     
       myMeeting();
     }
   };
@@ -103,10 +107,11 @@ const ScheduleTiming = (props) => {
 
   const myMeeting = async (element) => {
 
+    // const userId = meetingId;
     const userId = randomID(5)// Generate a random user ID
     const roomId = randomID(5) // Generate a random nonce
-    console.log("userId", userId)
-    console.log("roomId", roomId)
+    console.log("userId", userId);
+    console.log("roomId", roomId);
 
     try {
       // Generate Kit Token using the dynamic channel ID
@@ -114,7 +119,7 @@ const ScheduleTiming = (props) => {
         APP_ID,
         SERVER_SECRET,
         "UM2Zb",
-        userId,
+        roomId,
         userId,
         100000,
       );
@@ -122,7 +127,7 @@ const ScheduleTiming = (props) => {
       const zp = ZegoUIKitPrebuilt.create(kitToken);
 
       // Start the call
-
+      // zp.maxUsers(2);
       zp.joinRoom({
         container: element,
         showRoomTimer: true,
@@ -135,7 +140,7 @@ const ScheduleTiming = (props) => {
         },
       });
 
-      setJoined(true);
+      setJoined(false);
     } catch (error) {
       setError(error);
     }
@@ -152,7 +157,7 @@ const ScheduleTiming = (props) => {
     }
     return result;
   }
-
+console.log("ID",meetingId)
   return (
     <div>
       <Header {...props} />

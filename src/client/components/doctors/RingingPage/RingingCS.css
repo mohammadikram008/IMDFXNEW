@@ -1,0 +1,71 @@
+.call-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .call-modal {
+    width: 34%;
+    height: 41%;
+    background-color: #ffffff;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .call-modal-header {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center align content horizontally */
+    flex-direction: column; /* Stack items vertically */
+  }
+  
+  .caller-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-image: url('https://via.placeholder.com/200'); /* Example image URL */
+    background-size: cover;
+    margin-bottom: 8px; /* Space between image and text */
+  }
+  
+  .call-modal-body {
+    text-align: center;
+  }
+  
+  .call-modal-footer {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .reject-button,
+  .accept-button {
+    padding: 10px 40px; /* Increased button padding */
+    border-radius: 10px;
+    font-size: 18px; /* Increased font size */
+  }
+  
+  .reject-button {
+    background-color: red;
+    color: white;
+  }
+  
+  .accept-button {
+    background-color: green;
+    color: white;
+  }
+  
+  .call-icons {
+    font-size: 40px; /* Increased icon size */
+    color: black;
+  }

@@ -127,9 +127,16 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
               <div className="col-md-8 col-sm-12">
 
                 <div className="doc-info-left">
-                  <div className="doctor-img">
-                    <img src={IMG01} className="img-fluid" alt="User Image" />
+                  <div className="doctor-img rounded-circle position-relative ">
+                    {/* <img src={`https://imdfx-newserver-production.up.railway.app/uploads//dafb82ac1615a4fcec977ac6db88bb61`} className="img-fluid" alt="User" /> */}
+                    {/* <img src={`${imageUrl}/${doctor.image}`} className="img-fluid" alt="User" /> */}
+                    <img src={IMG01} className="img-fluid rounded-circle doc-profil-img" alt="User" />
+
+
                   </div>
+                  {/* <div className="doctor-img">
+                    <img src={IMG01} className="img-fluid" alt="User Image" />
+                  </div> */}
                   <div className="doc-info-cont">
 
                     <div className="d-flex premium-div">

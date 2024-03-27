@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 // import { Modal } from "react-bootstrap";
 import Footer from "../../footer";
-
+import Ringing from '../../doctors/RingingPage/Ringing.jsx'
 import { ToastContainer, toast } from "react-toastify";
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import Header from "../../header.jsx";
@@ -20,18 +20,25 @@ const Timeschedule = (props) => {
     const [notification, setNotification] = useState(null);
     const [docAppointment, setDocAppointment] = useState([]);
     const userId = localStorage.getItem('token');
+    const [meetingId, setMeetingId] = useState();
+
+    // state for calling model
+    const [showRingingModal, setShowRingingModal] = useState(false);
+    const [callerName, setCallerName] = useState("");
+    const [callerId, setCallerId] = useState("");
+
     const handelAddEmp = () => {
         setAddListEmp([...addListEmp, " "]);
     };
-  
+
     useEffect(() => { }, []);
     useEffect(() => {
-        const socket = io("https://imdfx-newserver-production.up.railway.app",{transports:["websocket"]});
-    
-       
+        const socket = io("https://imdfx-newserver-production.up.railway.app", { transports: ["websocket"] });
         // Listen for doctor's notification
         socket.on("doctorOnlineNotification", (message) => {
             toast.success(message);
+            setCallerName(message); // Assuming the message contains the caller's name
+            setShowRingingModal(true);
             // console.log("message", message);
             // setNotification(message);
         });
@@ -50,7 +57,7 @@ const Timeschedule = (props) => {
         try {
             const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getbookappointment/${userId}`);
             setDocAppointment(response.data);
-            console.log("R", response.data);
+            console.log("RRRRR", response.data);
 
         } catch (error) {
             console.error('Error fetching appointments:', error);
@@ -59,10 +66,7 @@ const Timeschedule = (props) => {
     };
     const [patient, setPatient] = useState([]);
     const fetchpatientdata = async () => {
-
         try {
-
-
             const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient/${userId}`);
             setPatient(response.data);
 
@@ -76,8 +80,9 @@ const Timeschedule = (props) => {
         fetchpatientdata()
 
     }, []);
-    const handleCall = (selectedDateTime, time) => {
-
+    const handleCall = (selectedDateTime, time, id) => {
+        console.log("userIduserId", id);
+        setMeetingId(id);
         const currentDateTime = new Date();
         const appointmentDateTime = new Date(selectedDateTime);
 
@@ -94,7 +99,6 @@ const Timeschedule = (props) => {
             // Use props.history.push
             //   props.history.push(`/patient/waiting-page`);  // Use props.history.push
         } else {
-            console.log("call");
             myMeeting();
         }
     };
@@ -124,6 +128,7 @@ const Timeschedule = (props) => {
     const myMeeting = async (element) => {
 
         const userId = randomID(5)// Generate a random user ID
+        // const userId = meetingId// Generate a random user ID
         const roomId = randomID(5) // Generate a random nonce
         console.log("userId", userId)
         console.log("roomId", roomId)
@@ -134,7 +139,7 @@ const Timeschedule = (props) => {
                 APP_ID,
                 SERVER_SECRET,
                 "UM2Zb",
-                userId,
+                roomId,
                 userId,
                 1000000,
             );
@@ -142,6 +147,7 @@ const Timeschedule = (props) => {
             const zp = ZegoUIKitPrebuilt.create(kitToken);
 
             // Start the call
+            // zp.maxUsers(3);
 
             zp.joinRoom({
                 container: element,
@@ -154,7 +160,48 @@ const Timeschedule = (props) => {
                     mode: ZegoUIKitPrebuilt.OneONoneCall,
                 },
             });
+            // zp.destroy();
+            setJoined(true);
+        } catch (error) {
+            setError(error);
+        }
+    };
+    const rejectMeeting = async (element) => {
 
+        const userId = randomID(5)// Generate a random user ID
+        // const userId = meetingId// Generate a random user ID
+        const roomId = randomID(5) // Generate a random nonce
+        console.log("userId", userId)
+        console.log("roomId", roomId)
+
+        try {
+            // Generate Kit Token using the dynamic channel ID
+            const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+                APP_ID,
+                SERVER_SECRET,
+                "UM2Zb",
+                roomId,
+                userId,
+                1000000,
+            );
+            // Create ZegoUIKitPrebuilt instance
+            const zp = ZegoUIKitPrebuilt.create(kitToken);
+
+            // Start the call
+            // zp.maxUsers(3);
+
+            // zp.joinRoom({
+            //     container: element,
+            //     showRoomTimer: true,
+            //     showPreJoinView: false,
+            //     enableCustomCallInvitationWaitingPage: true,
+            //     enableCustomCallInvitationDialog: true,
+            //     enableNotifyWhenAppRunningInBackgroundOrQuit: true,
+            //     scenario: {
+            //         mode: ZegoUIKitPrebuilt.OneONoneCall,
+            //     },
+            // });
+            zp.destroy();
             setJoined(true);
         } catch (error) {
             setError(error);
@@ -173,7 +220,15 @@ const Timeschedule = (props) => {
         return result;
     }
     const time = docAppointment.map((item) => item.appointmentDetails.selectedTimeSlot)
-    console.log("Time", time);
+    console.log("ID", meetingId)
+
+    const onAcceptCall = () => {
+        myMeeting();
+    }
+    const onRejectCall = () => {
+        rejectMeeting();
+        setShowRingingModal(false)
+    }
     return (
         <div>
             <Header {...props} />
@@ -182,6 +237,7 @@ const Timeschedule = (props) => {
                     <p>New Notification: {notification}</p>
                 </div>
             )} */}
+
             <div className="content">
                 <div className="container-fluid ">
                     <div className="row mt-5">
@@ -225,7 +281,7 @@ const Timeschedule = (props) => {
                                                                 <div className="d-flex justify-content-between align-self-end  align-items-center gap-2 calling-btn">
                                                                     {/* <button className="px-4 py-2 bg-white text-dark rounded-2 border">Cancel</button> */}
                                                                     <button onClick={() =>
-                                                                        handleCall(item.appointmentDetails.selectedDate, item.appointmentDetails.selectedTimeSlot)
+                                                                        handleCall(item.appointmentDetails.selectedDate, item.appointmentDetails.selectedTimeSlot, item.appointmentDetails.userId)
                                                                     } className={`px-4 py-2 bg-primary  text-white rounded-2 border delete_schedule mx-3  mt-5 ${isCallDisabled(item.appointmentDetails.selectedDate + ' ' + item.appointmentDetails.selectedTimeSlot) ? 'disabled' : ''}`}>
                                                                         Start</button>
 
@@ -243,6 +299,15 @@ const Timeschedule = (props) => {
                         <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar"></div>
                     </div>
                 </div>
+                {showRingingModal && (
+                    <Ringing
+                        callerName={callerName}
+                        onAcceptCall={onAcceptCall}
+                        onRejectCall={onRejectCall}
+                        onCloseModal={() => setShowRingingModal(false)}
+                    />
+                )}
+
             </div>
             <Footer {...props} />
             <ToastContainer />
