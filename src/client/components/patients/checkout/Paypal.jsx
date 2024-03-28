@@ -23,15 +23,21 @@ const ButtonWrapper = ({ showSpinner, setIsModalOpen, formdata }) => {
     console.log("MdF", formdata);
 
     const userId = localStorage.getItem('token');
-    const handleFormData = async () => {
+    const handleFormData = async (formdata) => {
         try {
-            const message = "Your Transection is Successfull.your appointment has Booked"
+            console.log("handledata",formdata);
+            const Amount=formdata.Fees;
+            const doc_id=formdata.doc_id
+            const message = "Your Transaction is Successfull.Wait for confirmation"
             // Make your API request using Axios
             const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/bookappointment', formdata);
+            const resp = await axios.post(`http://localhost:3005/api/addpaymentwallet/${userId}/${doc_id}`,{Amount});
             const notify = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/usertransectionnotification/${userId}`, { message });
+            
+         
             // Add any further logic here based on the API response
             toast.success("Payment Add SuccessFully");
-            console.log('API response:', response.data);
+            console.log('API response:', resp.data);
             history.push({
                 pathname: '/patient/invoice-view',
                 state: { id: formdata.doc_id }
@@ -96,8 +102,9 @@ const ButtonWrapper = ({ showSpinner, setIsModalOpen, formdata }) => {
             const response = await res.json();
             // const amount=response.purchase_units.map((item)=>item.payments.map((newitem)=>newitem.captures))
             // console.log("account Responce",amount);
-            handleFormData()
-            setIsModalOpen(true)
+            console.log("Onapproved", formdata);
+            handleFormData(formdata);
+            setIsModalOpen(true);
             // const timeoutId = setTimeout(() => {
             //     setIsModalOpen(false);
             //     history.push('/patient/dashboard')
@@ -126,7 +133,7 @@ const ButtonWrapper = ({ showSpinner, setIsModalOpen, formdata }) => {
 };
 export default function Paypal({ modelform }) {
     const history = useHistory()
-    const formdata = modelform
+    // const formdata = modelform
     const bookingDate = new Date();
     console.log("paypal props", modelform);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -184,7 +191,7 @@ export default function Paypal({ modelform }) {
                         disableFunding: "",
                     }}
                 >
-                    <ButtonWrapper showSpinner={true} setIsModalOpen={setIsModalOpen} formdata={formdata} />
+                    <ButtonWrapper showSpinner={true} setIsModalOpen={setIsModalOpen} formdata={modelform} />
                 </PayPalScriptProvider >
 
             </div>

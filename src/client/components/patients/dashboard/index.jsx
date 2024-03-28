@@ -32,6 +32,7 @@ import Graph4 from "../../../assets/images/shapes/graph-04.png";
 import Footer from "../../footer";
 import Header from "../../header.jsx";
 import WalletPaypal from "../checkout/WalletPaypal.jsx";
+import Transaction from "./Transaction/index.jsx";
 
 const Dashboard = (props) => {
   const userId = localStorage.getItem('token');
@@ -787,29 +788,30 @@ const Dashboard = (props) => {
                           </div>
                         </div>
                       </div>
+                      <div>
+                        <Transaction/>
+                      </div>
                     </div>
-                    <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
-
-                    </div>
+                    <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
                   </div>
                 </>
                 :
-                 loading ? "Loading...." :
-                <>
-                  <div className="row">
-                    <div className="col-md-1 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
+                loading ? "Loading...." :
+                  <>
+                    <div className="row">
+                      <div className="col-md-1 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
 
-                    </div>
+                      </div>
 
-                    <div className="col-md-10 col-lg-10 col-xl-10 mt-5">
-                      <h2>Your Account has been suspended Please Contact Admin,Thank You!</h2>
-                    </div>
-                    <div className="col-md-1 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
+                      <div className="col-md-10 col-lg-10 col-xl-10 mt-5">
+                        <h2>Your Account has been suspended Please Contact Admin,Thank You!</h2>
+                      </div>
+                      <div className="col-md-1 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
 
+                      </div>
                     </div>
-                  </div>
-                </>
-                
+                  </>
+
               }
             </>
 

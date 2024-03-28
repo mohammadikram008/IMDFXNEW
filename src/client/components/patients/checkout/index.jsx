@@ -13,14 +13,32 @@ import Paypal from "./Paypal";
 const bookingDate = new Date();
 const Checkout = (props) => {
   const history = useHistory()
+   const userId = localStorage.getItem('token');
   console.log("pro", props);
+  const [payment, setPayments] = useState([]);
   const { selectedDateData, selectedTimeSlot, doctorDetail } = props.location && props.location.state;
+  console.log("d",doctorDetail);
   // console.log("selectedDateData",selectedDateData,"selectedTimeSlot",selectedTimeSlot,"doctorDetail",doctorDetail);
   const selectedDate = selectedDateData;
   const [selectedMethod, setSelectedMethod] = useState("payPal");
   const navigate = async () => {
     history.goBack();
   };
+  const fetchpaymet = async () => {
+
+    try {
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/mypayments/${userId}`);
+      setPayments(response.data);
+      
+    } catch (error) {
+      console.error('Error fetching Payments:', error);
+     
+    }
+  };
+  useEffect(() => {
+    fetchpaymet();
+    
+  }, []);
   // const handleSubmit = async (values, { setSubmitting }) => {
   //   // e.preventDefault();
   //   console.log("FormData", values);
@@ -72,7 +90,18 @@ const Checkout = (props) => {
 
   console.log("Fees", Fees);
 
-  const userId = localStorage.getItem('token');
+
+
+// Calculate total fees and update each entry
+const totalFees = payment.reduce((total, entry) => {
+
+  const fees = Number(entry.Amount);
+  total += fees;
+  entry.totalFees = fees;
+
+  return total;
+}, 0);
+ 
   const [modelform, setModelForm] = useState({
     gender: '',
     bookingFor: '',
@@ -99,22 +128,37 @@ const Checkout = (props) => {
     const { name, value } = event.target;
     setModelForm(prev => ({ ...prev, [name]: value }));
   };
-  // const handleSubmitmodel = async (event) => {
-  //   event.preventDefault();
-  //   console.log("modelform", modelform);
-  //   try {
-  //     // Make your API request using Axios
-  //     // const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/bookappointment', modelform);
-  //     // Add any further logic here based on the API response
-  //     // toast.success("Payment Add SuccessFully");
-  //     // console.log('API response:', response.data);
-  //     history.push(`/patient/booking-success`)
+  const handleSubmitmodel = async (event) => {
+    event.preventDefault();
+    console.log("modelform", modelform);
+    try {
+      const Amounts=modelform.Fees;
+      const Amount = -1 * Amounts;
 
-  //   } catch (error) {
-  //     toast.error("Booking failed. Please try again.");
-  //     console.error('Error making API request:', error);
-  //   }
-  // };
+      const doc_id=modelform.doc_id
+      const message = "Your Transaction is Successfull.Wait for confirmation"
+      // console.log("Amount",Amount,"doc_id",doc_id,"message",message);
+      // Make your API request using Axios
+      
+    
+      const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/bookappointment', modelform);
+      const resp = await axios.post(`http://localhost:3005/api/addpaymentwallet/${userId}/${doc_id}`,{Amount});
+      const notify = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/usertransectionnotification/${userId}`, { message });
+     
+      // Add any further logic here based on the API response
+      toast.success("Payment Add SuccessFully");
+      setIsModalOpen(true);
+      // console.log('API response:', resp.data);
+      history.push({
+          pathname: '/patient/invoice-view',
+          state: { id: modelform.doc_id }
+      });
+
+    } catch (error) {
+      toast.error("Booking failed. Please try again.");
+      console.error('Error making API request:', error);
+    }
+  };
   const handleSubmit = async () => {
     // const message="Your Transection is Successfull."
     // const notify = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/usertransectionnotification/${userId}`,{message} );
@@ -229,7 +273,7 @@ const Checkout = (props) => {
                             height={"30px"}
                           />
                           <h4 className="h5 text-black  fw-medium ">
-                            Credits: 0.0$
+                            Credits: {totalFees}$
                           </h4>
                         </div>
                       </div>
@@ -271,7 +315,7 @@ const Checkout = (props) => {
                           <h4 className="h5 text-danger  fw-medium ">
                             Your balance
                           </h4>
-                          <h4 className="h5 text-danger  fw-medium ">0.0$</h4>
+                          <h4 className="h5 text-danger  fw-medium ">{totalFees}$</h4>
                         </div>
                       )}
                     </div>
@@ -370,12 +414,12 @@ const Checkout = (props) => {
                 </div>
                 {selectedMethod === "wallet" && <div className="booking-btn proceed-btn">
                   <button
-                    // onClick={(e) => {
-                    //   handleSubmitmodel(e)
-                    // }}
+                    onClick={(e) => {
+                      handleSubmitmodel(e)
+                    }}
                     className="btn btn-primary prime-btn"
                   >
-                    Proceed to Pay $163.00
+                    Proceed to Pay ${Fees}
                   </button>
                 </div>}
               </div>
@@ -390,7 +434,7 @@ const Checkout = (props) => {
         {/* /Cursor */}
       </div>
 
-
+      <ToastContainer />
       <ModalComponent isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} >
         <div className="d-flex justify-content-center align-items-center gap-3 flex-column w-100">
           <h2 className="w-100 text-center fs-5 fw-bold">Appointment Form</h2>
@@ -452,7 +496,7 @@ const Checkout = (props) => {
       </ModalComponent>
 
 
-      <ToastContainer />
+   
     </Fragment>
   );
 };

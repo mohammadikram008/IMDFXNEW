@@ -7,7 +7,7 @@ import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import IMG01 from './doctorAi.jpg'
 import Header from "../../header";
 import axios from "axios";
-
+import { ToastContainer, toast } from "react-toastify";
 import io from "socket.io-client";
 const ENDPOINT = "https://imdfx-newserver-production.up.railway.app";
 
@@ -77,13 +77,28 @@ const ScheduleTiming = (props) => {
     } else {
       const userId=id;
       const socket = io("https://imdfx-newserver-production.up.railway.app",{transports:["websocket"]});
-     
       const res = socket.emit("doctorJoinRoom", docId, userId);
       console.log("RES", res);
      
       myMeeting();
     }
   };
+  useEffect(() => {
+        const socket = io("http://localhost:3005", { transports: ["websocket"] });
+        // Listen for doctor's notification
+        socket.on("patientnotAvaible", (message) => {
+            toast.success(message);
+            // setCallerName(message); // Assuming the message contains the caller's name
+            // setShowRingingModal(true);
+            // initAudio()
+
+            // console.log("message", message);
+            // setNotification(message);
+        });
+
+        // return () => socket.disconnect();
+    }, []);
+
   const handleMessage = () => {
     console.log("message");
   }
@@ -129,6 +144,8 @@ const ScheduleTiming = (props) => {
       // Start the call
       // zp.maxUsers(2);
       zp.joinRoom({
+        showLeavingView:false,
+        maxUsers:2,
         container: element,
         showRoomTimer: true,
         showPreJoinView: false,
@@ -240,7 +257,7 @@ console.log("ID",meetingId)
           </div>
         </div>
       </div>
-
+<ToastContainer/>
       <Footer {...props} />
 
       {/* <!-- Add Time Slot Modal --> */}

@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { doctor_thumb_02, doc_01, doc_02, doc_03 } from "../../imagepath";
 import doc1 from '../../../assets/images/doc1.jpg'
 const DoctorSidebar = ({ props }) => {
   let pathnames = window.location.pathname;
   console.log("proDoc",props);
+
+  const [Doctor, setDoctor] = useState([]);
+  const doc_id = localStorage.getItem('token');
+  const fetchTodayAppointments = async () => {
+    try {
+      setLoading(true);
+      // const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/gettodayappointments/${userId}`);
+      const res = await axios.get(`http://localhost:3005/api/check-doctor-office/${doc_id}`);
+      setDoctor(response.data);
+      
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+     
+    }
+  };
+  useEffect(() => {
+    fetchTodayAppointments();
+  }, []);
   const imageUrl = `https://imdfx-newserver-production.up.railway.app/api`;
   // const imageUrl = `https://imdfx-newserver-production.up.railway.app/api/`;
   // const imageUrl = props.image ? `https://imdfx-newserver-production.up.railway.app/${props.image.replace(/\\/g, '/')}` : '';
@@ -154,7 +173,8 @@ const DoctorSidebar = ({ props }) => {
                   <span>Join as Office</span>
                 </Link>
               </li>
-              <li
+              {
+                Doctor && Doctor?"": <li
                 className={
                   pathnames.includes("/doctor/account") ? "active bg" : ""
                 }
@@ -164,6 +184,8 @@ const DoctorSidebar = ({ props }) => {
                   <span>Wallet</span>
                 </Link>
               </li>
+              }
+             
               {/* <li
                 className={
                   pathnames.includes("/doctor/profile-setting") ? "active bg" : ""

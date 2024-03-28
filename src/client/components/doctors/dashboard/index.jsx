@@ -10,8 +10,10 @@ import axios from "axios";
 import Header from "../../header";
 import UpcomingTab from "./upcomimgtab";
 import AppointmentTab from "./appoitmenttab";
+import Transaction from "../Transaction";
 const DoctorDashboard = (props) => {
   const [Doctor, setDoctor] = useState([]);
+  const docId = localStorage.getItem('token');
 
   const [appointments, setAppointments] = useState([]);
   const [mypatient, setMyPatient] = useState([]);
@@ -19,7 +21,6 @@ const DoctorDashboard = (props) => {
 
   const [todayappointments, setTodayAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const docId = localStorage.getItem('token');
   const fetchAppointments = async () => {
     try {
 
@@ -283,6 +284,9 @@ const DoctorDashboard = (props) => {
                             <AppointmentTab />
                           </div>
                         </div>
+                      </div>
+                      <div className="col-md-12">
+                        <Transaction/>
                       </div>
                     </div>
                   </div>

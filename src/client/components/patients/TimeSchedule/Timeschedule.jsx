@@ -1,21 +1,51 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 // import { DashboardSidebar } from "./sidebar/sidebar.jsx";
 import { DashboardSidebar } from "../../patients/dashboard/sidebar/sidebar.jsx";
 import { Link } from "react-router-dom";
 import axios from "axios";
 // import { Modal } from "react-bootstrap";
+import useSound from 'use-sound';
 import Footer from "../../footer";
 import Ringing from '../../doctors/RingingPage/Ringing.jsx'
 import { ToastContainer, toast } from "react-toastify";
 import { ZegoUIKitPrebuilt } from '@zegocloud/zego-uikit-prebuilt';
 import Header from "../../header.jsx";
 import io from "socket.io-client";
+// import ringingSound from "./path/to/your/ringing-sound.mp3";
+// import ringingSound from "../../../../../public/notification-sound.mp3";
+
 const ENDPOINT = "https://imdfx-newserver-production.up.railway.app";
 // import { IMG01 } from "../doctorprofile/img.jsx";
 import IMG01 from "./doctorAi.jpg";
 const Timeschedule = (props) => {
-    console.log("ppppppppp", props);
+    const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+    let audioInterval;
+    let initAudio = () => {
+        const targetAudio = document.getElementsByClassName("audioBtn")[0];
+        targetAudio.currentTime = 0;
+        targetAudio.play();
+        setIsAudioPlaying(true);
+
+        if(isAudioPlaying){
+
+            audioInterval = setInterval(() => {
+                targetAudio.currentTime = 0; // Reset playback position to start
+                targetAudio.play();
+            }, 5000);
+        }
+    };
+    let stopAudio = () => {
+        const targetAudio = document.getElementsByClassName("audioBtn")[0];
+    
+        setIsAudioPlaying(false);
+        console.log("Clearing interval:", audioInterval); 
+        clearInterval(audioInterval);
+        targetAudio.pause();
+        console.log("Interval cleared");
+       
+    };
+
     const [addListEmp, setAddListEmp] = useState([""]);
     const [notification, setNotification] = useState(null);
     const [docAppointment, setDocAppointment] = useState([]);
@@ -39,6 +69,8 @@ const Timeschedule = (props) => {
             toast.success(message);
             setCallerName(message); // Assuming the message contains the caller's name
             setShowRingingModal(true);
+            initAudio()
+
             // console.log("message", message);
             // setNotification(message);
         });
@@ -46,6 +78,9 @@ const Timeschedule = (props) => {
         // return () => socket.disconnect();
     }, []);
 
+    // if(isAudioPlaying){
+    //     initAudio();
+    // }
 
     const handelRemoveEmp = (index) => {
         const listEmp = [...addListEmp];
@@ -150,6 +185,8 @@ const Timeschedule = (props) => {
             // zp.maxUsers(3);
 
             zp.joinRoom({
+                showLeavingView: false,
+                maxUsers: 2,
                 container: element,
                 showRoomTimer: true,
                 showPreJoinView: false,
@@ -201,7 +238,11 @@ const Timeschedule = (props) => {
             //         mode: ZegoUIKitPrebuilt.OneONoneCall,
             //     },
             // });
+            stopAudio()
+            const socket = io("http://localhost:3005",{transports:["websocket"]});
+            const res = socket.emit("patientrejectcall", roomId, userId);
             zp.destroy();
+
             setJoined(true);
         } catch (error) {
             setError(error);
@@ -237,7 +278,7 @@ const Timeschedule = (props) => {
                     <p>New Notification: {notification}</p>
                 </div>
             )} */}
-
+            {/* <audio ref={audioPlayer} src={ringingSound}/> */}
             <div className="content">
                 <div className="container-fluid ">
                     <div className="row mt-5">
@@ -296,7 +337,16 @@ const Timeschedule = (props) => {
                             </div>
                         </div>
 
-                        <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar"></div>
+                        <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
+                            <div>
+                                {/* <button className="btn btn-danger" onClick={initAudio}>
+                                    Play Mp3 Audio
+                                </button> */}
+                                <audio className="audioBtn" >
+                                    <source src="/ringing.mp3"></source>
+                                </audio>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 {showRingingModal && (
