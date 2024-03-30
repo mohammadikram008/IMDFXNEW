@@ -6,6 +6,7 @@ import boold from '../../../assets/images/icons/Blood.png'
 import CTScan from '../../../assets/images/icons/Ctscan.png'
 import MRI from '../../../assets/images/icons/mri.png'
 const Tablerecords = () => {
+  const userId = localStorage.getItem('token');
   const [formData, setFormData] = useState({
     BloodReport: {
       selectedFile: null,
@@ -53,8 +54,9 @@ const Tablerecords = () => {
         }
       });
 
+      console.log("formData",formData);
       // Send form data to the backend
-      const response = await axios.post("https://imdfx-newserver-production.up.railway.app/api/medicalreport", allData);
+      const response = await axios.post(`http://localhost:3005/api/medicalreport/${userId}`, allData);
 
       console.log(response.data);
 

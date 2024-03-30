@@ -27,7 +27,7 @@ const Timeschedule = (props) => {
         targetAudio.play();
         setIsAudioPlaying(true);
 
-        if(isAudioPlaying){
+        if (isAudioPlaying) {
 
             audioInterval = setInterval(() => {
                 targetAudio.currentTime = 0; // Reset playback position to start
@@ -37,13 +37,13 @@ const Timeschedule = (props) => {
     };
     let stopAudio = () => {
         const targetAudio = document.getElementsByClassName("audioBtn")[0];
-    
+
         setIsAudioPlaying(false);
-        console.log("Clearing interval:", audioInterval); 
+        console.log("Clearing interval:", audioInterval);
         clearInterval(audioInterval);
         targetAudio.pause();
         console.log("Interval cleared");
-       
+
     };
 
     const [addListEmp, setAddListEmp] = useState([""]);
@@ -239,7 +239,7 @@ const Timeschedule = (props) => {
             //     },
             // });
             stopAudio()
-            const socket = io("http://localhost:3005",{transports:["websocket"]});
+            const socket = io("http://localhost:3005", { transports: ["websocket"] });
             const res = socket.emit("patientrejectcall", roomId, userId);
             zp.destroy();
 

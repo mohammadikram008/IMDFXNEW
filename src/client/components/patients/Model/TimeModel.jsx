@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { IoMdSunny } from 'react-icons/io';
 import { MdOutlineNightlightRound } from 'react-icons/md';
 import OwlCarousel from 'react-owl-carousel';
@@ -18,17 +18,40 @@ import 'slick-carousel/slick/slick-theme.css';
 import { Modal } from "antd";
 const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctorTimeDetails }) => {
 
-  const doc_id=doctorDetail && doctorDetail._id;
-  console.log("doc_id", doc_id);
+  const docId = doctorDetail && doctorDetail._id;
 
   const history = useHistory();
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
+  const [startDate, setstartDate] = useState();
   const [selectedDateData, setSelectedDateData] = useState(null);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
   const [selectedDateSlot, setSelectedDateSlote] = useState(false);
+  const [doctorTimeDetail, setDoctorTimeDetail] = useState([]);
+ 
+  const fetchDoctorAvaibleTimeDetail = async () => {
+    try {
+
+      const response = await axios.get(`http://localhost:3005/api/doctorAvailableTimings/${docId}`, {
+        params: { startDate: startDate },
+      });
+      setDoctorTimeDetail(response.data);
+      console.log("ModelTime", response.data);
+    } catch (error) {
+      console.error('Error fetching doctor Time details:', error);
+    }
+  };
+  useEffect(() => {
+
+    fetchDoctorAvaibleTimeDetail();
+  
+  }, [startDate]);
+
+
+
+  console.log("doctorTimeDetails", doctorTimeDetails);
+
 
 
   const incrementMonth = () => {
@@ -50,17 +73,17 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
     const currentYear = new Date().getFullYear();
     const minimumYear = 2024; // Change this to your desired minimum year
     if (currentDate.getFullYear() > minimumYear) {
-        setCurrentDate(new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), 1));
-        setSelectedDate(null);
+      setCurrentDate(new Date(currentDate.getFullYear() - 1, currentDate.getMonth(), 1));
+      setSelectedDate(null);
     }
     // Disable the decrement button if the current year is the minimum year
     const decrementBtn = document.querySelector(".decrementYear");
     if (currentDate.getFullYear() === minimumYear) {
-        decrementBtn.disabled = true;
+      decrementBtn.disabled = true;
     } else {
-        decrementBtn.disabled = false;
+      decrementBtn.disabled = false;
     }
-};
+  };
 
 
 
@@ -68,27 +91,44 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
   //     setSelectedDate(day);
   //     console.log(`Selected date: ${day} ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`);
   // };
-
+  function formatDate(dateString) {
+    const parts = dateString.split(' '); // Split the string by space
+    const day = parts[0]; // Extract the day part
+    const month = getMonthNumber(parts[1]); // Convert month name to month number
+    const year = parts[2]; // Extract the year part
+    console.log("NEW",year,month,day);
+    setstartDate(`${year}${month}${day}`)
+   
+  }
+  function getMonthNumber(monthName) {
+    const months = {
+      Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
+      Jul: '07', Aug: '08', Sep: '09', Oct: '10', Nov: '11', Dec: '12'
+    };
+    return months[monthName];
+  }
   const handleDateClick = (day) => {
     const date = `${day} ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`
     setSelectedDate(day);
     setSelectedDateData(date)
     setSelectedDateSlote(true)
+    formatDate(date)
+    console.log("formatDate",formatDate);
     console.log("day", date)
     console.log(`Selected date: ${day} ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`);
   };
 
   const fetchDoctorBookingTime = async (timeSlot) => {
-    console.log("selectedDate",selectedDateData);
+    console.log("selectedDate", selectedDateData);
     try {
-      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/check-doctor-availability/${doc_id}/${timeSlot}/${selectedDateData}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/check-doctor-availability/${docId}/${timeSlot}/${selectedDateData}`);
       // setDoctorTimeDetail(response.data.available);
-      console.log("BookingAV",response.data.available);
-      const avaible=response.data.available;
-      if(avaible){
+      console.log("BookingAV", response.data.available);
+      const avaible = response.data.available;
+      if (avaible) {
         // alert("docter time is avaible ")
         setSelectedTimeSlot(timeSlot);
-      }else{
+      } else {
         alert("docter timeSlote has book already with some one ")
       }
     } catch (error) {
@@ -97,7 +137,7 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
   };
 
   const handleTimeSlotClick = (timeSlot) => {
-   
+
     fetchDoctorBookingTime(timeSlot)
     console.log(`Selected time slot: ${timeSlot}`);
   };
@@ -136,85 +176,106 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
     const dateContainers = [];
 
     for (let day = 1; day <= numberOfDays; day++) {
-        // Check if it's the current month and the day is past
-        const isPastDate = currentMonth === today.getMonth() && day < currentDay;
+      // Check if it's the current month and the day is past
+      const isPastDate = currentMonth === today.getMonth() && day < currentDay;
 
-        // Render dates only from the current date onwards for the current month
-        // Render all dates for future months
-        if (!isPastDate || currentMonth < today.getMonth()) {
-            const formattedDate = `${day}`;
-            const isSelected = day === selectedDate;
+      // Render dates only from the current date onwards for the current month
+      // Render all dates for future months
+      if (!isPastDate || currentMonth < today.getMonth()) {
+        const formattedDate = `${day}`;
+        const isSelected = day === selectedDate;
 
-            dateContainers.push(
-                <div key={day} className=" ">
-                    <div
-                        className={`date-container  cursor-pointer  ${isSelected ? "background-gradient" : "border-black"}`}
-                        onClick={() => handleDateClick(day)}
-                    >
-                        <div>{formattedDate}</div>
-                        <div>{monthNames[currentMonth]}</div>
-                    </div>
-                </div>
-            );
-        }
+        dateContainers.push(
+          <div key={day} className=" ">
+            <div
+              className={`date-container  cursor-pointer  ${isSelected ? "background-gradient" : "border-black"}`}
+              onClick={() => handleDateClick(day)}
+            >
+              <div>{formattedDate}</div>
+              <div>{monthNames[currentMonth]}</div>
+            </div>
+          </div>
+        );
+      }
     }
 
     return dateContainers;
-};
+  };
 
 
+console.log("doctorTimeDetail",doctorTimeDetail);
 
- 
   const renderTimeSlotContainers = () => {
-    return doctorTimeDetails && doctorTimeDetails.map((timeSlot, index) => (
-     
+    return doctorTimeDetail && doctorTimeDetail.map((timeSlot, index) => (
+
       <div
         key={index}
         className={`time-slot-container mt-3  md:flex flex-col items-center justify-center md:mx-3   w-44  `}
       >
         <button
-          onClick={() => handleTimeSlotClick(timeSlot.session1.startTime)}
-          className={` ${selectedTimeSlot === timeSlot.session1.startTime ? "  btn-slot-click " : " btn-slot-select"}`}
+          // onClick={() => handleTimeSlotClick(timeSlot.sessions.startTime)}
+          className={` ${selectedTimeSlot === timeSlot.sessions.map((session, sessionIndex) => ( session.startTime )) ? "  btn-slot-click " : " btn-slot-select"}`}
         >
-        
-          <p> {timeSlot.session1.startTime ?timeSlot.session1.startTime:"Doctor is not Avaible in this Time"}</p>
+
+          {/* <p> {timeSlot.sessions ?
+            timeSlot.sessions.map((session, sessionIndex) => (
+             <>
+                {session.startTime} - {session.endTime}
+             </>
+            
+            ))
+            : "Doctor is not Avaible in this Time"}</p> */}
+            <p> 
+            {timeSlot.sessions.map((session, sessionIndex) => (
+             <>
+                {session.startTime} - {session.endTime}
+             </>
+            
+            ))
+            }
+            </p>
+
         </button>
-        <button
-          onClick={() => handleTimeSlotClick(timeSlot.session1.endTime)}
-          className={` ${selectedTimeSlot === timeSlot.session1.endTime ? "  btn-slot-click mt-2" : " btn-slot-select mt-2"}`}
+        {/* <button
+          onClick={() => handleTimeSlotClick(timeSlot.sessions.endTime)}
+          className={` ${selectedTimeSlot === timeSlot.sessions.endTime ? "  btn-slot-click mt-2" : " btn-slot-select mt-2"}`}
         >
-          <p> {timeSlot.session1.endTime?timeSlot.session1.endTime:"Doctor is not Avaible in this Time"}</p>
-        </button>
+          <p> {timeSlot.sessions?timeSlot.sessions.map((i,index)=>(
+            i.endTime
+
+          ))
+          :"Doctor is not Avaible in this Time"}</p>
+        </button> */}
       </div>
     ));
   };
   const renderTimeSlotContainer = () => {
-    return doctorTimeDetails && doctorTimeDetails.map((timeSlot, index) => (
+    // return doctorTimeDetails && doctorTimeDetails.map((timeSlot, index) => (
 
-      <div
-        key={index}
-        className={`time-slot-container mt-3  md:flex flex-col items-center justify-center md:mx-3   w-44  `}
-      >
-        <button
-          onClick={() => handleTimeSlotClick(timeSlot.session2.startTime)}
-          className={` ${selectedTimeSlot === timeSlot.session2.startTime ? "  btn-slot-click" : " btn-slot-select "}`}
-        >
-          <p> {timeSlot.session2.startTime?timeSlot.session2.startTime:"Doctor is not Avaible in this Time"}</p>
-        </button>
-        <button
-          onClick={() => handleTimeSlotClick(timeSlot.session2.endTime)}
-          className={` ${selectedTimeSlot === timeSlot.session2.endTime ? "  btn-slot-click mt-2" : " btn-slot-select mt-2"}`}
-        >
-          {/* <p>Date: {timeSlot.date}</p> */}
-          {/* <p>Doctor ID: {timeSlot.doc_id}</p>
-               <p>Session 1 Start Time: {timeSlot.session1.startTime}</p>
-               <p>Session 1 End Time: {timeSlot.session1.endTime}</p>
-               <p>Session 2 Start Time: {timeSlot.session2.startTime}</p>
-               <p>Session 2 End Time: {timeSlot.session2.endTime}</p> */}
-          <p> {timeSlot.session2.endTime?timeSlot.session2.endTime:"Doctor is not Avaible in this Time"}</p>
-        </button>
-      </div>
-    ));
+    //   <div
+    //     key={index}
+    //     className={`time-slot-container mt-3  md:flex flex-col items-center justify-center md:mx-3   w-44  `}
+    //   >
+    //     <button
+    //       onClick={() => handleTimeSlotClick(timeSlot.session2.startTime)}
+    //       className={` ${selectedTimeSlot === timeSlot.session2.startTime ? "  btn-slot-click" : " btn-slot-select "}`}
+    //     >
+    //       <p> {timeSlot.session2.startTime?timeSlot.session2.startTime:"Doctor is not Avaible in this Time"}</p>
+    //     </button>
+    //     <button
+    //       onClick={() => handleTimeSlotClick(timeSlot.session2.endTime)}
+    //       className={` ${selectedTimeSlot === timeSlot.session2.endTime ? "  btn-slot-click mt-2" : " btn-slot-select mt-2"}`}
+    //     >
+    //       {/* <p>Date: {timeSlot.date}</p> */}
+    //       {/* <p>Doctor ID: {timeSlot.doc_id}</p>
+    //            <p>Session 1 Start Time: {timeSlot.sessions.startTime}</p>
+    //            <p>Session 1 End Time: {timeSlot.sessions.endTime}</p>
+    //            <p>Session 2 Start Time: {timeSlot.session2.startTime}</p>
+    //            <p>Session 2 End Time: {timeSlot.session2.endTime}</p> */}
+    //       <p> {timeSlot.session2.endTime?timeSlot.session2.endTime:"Doctor is not Avaible in this Time"}</p>
+    //     </button>
+    //   </div>
+    // ));
   };
 
   const settings = {
@@ -370,7 +431,7 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
                       <h2 className="text-lg font-bold">Morning Slots</h2>
                     </div>
                     <div className="d-flex flex-column md:flex-row align-items-center justify-content-center">
-                      {doctorTimeDetails && doctorTimeDetails.length > 0 ?renderTimeSlotContainers():<p>Doctor is not avaible in this time!</p>}
+                      {doctorTimeDetail && doctorTimeDetail.length > 0 ? renderTimeSlotContainers() : <p>Doctor is not avaible in this time!</p>}
                     </div>
                   </div>
                   <div className="border p-4  text-center rounded-md shadow">
@@ -380,7 +441,7 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
                     </div>
                     <div className="d-flex flex-column md:flex-row align-items-center justify-content-center">
                       {/* {renderTimeSlotContainer()} */}
-                      {doctorTimeDetails && doctorTimeDetails.length > 0 ?renderTimeSlotContainer():<p>Doctor is not avaible in this time!</p>}
+                      {doctorTimeDetails && doctorTimeDetails.length > 0 ? renderTimeSlotContainer() : <p>Doctor is not avaible in this time!</p>}
                     </div>
                   </div>
                 </div>

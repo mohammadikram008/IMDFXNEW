@@ -5,7 +5,7 @@ import { doctor_thumb_02, doc_01, doc_02, doc_03 } from "../../imagepath";
 import doc1 from '../../../assets/images/doc1.jpg'
 const DoctorSidebar = ({ props }) => {
   let pathnames = window.location.pathname;
-  console.log("proDoc",props);
+  console.log("proDoc", props);
 
   const [Doctor, setDoctor] = useState([]);
   const doc_id = localStorage.getItem('token');
@@ -15,10 +15,10 @@ const DoctorSidebar = ({ props }) => {
       // const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/gettodayappointments/${userId}`);
       const res = await axios.get(`http://localhost:3005/api/check-doctor-office/${doc_id}`);
       setDoctor(response.data);
-      
+
     } catch (error) {
       console.error('Error fetching appointments:', error);
-     
+
     }
   };
   useEffect(() => {
@@ -27,7 +27,7 @@ const DoctorSidebar = ({ props }) => {
   const imageUrl = `https://imdfx-newserver-production.up.railway.app/api`;
   // const imageUrl = `https://imdfx-newserver-production.up.railway.app/api/`;
   // const imageUrl = props.image ? `https://imdfx-newserver-production.up.railway.app/${props.image.replace(/\\/g, '/')}` : '';
-  console.log("img",imageUrl);
+  console.log("img", imageUrl);
   return (
     <>
       {/* Profile Sidebar */}
@@ -95,7 +95,7 @@ const DoctorSidebar = ({ props }) => {
                   <span>My Patients</span>
                 </Link>
               </li>
-            
+
               <li
                 className={
                   pathnames.includes("/doctor/schedule-timing") ? "active bg" : ""
@@ -174,18 +174,18 @@ const DoctorSidebar = ({ props }) => {
                 </Link>
               </li>
               {
-                Doctor && Doctor?"": <li
-                className={
-                  pathnames.includes("/doctor/account") ? "active bg" : ""
-                }
-              >
-                <Link to="/doctor/account">
-                  <i className="fas fa-wallet" />
-                  <span>Wallet</span>
-                </Link>
-              </li>
+                Doctor && Doctor ? "" : <li
+                  className={
+                    pathnames.includes("/doctor/account") ? "active bg" : ""
+                  }
+                >
+                  <Link to="/doctor/account">
+                    <i className="fas fa-wallet" />
+                    <span>Wallet</span>
+                  </Link>
+                </li>
               }
-             
+
               {/* <li
                 className={
                   pathnames.includes("/doctor/profile-setting") ? "active bg" : ""
