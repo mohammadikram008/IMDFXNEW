@@ -49,6 +49,7 @@ const Dashboard = (props) => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedAmount, setSelectedAmount] = useState(null);
   const [medicalrecords, setMedicalRecord] = useState([]);
+  
   const handleCardClick = (index, price) => {
     setSelectedCard(index);
     setSelectedAmount(price);
