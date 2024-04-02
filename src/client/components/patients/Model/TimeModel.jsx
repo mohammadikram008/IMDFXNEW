@@ -16,43 +16,47 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Modal } from "antd";
+
 const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctorTimeDetails }) => {
-
+  // const docId = localStorage.getItem('token');
   const docId = doctorDetail && doctorDetail._id;
-
+  // console.log("docId", docId);
   const history = useHistory();
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(new Date()); // Initialize with today's date
   const [selectedDate, setSelectedDate] = useState(null);
-  const [startDate, setstartDate] = useState();
+  const [startDate, setStartDate] = useState();
   const [selectedDateData, setSelectedDateData] = useState(null);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState(null);
-  const [selectedDateSlot, setSelectedDateSlote] = useState(false);
+  const [selectedDateSlot, setSelectedDateSlot] = useState(false);
   const [doctorTimeDetail, setDoctorTimeDetail] = useState([]);
- 
-  const fetchDoctorAvaibleTimeDetail = async () => {
+  const [selectedTime, setSelectTime] = useState([]);
+  const [isProceedBtnEnabled,setisProceedBtnEnabled]=useState(false)
+  // Fetch doctor available time details based on selected date
+  const fetchDoctorAvailableTimeDetail = async () => {
     try {
+      const today = new Date();
+      const currentDay = today.getDate();
+      const getDayName = (date) => {
+        const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        return daysOfWeek[date.getDay()];
+      };
 
-      const response = await axios.get(`http://localhost:3005/api/doctorAvailableTimings/${docId}`, {
-        params: { startDate: startDate },
-      });
-      setDoctorTimeDetail(response.data);
-      console.log("ModelTime", response.data);
+      // // Get the day name of today
+      const dayname = getDayName(today);
+      setSelectedDate(currentDay);
+     
+      const response = await axios.get(`http://localhost:3005/api/check-doctor-availability/${docId}/${dayname}`);
+     
+      setSelectTime(response.data)
     } catch (error) {
       console.error('Error fetching doctor Time details:', error);
     }
   };
+
   useEffect(() => {
-
-    fetchDoctorAvaibleTimeDetail();
-  
-  }, [startDate]);
-
-
-
-  console.log("doctorTimeDetails", doctorTimeDetails);
-
-
+    fetchDoctorAvailableTimeDetail();
+  }, [docId]);
 
   const incrementMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
@@ -85,21 +89,17 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
     }
   };
 
-
-
-  // const handleDateClick = (day) => {
-  //     setSelectedDate(day);
-  //     console.log(`Selected date: ${day} ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`);
-  // };
+  // Function to format date string
   function formatDate(dateString) {
     const parts = dateString.split(' '); // Split the string by space
     const day = parts[0]; // Extract the day part
     const month = getMonthNumber(parts[1]); // Convert month name to month number
     const year = parts[2]; // Extract the year part
-    console.log("NEW",year,month,day);
-    setstartDate(`${year}${month}${day}`)
-   
+    setStartDate(`${year}${month}${day}`); // Set startDate state
+    setSelectedDateData(dateString); // Set selectedDateData state
   }
+
+  // Function to get month number from month name
   function getMonthNumber(monthName) {
     const months = {
       Jan: '01', Feb: '02', Mar: '03', Apr: '04', May: '05', Jun: '06',
@@ -107,66 +107,69 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
     };
     return months[monthName];
   }
+
+
+  // Function to handle date click
   const handleDateClick = (day) => {
     const date = `${day} ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`
     setSelectedDate(day);
-    setSelectedDateData(date)
-    setSelectedDateSlote(true)
-    formatDate(date)
-    console.log("formatDate",formatDate);
-    console.log("day", date)
-    console.log(`Selected date: ${day} ${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`);
+    setSelectedDateData(date);
+  
+    const dates = new Date(date);
+    const dayIndex = dates.getDay();
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayName = daysOfWeek[dayIndex];
+    fetchDoctorBookingTime(dayName);
+    setSelectedDateSlot(true);
+    formatDate(date);
   };
 
-  const fetchDoctorBookingTime = async (timeSlot) => {
-    console.log("selectedDate", selectedDateData);
+
+
+  // Function to fetch doctor booking time
+  const fetchDoctorBookingTime = async (dayname) => {
+  
     try {
-      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/check-doctor-availability/${docId}/${timeSlot}/${selectedDateData}`);
-      // setDoctorTimeDetail(response.data.available);
-      console.log("BookingAV", response.data.available);
-      const avaible = response.data.available;
-      if (avaible) {
-        // alert("docter time is avaible ")
-        setSelectedTimeSlot(timeSlot);
+      const response = await axios.get(`http://localhost:3005/api/check-doctor-availability/${docId}/${dayname}`);
+      setSelectTime(response.data)
+      //  isProceedBtnEnabled = selectedDate !== null && selectedTimeSlot !== null;
+      // const available = response.data.available;
+      console.log("PPP",response.data.timeSlots);
+      if ((response.data.timeSlots).length>0) {
+      
       } else {
-        alert("docter timeSlote has book already with some one ")
+        setisProceedBtnEnabled(false)
+       
       }
     } catch (error) {
       console.error('Error fetching doctor details:', error);
     }
   };
 
-  const handleTimeSlotClick = (timeSlot) => {
+  // Function to fetch doctor booking time
+  const fetchCheckBookingTime = async (timeSlot) => {
 
-    fetchDoctorBookingTime(timeSlot)
-    console.log(`Selected time slot: ${timeSlot}`);
+    try {
+      const response = await axios.get(`http://localhost:3005/api/check-booking-availability/${docId}/${timeSlot}/${selectedDateData}`);
+      // console.log("RES",response);
+      // setSelectTime(response.data)
+      const available = response.data.available;
+      if (available) {
+        setSelectedTimeSlot(timeSlot);
+        setisProceedBtnEnabled(true)
+      } else {
+        alert("Doctor time slot has already been booked.");
+      }
+    } catch (error) {
+      console.error('Error fetching doctor details:', error);
+    }
+  };
+  // Function to handle time slot click
+  const handleTimeSlotClick = (timeSlot) => {
+    fetchCheckBookingTime(timeSlot);
   };
 
-  const isProceedBtnEnabled = selectedDate !== null && selectedTimeSlot !== null;
-  console.log("isProceedBtnEnabled", isProceedBtnEnabled)
-  // const renderDateContainers = () => {
-  //   const numberOfDays = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
-  //   const dateContainers = [];
-
-  //   for (let day = 1; day <= numberOfDays; day++) {
-  //     const formattedDate = `${day}`;
-  //     const isSelected = day === selectedDate;
-
-  //     dateContainers.push(
-  //       <div key={day} className=" ">
-  //         <div
-  //           className={`date-container  cursor-pointer  ${isSelected ? "background-gradient" : "border-black"}`}
-  //           onClick={() => handleDateClick(day)}
-  //         >
-  //           <div>{formattedDate}</div>
-  //           <div>{monthNames[currentDate.getMonth()]}</div>
-  //         </div>
-  //       </div>
-  //     );
-  //   }
-
-  //   return dateContainers;
-  // };
+  // Function to render date containers
   const renderDateContainers = () => {
     const today = new Date();
     const currentMonth = currentDate.getMonth();
@@ -175,107 +178,65 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
     const numberOfDays = new Date(currentYear, currentMonth + 1, 0).getDate();
     const dateContainers = [];
 
+    // console.log("numberOfDays", numberOfDays);
+    // const getDayName = (date) => {
+    //   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    //   return daysOfWeek[date.getDay()];
+    // };
+    // console.log("today",today);
+    // // Get the day name of today
+    // const dayName = getDayName(today);
+    // console.log("dayName", dayName);
+
     for (let day = 1; day <= numberOfDays; day++) {
-      // Check if it's the current month and the day is past
       const isPastDate = currentMonth === today.getMonth() && day < currentDay;
-
-      // Render dates only from the current date onwards for the current month
-      // Render all dates for future months
-      if (!isPastDate || currentMonth < today.getMonth()) {
-        const formattedDate = `${day}`;
-        const isSelected = day === selectedDate;
-
-        dateContainers.push(
-          <div key={day} className=" ">
-            <div
-              className={`date-container  cursor-pointer  ${isSelected ? "background-gradient" : "border-black"}`}
-              onClick={() => handleDateClick(day)}
-            >
-              <div>{formattedDate}</div>
-              <div>{monthNames[currentMonth]}</div>
-            </div>
+      const isSelected = day === selectedDate;
+      dateContainers.push(
+        <div key={day} className=" ">
+          <div
+            className={`date-container  cursor-pointer  ${isSelected ? "background-gradient" : "border-black"}`}
+            onClick={() => handleDateClick(day)}
+          >
+            <div>{day}</div>
+            <div>{monthNames[currentMonth]}</div>
           </div>
-        );
-      }
+        </div>
+      );
+      // if (!isPastDate || currentMonth < today.getMonth()) {
+      //   const formattedDate = `${day}`;
+      //   const isSelected = day === selectedDate;
+
+      //   dateContainers.push(
+      //     <div key={day} className=" ">
+      //       <div
+      //         className={`date-container  cursor-pointer  ${isSelected ? "background-gradient" : "border-black"}`}
+      //         onClick={() => handleDateClick(day)}
+      //       >
+      //         <div>{formattedDate}</div>
+      //         <div>{monthNames[currentMonth]}</div>
+      //       </div>
+      //     </div>
+      //   );
+      // }
     }
 
     return dateContainers;
   };
 
-
-console.log("doctorTimeDetail",doctorTimeDetail);
-
+  // Function to render time slot containers
   const renderTimeSlotContainers = () => {
-    return doctorTimeDetail && doctorTimeDetail.map((timeSlot, index) => (
+    return selectedTime.timeSlots && selectedTime.timeSlots.map((timeSlot, index) => (
 
-      <div
-        key={index}
-        className={`time-slot-container mt-3  md:flex flex-col items-center justify-center md:mx-3   w-44  `}
-      >
-        <button
-          // onClick={() => handleTimeSlotClick(timeSlot.sessions.startTime)}
-          className={` ${selectedTimeSlot === timeSlot.sessions.map((session, sessionIndex) => ( session.startTime )) ? "  btn-slot-click " : " btn-slot-select"}`}
-        >
+      timeSlot.timefrom ?
+        <div key={index} className="col-lg-6 col-md-6 col-sm-12 mt-2" >
+          <button className={` ${selectedTimeSlot === timeSlot.timefrom ? "btn-slot-click" : "btn-slot-select"}`} onClick={() => handleTimeSlotClick(timeSlot.timefrom)}>
+            <p>{timeSlot.timefrom ? timeSlot.timefrom : "No Appointment this date"}</p>
+          </button>
+        </div>
+        : "No Appointment this date"
 
-          {/* <p> {timeSlot.sessions ?
-            timeSlot.sessions.map((session, sessionIndex) => (
-             <>
-                {session.startTime} - {session.endTime}
-             </>
-            
-            ))
-            : "Doctor is not Avaible in this Time"}</p> */}
-            <p> 
-            {timeSlot.sessions.map((session, sessionIndex) => (
-             <>
-                {session.startTime} - {session.endTime}
-             </>
-            
-            ))
-            }
-            </p>
 
-        </button>
-        {/* <button
-          onClick={() => handleTimeSlotClick(timeSlot.sessions.endTime)}
-          className={` ${selectedTimeSlot === timeSlot.sessions.endTime ? "  btn-slot-click mt-2" : " btn-slot-select mt-2"}`}
-        >
-          <p> {timeSlot.sessions?timeSlot.sessions.map((i,index)=>(
-            i.endTime
-
-          ))
-          :"Doctor is not Avaible in this Time"}</p>
-        </button> */}
-      </div>
     ));
-  };
-  const renderTimeSlotContainer = () => {
-    // return doctorTimeDetails && doctorTimeDetails.map((timeSlot, index) => (
-
-    //   <div
-    //     key={index}
-    //     className={`time-slot-container mt-3  md:flex flex-col items-center justify-center md:mx-3   w-44  `}
-    //   >
-    //     <button
-    //       onClick={() => handleTimeSlotClick(timeSlot.session2.startTime)}
-    //       className={` ${selectedTimeSlot === timeSlot.session2.startTime ? "  btn-slot-click" : " btn-slot-select "}`}
-    //     >
-    //       <p> {timeSlot.session2.startTime?timeSlot.session2.startTime:"Doctor is not Avaible in this Time"}</p>
-    //     </button>
-    //     <button
-    //       onClick={() => handleTimeSlotClick(timeSlot.session2.endTime)}
-    //       className={` ${selectedTimeSlot === timeSlot.session2.endTime ? "  btn-slot-click mt-2" : " btn-slot-select mt-2"}`}
-    //     >
-    //       {/* <p>Date: {timeSlot.date}</p> */}
-    //       {/* <p>Doctor ID: {timeSlot.doc_id}</p>
-    //            <p>Session 1 Start Time: {timeSlot.sessions.startTime}</p>
-    //            <p>Session 1 End Time: {timeSlot.sessions.endTime}</p>
-    //            <p>Session 2 Start Time: {timeSlot.session2.startTime}</p>
-    //            <p>Session 2 End Time: {timeSlot.session2.endTime}</p> */}
-    //       <p> {timeSlot.session2.endTime?timeSlot.session2.endTime:"Doctor is not Avaible in this Time"}</p>
-    //     </button>
-    //   </div>
-    // ));
   };
 
   const settings = {
@@ -285,7 +246,7 @@ console.log("doctorTimeDetail",doctorTimeDetail);
     autoplay: false,
     autoplaySpeed: 3000,
     slidesToShow: 6,
-    slidesToScroll: 6,
+    slidesToScroll: 2,
     nextArrow: null,
     prevArrow: null,
     initialSlide: 2,
@@ -329,20 +290,14 @@ console.log("doctorTimeDetail",doctorTimeDetail);
   };
 
   const handleChangePay = () => {
-
     if (isProceedBtnEnabled) {
-      // Redirect to the checkout page or perform other actions
-      // window.location.href = "/patient/checkout";
-      // console.log("selectedDate", selectedDate);
-      // console.log("selectedTimeSlot", selectedTimeSlot);
-      // console.log(doctorDetail)
       history.push({
         pathname: "/patient/checkout",
         state: { selectedDateData, selectedTimeSlot, doctorDetail },
       });
     }
-
   }
+
   return (
     <>
       <Modal
@@ -374,15 +329,13 @@ console.log("doctorTimeDetail",doctorTimeDetail);
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Book Appointment</h5>
+                <h3 className="">Book Appointment</h3>
               </div>
               <div className="modal-body">
                 <div className="d-flex align-items-center justify-content-between date-btn-icon">
-                  {/* <div className=" col-sm-8 col-md-4 text-sm-end"></div> */}
                   <div className=" model-heading-tag col-md-12 text-sm-end">
                     <div className="datepicker-icon">
                       <div className="border p-4 mt-4 rounded-md shadow">
-
                         <div className="d-flex align-items-center justify-content-between mt-4">
                           <button onClick={decrementYear} className=" decrementYear">
                             <BsCaretLeftFill />
@@ -409,61 +362,37 @@ console.log("doctorTimeDetail",doctorTimeDetail);
 
                 <div className="card booking-schedule schedule-widget">
                   <div className="schedule-header">
-                    <style>
-                      {`
-                      .slick-track{
-                        width:"max-content"
-                      }
-                      `}
-                    </style>
-                    {/* <OwlCarousel {...owlOptions}>
-                      {renderDateContainers()}
-                    </OwlCarousel> */}
                     <Slider {...settings} className="slick-lists" >
                       {renderDateContainers()}
                     </Slider>
                   </div>
                 </div>
-                <div className="container  slot-main-div">
-                  <div className="border p-4 text-center rounded-md shadow">
-                    <div className=" mb-3 slot-heading-imgtext">
-                      <IoMdSunny size={26} className="color-gradient" color="orange" />
-                      <h2 className="text-lg font-bold">Morning Slots</h2>
+              
+                    <div className="container">
+                      <div className="border p-4 text-center rounded-md shadow" style={{ marginTop: '-3rem' }}>
+                        <div className="mb-3 slot-heading-imgtext">
+                          {/* <IoMdSunny size={26} className="color-gradient" color="orange" /> */}
+                          <h2 className="text-lg font-bold"> Select Time Slots</h2>
+                        </div>
+                       { selectedTime.timeSlots && (selectedTime.timeSlots).length >0 ?
+                        <div className="row slots-show-row" >
+                        {renderTimeSlotContainers()}
+                        </div>
+                         : <div className="slots-show-row">"No Slots are available on  this Day!  "</div>}
+                      </div>
                     </div>
-                    <div className="d-flex flex-column md:flex-row align-items-center justify-content-center">
-                      {doctorTimeDetail && doctorTimeDetail.length > 0 ? renderTimeSlotContainers() : <p>Doctor is not avaible in this time!</p>}
-                    </div>
-                  </div>
-                  <div className="border p-4  text-center rounded-md shadow">
-                    <div className="slot-headinf-imgtext mb-3">
-                      <MdOutlineNightlightRound size={26} color="#87ceeb" className="slot-icon" />
-                      <h2 className="text-lg font-bold">Evening Slots</h2>
-                    </div>
-                    <div className="d-flex flex-column md:flex-row align-items-center justify-content-center">
-                      {/* {renderTimeSlotContainer()} */}
-                      {doctorTimeDetails && doctorTimeDetails.length > 0 ? renderTimeSlotContainer() : <p>Doctor is not avaible in this time!</p>}
-                    </div>
-                  </div>
-                </div>
+                 
+
               </div>
               <div className="modal-footer">
-                {/* <button type="button" className="btn btn-secondary" onClick={handleModalClose}>
-                  Close
-                </button> */}
                 <button
                   type="button"
                   style={{
                     background: !isProceedBtnEnabled ? "gray" : "linear-gradient(to bottom, #ffcc00 0%, #ff9900 98%)"
                   }}
-                  // className="btn btn-primary"
-                  onClick={() => handleChangePay()}
                   className={` ${isProceedBtnEnabled ? "pay-btn" : "pay-btn-dis"}`}
                   disabled={!isProceedBtnEnabled}
-                // onClick={() => {
-                //   // Handle booking confirmation logic here
-                //   // Close the modal
-                //   handleModalClose();
-                // }}
+                  onClick={handleChangePay}
                 >
                   Confirm Booking
                 </button>
@@ -473,36 +402,7 @@ console.log("doctorTimeDetail",doctorTimeDetail);
         </div>
       </Modal>
     </>
-
-
-
-
   );
 };
 
 export default TimeModel;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

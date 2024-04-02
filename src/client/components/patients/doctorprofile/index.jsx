@@ -16,6 +16,7 @@ const DoctorProfile = (props) => {
   const { id } = props.location.state;
   console.log("iddd", id);
   const docId = id;
+  localStorage.setItem("docId",docId)
   const loginId = localStorage.getItem('token');
   const status = localStorage.getItem('status');
   const [show, setShow] = useState(false);
@@ -51,7 +52,7 @@ const DoctorProfile = (props) => {
     try {
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getDoctorDetail/${id}`);
       setDoctorDetail(response.data);
-      // console.log("profile",response.data);
+      console.log("profile",response.data);
     } catch (error) {
       console.error('Error fetching doctor details:', error);
     }

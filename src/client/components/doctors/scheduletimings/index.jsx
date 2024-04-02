@@ -86,6 +86,7 @@ const ScheduleTiming = (props) => {
   useEffect(() => {
         const socket = io("http://localhost:3005", { transports: ["websocket"] });
         // Listen for doctor's notification
+        const res = socket.emit("storeSocketId", {docId});
         socket.on("patientnotAvaible", (message) => {
             toast.success(message);
             // setCallerName(message); // Assuming the message contains the caller's name

@@ -494,7 +494,15 @@
     color: black;
     width: 10rem;
 }
-
+.slots-show-row{
+    height: 8rem;
+    overflow-y: auto;
+}
+.modal-header{
+    display: flex;
+    justify-content: center;
+align-items: center;
+}
 .btn-slot-click {
     width: 100%;
     /* background: linear-gradient(180deg, rgb(45, 82, 57) 0%, rgb(40, 185, 178) 100%); */
@@ -502,7 +510,7 @@
     border: none;
     border-radius: 50px;
     padding: 0.7rem;
-    display: flex;
+    /* display: flex; */
     text-align: center;
     justify-content: center;
     color: white;

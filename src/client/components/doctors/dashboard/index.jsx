@@ -50,7 +50,7 @@ const DoctorDashboard = (props) => {
   const fetchpatientdata = async () => {
 
     try {
-      setLoading(true);
+     
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getDoctorDetail/${docId}`);
       setDoctor(response.data);
       const doctordata = response.data
