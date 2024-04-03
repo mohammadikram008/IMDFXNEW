@@ -13,16 +13,17 @@ const Ringing = ({ callerName, onAcceptCall, onRejectCall, onCloseModal }) => {
                         {/* <button className="close-button" onClick={onCloseModal}>
                             <i className="fas fa-times"></i>
                         </button> */}
-                    
-                    {/* <div className="call-modal-body">
+
+                        {/* <div className="call-modal-body">
                         <div className="call-icons">
                             <i className="fas fa-phone-alt"></i>
                         </div>
                     </div> */}
-                    <div className="call-modal-footer">
-                        <button className="reject-button" onClick={onRejectCall}>Reject</button>
-                        <button className="accept-button mx-2" onClick={onAcceptCall}>Accept</button>
-                    </div>
+                       
+                        <div className="call-modal-footer">
+                            <button className="reject-button" onClick={onRejectCall}>Reject</button>
+                            <button className="accept-button mx-2" onClick={onAcceptCall}>Accept</button>
+                        </div>
                     </div>
                 </div>
             </div>

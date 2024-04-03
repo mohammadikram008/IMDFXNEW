@@ -56,7 +56,7 @@ const ScheduleTiming = (props) => {
     setAddListEmp(listEmp);
   };
   const handleCall = (selectedDateTime, time, id,doctorname) => {
-    console.log("userId", id);
+    
     setMeetingId(id);
     
     const currentDateTime = new Date();
@@ -76,17 +76,18 @@ const ScheduleTiming = (props) => {
       //   props.history.push(`/patient/waiting-page`);  // Use props.history.push
     } else {
       const userId=id;
-      const socket = io("https://imdfx-newserver-production.up.railway.app",{transports:["websocket"]});
+      console.log("userId", id);
+      const socket = io("http://localhost:3005",{transports:["websocket"]});
       const res = socket.emit("doctorJoinRoom", docId, userId);
       console.log("RES", res);
-     
+    
       myMeeting();
     }
   };
   useEffect(() => {
         const socket = io("http://localhost:3005", { transports: ["websocket"] });
         // Listen for doctor's notification
-        const res = socket.emit("storeSocketId", {docId});
+        // const res = socket.emit("storeSocketId", {docId});
         socket.on("patientnotAvaible", (message) => {
             toast.success(message);
             // setCallerName(message); // Assuming the message contains the caller's name
@@ -103,8 +104,8 @@ const ScheduleTiming = (props) => {
   const handleMessage = () => {
     console.log("message");
   }
-  const APP_ID = 1049140173;
-  const SERVER_SECRET = "80f3b1250528f24162893ff96e2c4809";
+  const APP_ID =  549911561;
+  const SERVER_SECRET = "cb161fefa2b3464f6da3590442f39d48";
 
   // Function to generate a unique channel ID based on current timestamp
   function generateUniqueChannelID() {
@@ -137,7 +138,7 @@ const ScheduleTiming = (props) => {
         "UM2Zb",
         roomId,
         userId,
-        100000,
+        10000000000,
       );
       // Create ZegoUIKitPrebuilt instance
       const zp = ZegoUIKitPrebuilt.create(kitToken);
@@ -156,6 +157,9 @@ const ScheduleTiming = (props) => {
         scenario: {
           mode: ZegoUIKitPrebuilt.OneONoneCall,
         },
+          onLeaveRoom: ()=>{
+          // setShowRingingModal(false)
+        }
       });
 
       setJoined(false);
@@ -175,7 +179,7 @@ const ScheduleTiming = (props) => {
     }
     return result;
   }
-console.log("ID",meetingId)
+
   return (
     <div>
       <Header {...props} />

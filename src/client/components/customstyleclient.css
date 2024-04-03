@@ -480,7 +480,9 @@
 .booking-info p {
     color: black;
 }
-
+.call-modal-backdrop{
+    z-index: 100;
+}
 .btn-slot-select {
     width: 100%;
     /* background: linear-gradient(180deg, rgb(94, 239, 143) 0%, rgb(0, 166, 157) 100%); */

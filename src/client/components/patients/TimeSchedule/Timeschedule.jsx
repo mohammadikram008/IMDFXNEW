@@ -19,20 +19,24 @@ const ENDPOINT = "https://imdfx-newserver-production.up.railway.app";
 // import { IMG01 } from "../doctorprofile/img.jsx";
 import IMG01 from "./doctorAi.jpg";
 const Timeschedule = (props) => {
-    const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+    const [isAudioPlaying, setIsAudioPlaying] = useState(true);
     let audioInterval;
-    let initAudio = () => {
+    let initAudio = (stop) => {
         const targetAudio = document.getElementsByClassName("audioBtn")[0];
-        targetAudio.currentTime = 0;
-        targetAudio.play();
-        setIsAudioPlaying(true);
-
-        if (isAudioPlaying) {
-
-            audioInterval = setInterval(() => {
-                targetAudio.currentTime = 0; // Reset playback position to start
-                targetAudio.play();
-            }, 5000);
+        if (stop) {
+            console.log("stop", stop);
+            targetAudio.pause();
+        } else {
+            // targetAudio.currentTime = 0;
+            targetAudio.play();
+            // if (isAudioPlaying) {
+            //     console.log("checked");
+            //     audioInterval = setInterval(() => {
+            //         console.log("audioInterval!", audioInterval);
+            //         // targetAudio.currentTime = 0; 
+            //         targetAudio.play();
+            //     }, 5000);
+            // }
         }
     };
     let stopAudio = () => {
@@ -43,6 +47,7 @@ const Timeschedule = (props) => {
         clearInterval(audioInterval);
         targetAudio.pause();
         console.log("Interval cleared");
+        initAudio(true);
 
     };
 
@@ -61,18 +66,23 @@ const Timeschedule = (props) => {
         setAddListEmp([...addListEmp, " "]);
     };
 
-    useEffect(() => { }, []);
+    const ID = localStorage.getItem('token');
     useEffect(() => {
-        const socket = io("https://imdfx-newserver-production.up.railway.app", { transports: ["websocket"] });
+        // window.location.reload();
+        const socket = io("http://localhost:3005", { transports: ["websocket"] });
+        // Listen for doctor's notification
+        //   const res = socket.emit("storeSocketId", {ID});
+    }, []);
+    useEffect(() => {
+        const socket = io("http://localhost:3005", { transports: ["websocket"] });
         // Listen for doctor's notification
         socket.on("doctorOnlineNotification", (message) => {
+            console.log("message", message)
             toast.success(message);
-            setCallerName(message); // Assuming the message contains the caller's name
+            setCallerName(message);
             setShowRingingModal(true);
-            initAudio()
+            // initAudio()
 
-            // console.log("message", message);
-            // setNotification(message);
         });
 
         // return () => socket.disconnect();
@@ -137,10 +147,7 @@ const Timeschedule = (props) => {
             myMeeting();
         }
     };
-    // const handleCall = () => {
-    //     console.log("call");
-    //     myMeeting();
-    // }
+  
 
     const APP_ID = 1049140173;
     const SERVER_SECRET = "80f3b1250528f24162893ff96e2c4809";
@@ -342,21 +349,21 @@ const Timeschedule = (props) => {
                                 {/* <button className="btn btn-danger" onClick={initAudio}>
                                     Play Mp3 Audio
                                 </button> */}
-                                <audio className="audioBtn" >
+                                {/* <audio className="audioBtn" >
                                     <source src="/ringing.mp3"></source>
-                                </audio>
+                                </audio> */}
                             </div>
                         </div>
                     </div>
                 </div>
-                {showRingingModal && (
+                {/* {showRingingModal && (
                     <Ringing
                         callerName={callerName}
                         onAcceptCall={onAcceptCall}
                         onRejectCall={onRejectCall}
                         onCloseModal={() => setShowRingingModal(false)}
                     />
-                )}
+                )} */}
 
             </div>
             <Footer {...props} />

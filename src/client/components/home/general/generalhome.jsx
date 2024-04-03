@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useEffect } from "react";
 import Priceingplan from "./priceingplan";
 import Homebanner from "./homebanner";
 import Speacialities from "./speacialities";
@@ -14,16 +14,20 @@ import Faq from "./faq";
 import Header from "../../header";
 import Footer from "../../footer";
 import ProgressCircle from "../paediatric/scrolltotop";
-
+import io from "socket.io-client";
 function Generalhome(props) {
   let pathname = props.location.pathname;
 
   if (props.location.pathname === "/") {
     require("../../../assets/css/feather.css");
   }
-  // useEffect(() => {
-  //   window.location.reload();
-  // }, []);
+  const ID = localStorage.getItem('token');
+  useEffect(() => {
+    // window.location.reload();
+    const socket = io("http://localhost:3005", { transports: ["websocket"] });
+    // Listen for doctor's notification
+    const res = socket.emit("storeSocketId", { ID });
+  }, []);
   return (
     <>
       <>
