@@ -93,13 +93,17 @@ const AppointmentList = (props) => {
       dataIndex: "doctorDetail",
       render: (text, record) => (
         <>
-          <Link className="avatar mx-2" to="/admin/profile">
+          {/* <Link className="avatar mx-2" to="/admin/profile">
             <img className="rounded-circle" src={patient3} />
-          </Link>
+          </Link> */}
           {/* <Link to="/admin/profile" className="text-decoration-none">
             {text.name}
           </Link> */}
-          <span>{text.name}</span>
+          {/* <span>{text.name}</span> */}
+          <Link to={{
+            pathname: "/admin/profile",
+            state: { record } // Pass the entire record object as state
+          }} className="text-black ">{text.name}</Link>
         </>
       ),
       sorter: (a, b) => a.bookingDetail.doctorDetail.name.length - b.bookingDetail.doctorDetail.name.length,

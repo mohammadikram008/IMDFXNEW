@@ -8,7 +8,7 @@ import { doc_1 ,doc_2,IMG01,doc_4} from "./img";
 import { FaHeart } from "react-icons/fa6"; import { AiOutlineCheckCircle } from "react-icons/ai";
 import TimeModel from "../../../patients/Model/TimeModel";
 import { IoMdVideocam } from "react-icons/io";
-
+import { Offline, Online } from "react-detect-offline";
 import { ToastContainer, toast } from "react-toastify";
 const SearchList = (props) => {
   const history = useHistory()
@@ -206,10 +206,14 @@ const SearchList = (props) => {
                     <div className="d-flex gap-2 justify-content-start align-items-center  premium-div">
                       <h2 className="fw-bold mb-1" >{doctor.name}
                       </h2>
-                      <div className=" d-flex gap-1 " style={{color:"#008000"}}>
+                      {/* <div className=" d-flex gap-1 " style={{color:"#008000"}}>
 
                         Active
-                      </div>
+                      </div> */}
+                       <div className="d-flex " style={{color:"#008000"}}>
+                    <Online>Active</Online>
+                    <Offline>Offline</Offline>
+                  </div>
                       <MdStars size={32} className="star" />
                       <div className="gold-gradient badge-bg">
                         <div className="text-div">

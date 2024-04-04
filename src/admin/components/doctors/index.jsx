@@ -23,8 +23,8 @@ const Doctors = () => {
   const location = useLocation();
   // console.log("Dloc",location.state.key);
   const doctors = location ? location.state : '';
-
-  const [doctor, setDoctor] = useState(doctors && doctors?doctors.doctors:[]);
+  const [loading, setLoading] = useState(false);
+  const [doctor, setDoctor] = useState(doctors && doctors ? doctors.doctors : []);
   // const [doctor, setDoctor] = useState([]);
   const fetchdoctor = async () => {
     try {
@@ -44,19 +44,37 @@ const Doctors = () => {
     }
 
   }, []);
+  // const handleCheckboxChange = async (id, checked) => {
+  //   try {
+  //     // Make API call to update patient status
+  //     const response = await axios.put(`https://imdfx-newserver-production.up.railway.app/api/update-doctor-status/${id}`, { status: checked });
+  //     // Update patient status in the state based on the response
+  //     console.log("afterstatusresDoctor", response.data);
+  //     setDoctor((prevDoctor) =>
+  //     prevDoctor.map((doctor) =>
+  //       doctor._id === id ? { ...doctor, status: response.data.status } : doctor
+  //     )
+  //   );
+  //   } catch (error) {
+  //     console.error(`Error updating status for patient with ID ${id}:`, error);
+  //   }
+  // };
   const handleCheckboxChange = async (id, checked) => {
     try {
-      // Make API call to update patient status
+      setLoading(true);
+      // Make API call to update doctor's status
       const response = await axios.put(`https://imdfx-newserver-production.up.railway.app/api/update-doctor-status/${id}`, { status: checked });
-      // Update patient status in the state based on the response
-      console.log("afterstatusresDoctor",response.data);
+
+      // Update doctor's status in the state based on the response
       setDoctor((prevDoctor) =>
-      prevDoctor.map((doctor) =>
-        doctor._id === id ? { ...doctor, Status: response.data.status } : doctor
+        prevDoctor.map((doctor) =>
+          doctor._id === id ? { ...doctor, status: response.data.status } : doctor
         )
       );
     } catch (error) {
-      console.error(`Error updating status for patient with ID ${id}:`, error);
+      console.error(`Error updating status for doctor with ID ${id}:`, error);
+    } finally {
+      setLoading(false);
     }
   };
   const data = [
@@ -173,11 +191,19 @@ const Doctors = () => {
           <Link to="/admin/doctor-list" style={{
             color: "black"
           }}>{text}</Link> */}
+          {/* 
 
+          // <div className="avatar mx-2">
+          //   <img className="rounded-circle" src={doctor_thumb_04} />
+          // </div>
+          {text} */}
           <div className="avatar mx-2">
             <img className="rounded-circle" src={doctor_thumb_04} />
           </div>
-          {text}
+          <Link to={{
+            pathname: "/admin/profile",
+            state: { record }
+          }} className="text-black">{text}</Link>
         </>
       ),
       sorter: (a, b) => a.name.length - b.name.length,
@@ -213,11 +239,10 @@ const Doctors = () => {
             className="check"
             type="checkbox"
             checked={text}
+            disabled={loading}
             onChange={(e) => handleCheckboxChange(record._id, e.target.checked)}
           />
-          <label htmlFor={`rating${record?._id}`} className="checktoggle checkbox-bg">
-            
-          </label>
+          <label htmlFor={`rating${record?._id}`} className="checktoggle checkbox-bg"> </label>
         </div>
       ),
     },

@@ -9,6 +9,8 @@ import Header from "../../header";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import io from "socket.io-client";
+import { backend_base } from "../../../..";
+import { useCallModalStore } from "../../../../callModalStore";
 const ENDPOINT = "https://imdfx-newserver-production.up.railway.app";
 
 const ScheduleTiming = (props) => {
@@ -18,6 +20,13 @@ const ScheduleTiming = (props) => {
   const [loading, setLoading] = useState(true);
   const docId = localStorage.getItem('token');
   const [notification, setNotification] = useState(null);
+  const { setShowRingingModal, setPickerId, } = useCallModalStore()
+  const askForCall = (buyerId, sellerId) => {
+    const socket = io(backend_base);
+    setPickerId(buyerId)
+    setShowRingingModal(true)
+    socket.emit("callRequestFromSeller", { buyerId, sellerId });
+  };
   const fetchAppointments = async () => {
     try {
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/mypatient/${docId}`);
@@ -55,10 +64,10 @@ const ScheduleTiming = (props) => {
     listEmp.splice(index, 1);
     setAddListEmp(listEmp);
   };
-  const handleCall = (selectedDateTime, time, id,doctorname) => {
-    
+  const handleCall = (selectedDateTime, time, id, doctorname) => {
+
     setMeetingId(id);
-    
+
     const currentDateTime = new Date();
     const appointmentDateTime = new Date(selectedDateTime);
 
@@ -75,36 +84,36 @@ const ScheduleTiming = (props) => {
       // Use props.history.push
       //   props.history.push(`/patient/waiting-page`);  // Use props.history.push
     } else {
-      const userId=id;
+      const userId = id;
       console.log("userId", id);
-      const socket = io("http://localhost:3005",{transports:["websocket"]});
+      const socket = io("http://localhost:3005", { transports: ["websocket"] });
       const res = socket.emit("doctorJoinRoom", docId, userId);
       console.log("RES", res);
-    
+
       myMeeting();
     }
   };
   useEffect(() => {
-        const socket = io("http://localhost:3005", { transports: ["websocket"] });
-        // Listen for doctor's notification
-        // const res = socket.emit("storeSocketId", {docId});
-        socket.on("patientnotAvaible", (message) => {
-            toast.success(message);
-            // setCallerName(message); // Assuming the message contains the caller's name
-            // setShowRingingModal(true);
-            // initAudio()
+    const socket = io("http://localhost:3005", { transports: ["websocket"] });
+    // Listen for doctor's notification
+    // const res = socket.emit("storeSocketId", {docId});
+    socket.on("patientnotAvaible", (message) => {
+      toast.success(message);
+      // setCallerName(message); // Assuming the message contains the caller's name
+      // setShowRingingModal(true);
+      // initAudio()
 
-            // console.log("message", message);
-            // setNotification(message);
-        });
+      // console.log("message", message);
+      // setNotification(message);
+    });
 
-        // return () => socket.disconnect();
-    }, []);
+    // return () => socket.disconnect();
+  }, []);
 
   const handleMessage = () => {
     console.log("message");
   }
-  const APP_ID =  549911561;
+  const APP_ID = 549911561;
   const SERVER_SECRET = "cb161fefa2b3464f6da3590442f39d48";
 
   // Function to generate a unique channel ID based on current timestamp
@@ -146,8 +155,8 @@ const ScheduleTiming = (props) => {
       // Start the call
       // zp.maxUsers(2);
       zp.joinRoom({
-        showLeavingView:false,
-        maxUsers:2,
+        showLeavingView: false,
+        maxUsers: 2,
         container: element,
         showRoomTimer: true,
         showPreJoinView: false,
@@ -157,7 +166,7 @@ const ScheduleTiming = (props) => {
         scenario: {
           mode: ZegoUIKitPrebuilt.OneONoneCall,
         },
-          onLeaveRoom: ()=>{
+        onLeaveRoom: () => {
           // setShowRingingModal(false)
         }
       });
@@ -240,7 +249,8 @@ const ScheduleTiming = (props) => {
                                         <div className="d-flex justify-content-between align-self-end  align-items-center gap-2 calling-btn">
                                           {/* <button className="px-4 py-2 bg-white text-dark rounded-2 border">Cancel</button> */}
                                           <button onClick={() =>
-                                            handleCall(item.appointmentDetails[0].selectedDate, item.appointmentDetails[0].selectedTimeSlot, item.PatietnDetails._id)
+                                            askForCall(item.PatietnDetails._id, docId)
+                                            // handleCall(item.appointmentDetails[0].selectedDate, item.appointmentDetails[0].selectedTimeSlot, item.PatietnDetails._id)
                                           } className={`px-4 py-2 bg-primary  text-white rounded-2 border delete_schedule mx-3 ${isCallDisabled(item.appointmentDetails[0].selectedDate + ' ' + item.appointmentDetails[0].selectedTimeSlot) ? 'disabled' : ''}`}>
                                             Start</button>
 
@@ -262,7 +272,7 @@ const ScheduleTiming = (props) => {
           </div>
         </div>
       </div>
-<ToastContainer/>
+      <ToastContainer />
       <Footer {...props} />
 
       {/* <!-- Add Time Slot Modal --> */}

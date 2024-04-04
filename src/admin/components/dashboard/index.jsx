@@ -16,9 +16,9 @@ const Dashboard = () => {
   const [Appointmentswithdetail, setAppointmentsWithDetail] = useState([]);
   const fetchdoctor = async () => {
     try {
-      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doctorpersnoldetails`);
+      const response = await axios.get(`http://localhost:3005/api/doctorpersnoldetails`);
       setDoctor(response.data);
-      // console.log("setDoctor", response.data);
+      console.log("DoctorDetail", response.data);
       // setLoading(false);
     } catch (error) {
       console.error('Error fetching getDoctorDetail:', error);

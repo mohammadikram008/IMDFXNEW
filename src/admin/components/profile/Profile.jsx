@@ -2,10 +2,13 @@ import React, { useState } from "react";
 // import FeatherIcon from "feather-icons-react";
 import SidebarNav from "../sidebar";
 import DatePicker from "react-datepicker";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { avatar01 } from "../imagepath";
-
+import { Offline, Online } from "react-detect-offline";
 const Profile = () => {
+  const location = useLocation();
+  const { record } = location.state || {};
+  console.log("Recorde", record);
   const [selectedDate1, setSelectedDate1] = useState(new Date());
   const handleDateChange1 = (date) => {
     setSelectedDate1(date);
@@ -18,7 +21,7 @@ const Profile = () => {
       <div className="page-wrapper">
         <div className="content container-fluid">
           {/* Page Header */}
-          <div className="page-header">
+          {/* <div className="page-header">
             <div className="row">
               <div className="col">
                 <h3 className="page-title">Profile</h3>
@@ -30,7 +33,7 @@ const Profile = () => {
                 </ul>
               </div>
             </div>
-          </div>
+          </div> */}
           {/* /Page Header */}
           <div className="row">
             <div className="col-md-12">
@@ -44,24 +47,28 @@ const Profile = () => {
                         src={avatar01}
                       />
                     </a>
+                    <div className="d-flex justify-content-center  align-items-center " >
+                    <Online>Active</Online>
+                    <Offline>Offline</Offline>
                   </div>
+                  </div>
+
+
                   <div className="col ml-md-n2 profile-user-info">
-                    <h4 className="user-name mb-0">Ryan Taylor</h4>
-                    <h6 className="text-muted">ryantaylor@admin.com</h6>
+                    <h4 className="user-name mb-0"> {record && record.name}</h4>
+                    <h6 className="text-muted">{record && record.email}</h6>
                     <div className="user-Location">
-                      <i className="fa fa-map-marker" /> Florida, United States
+                      <i className="fa" /> {record && record.city}, {record && record.state} , {record && record.country}
                     </div>
                     <div className="about-text">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua.
+                      {record && record.aboutself}
                     </div>
                   </div>
-                  <div className="col-auto profile-btn">
+                  {/* <div className="col-auto profile-btn">
                     <a href="#" className="btn btn-primary">
                       Edit
                     </a>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="profile-menu">
@@ -75,7 +82,7 @@ const Profile = () => {
                       About
                     </a>
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <a
                       className="nav-link"
                       data-bs-toggle="tab"
@@ -83,7 +90,7 @@ const Profile = () => {
                     >
                       Password
                     </a>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
               <div className="tab-content profile-tab-cont">
@@ -94,7 +101,7 @@ const Profile = () => {
                     <div className="col-lg-12">
                       <div className="card">
                         <div className="card-body">
-                          <h5 className="card-title d-flex justify-content-between">
+                          {/* <h5 className="card-title d-flex justify-content-between">
                             <span>Personal Details</span>
                             <a
                               className="edit-link"
@@ -104,49 +111,64 @@ const Profile = () => {
                               <i className="fa fa-edit me-1" />
                               Edit
                             </a>
-                          </h5>
+                          </h5> */}
                           <div className="row">
                             <p className="col-sm-2 text-muted text-sm-end mb-0 mb-sm-3">
                               Name
                             </p>
-                            <p className="col-sm-10">John Doe</p>
+                            <p className="col-sm-10">{record && record.name}</p>
                           </div>
                           <div className="row">
                             <p className="col-sm-2 text-muted text-sm-end mb-0 mb-sm-3">
-                              Date of Birth
+                              Education
                             </p>
-                            <p className="col-sm-10">24 Jul 1983</p>
+                            <p className="col-sm-10">{record && record.education}</p>
                           </div>
+                          <div className="row">
+                            <p className="col-sm-2 text-muted text-sm-end mb-0 mb-sm-3">
+                              Specialization
+                            </p>
+                            <p className="col-sm-10">{record && record.specialization}</p>
+                          </div>
+                          <div className="row">
+                            <p className="col-sm-2 text-muted text-sm-end mb-0 mb-sm-3">
+                              License
+                            </p>
+                            <p className="col-sm-10">{record && record.license}</p>
+                          </div>
+
                           <div className="row">
                             <p className="col-sm-2 text-muted text-sm-end mb-0 mb-sm-3">
                               Email ID
                             </p>
-                            <p className="col-sm-10">johndoe@example.com</p>
+                            <p className="col-sm-10">{record && record.email}</p>
                           </div>
                           <div className="row">
                             <p className="col-sm-2 text-muted text-sm-end mb-0 mb-sm-3">
-                              Mobile
+
+                              Year of Experience
+
                             </p>
-                            <p className="col-sm-10">305-310-5857</p>
+                            <p className="col-sm-10">{record && record.yearofexperience}</p>
                           </div>
                           <div className="row">
                             <p className="col-sm-2 text-muted text-sm-end mb-0">
                               Address
                             </p>
                             <p className="col-sm-10 mb-0">
-                              4663 Agriculture Lane,
-                              <br />
+                              {record && record.city}, {record && record.state} , {record && record.country}
+                              {/* <br />
                               Miami,
                               <br />
                               Florida - 33165,
                               <br />
-                              United States.
+                              United States. */}
                             </p>
                           </div>
                         </div>
                       </div>
                       {/* Edit Details Modal */}
-                      <div
+                      {/* <div
                         className="modal fade"
                         id="edit_personal_details"
                         aria-hidden="true"
@@ -193,11 +215,7 @@ const Profile = () => {
                                     <div className="form-group">
                                       <label>Date of Birth</label>
                                       <div className="cal-icon">
-                                        {/* <input
-                                          type="text"
-                                          className="form-control datetimepicker"
-                                          defaultValue="24-07-1983"
-                                        /> */}
+                                    
                                         <DatePicker
                                           className="form-control"
                                           selected={selectedDate1}
@@ -294,7 +312,7 @@ const Profile = () => {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                       {/* /Edit Details Modal */}
                     </div>
                   </div>
@@ -302,7 +320,7 @@ const Profile = () => {
                 </div>
                 {/* /Personal Details Tab */}
                 {/* Change Password Tab */}
-                <div id="password_tab" className="tab-pane fade">
+                {/* <div id="password_tab" className="tab-pane fade">
                   <div className="card">
                     <div className="card-body">
                       <h5 className="card-title">Change Password</h5>
@@ -329,7 +347,7 @@ const Profile = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 {/* /Change Password Tab */}
               </div>
             </div>

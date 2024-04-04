@@ -1,4 +1,4 @@
-import React ,{useEffect,useState}from "react";
+import React, { useEffect, useState } from "react";
 import { Table } from "antd";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-daterangepicker/daterangepicker.css";
@@ -24,7 +24,7 @@ import axios from "axios";
 const PendingDoctors = () => {
   const location = useLocation();
   // console.log("Dloc",location.state.key);
-//   const doctor= location ?location.state.key:'';
+  //   const doctor= location ?location.state.key:'';
   const [doctor, setDoctor] = useState([]);
   const fetchdoctor = async () => {
     try {
@@ -38,9 +38,9 @@ const PendingDoctors = () => {
     }
   };
   useEffect(() => {
-   
+
     fetchdoctor();
-   
+
   }, []);
   const data = [
     {
@@ -144,16 +144,36 @@ const PendingDoctors = () => {
       AccountStatus: "checkbox",
     },
   ];
+  const handleCheckboxChange = async (id, checked) => {
+    console.log("id", id, "checked", checked);
+    try {
+      // Make API call to update patient status
+      const response = await axios.put(`http://localhost:3005/api/approve-doctor/${id}`);
+      // Update patient status in the state based on the response
+      console.log("afterstatusresDoctor", response.data);
+      setDoctor((prevDoctor) =>
+        prevDoctor.map((doctor) =>
+          doctor._id === id ? { ...doctor, status: response.data.status } : doctor
+        )
+      );
+    } catch (error) {
+      console.error(`Error updating status for patient with ID ${id}:`, error);
+    }
+  };
   const columns = [
     {
       title: "Doctor Name",
       dataIndex: "name",
       render: (text, record) => (
         <>
-          <Link className="avatar mx-2" to="/admin/profile">
+          <div className="avatar mx-2">
             <img className="rounded-circle" src={record.image} />
-          </Link>
-          <Link to="/admin/profile">{text}</Link>
+          </div>
+          {/* <Link to="/admin/profile">{text}</Link> */}
+          <Link to={{
+            pathname: "/admin/profile",
+            state: { record } // Pass the entire record object as state
+          }}>{text}</Link>
         </>
       ),
       sorter: (a, b) => a.name.length - b.name.length,
@@ -180,27 +200,22 @@ const PendingDoctors = () => {
     //   sorter: (a, b) => a.Earned.length - b.Earned.length,
     // },
     {
-      title: "Approved Acounts",
-      dataIndex: "AccountStatus",
-      render: (text, record) => {
-        return (
-          <div className="status-toggle">
-            <input
-              id={`rating${record?.id}`}
-              className="check"
-              type="checkbox"
-              //  checked={false}
-            />
-            <label
-              htmlFor={`rating${record?.id}`}
-              className="checktoggle checkbox-bg"
-            >
-              checkbox
-            </label>
-          </div>
-        );
-      },
-      sorter: (a, b) => a.AccountStatus.length - b.AccountStatus.length,
+      title: "Status",
+      dataIndex: "status",
+      render: (text, record) => (
+        <div className="status-toggle">
+          <input
+            id={`rating${record?._id}`}
+            className="check"
+            type="checkbox"
+            checked={record._id}
+            onChange={(e) => handleCheckboxChange(record._id, e.target.checked)}
+          />
+          <label htmlFor={`rating${record?._id}`} className="checktoggle checkbox-bg">
+
+          </label>
+        </div>
+      ),
     },
   ];
   return (
@@ -241,7 +256,7 @@ const PendingDoctors = () => {
                       columns={columns}
                       dataSource={doctor}
                       rowKey={(record) => record.id}
-                      //  onChange={this.handleTableChange}
+                    //  onChange={this.handleTableChange}
                     />
                   </div>
                 </div>

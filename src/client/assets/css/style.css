@@ -6570,8 +6570,8 @@ html.menu-opened body {
   background-color: #f5f5f5;
 }
 .nav-tabs.nav-tabs-solid > li > a.active, .nav-tabs.nav-tabs-solid > li > a.active:hover, .nav-tabs.nav-tabs-solid > li > a.active:focus {
-  background-color: #20c0f3;
-  border-color: #20c0f3;
+  background-color: #55CE63;
+  border-color: #55CE63;
   color: #ffffff;
 }
 .nav-tabs.nav-tabs-solid .active > a, .nav-tabs.nav-tabs-solid .active a:hover, .nav-tabs.nav-tabs-solid .active a:focus {
@@ -14386,9 +14386,13 @@ chat-attachment-list li {
   border: 1px solid #f06060;
   color: #ffffff;
   line-height: 0;
+  height: 4rem;
   border-radius: 100%;
   margin: 30px 20px 0;
   padding: 20px;
+}
+.call-end{
+  height: 4rem;
 }
 .call-box .call-wrapper .call-items .call-item.call-start {
   background: #55ce63;

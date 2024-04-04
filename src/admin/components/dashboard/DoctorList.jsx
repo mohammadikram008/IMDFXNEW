@@ -73,7 +73,11 @@ const DoctorListDesboard = (props) => {
             <img className="rounded-circle" src={avator1} />
           </Link>
           {/* <Link to="/admin/profile">{text}</Link> */}
-          <p>{text}</p>
+          {/* <p>{text}</p> */}
+          <Link to={{
+            pathname: "/admin/profile",
+            state: { record } // Pass the entire record object as state
+          }} className="text-black ">{text}</Link>
         </>
       ),
       sorter: (a, b) => a.DoctorName.length - b.DoctorName.length,

@@ -73,20 +73,20 @@ const Timeschedule = (props) => {
         // Listen for doctor's notification
         //   const res = socket.emit("storeSocketId", {ID});
     }, []);
-    useEffect(() => {
-        const socket = io("http://localhost:3005", { transports: ["websocket"] });
-        // Listen for doctor's notification
-        socket.on("doctorOnlineNotification", (message) => {
-            console.log("message", message)
-            toast.success(message);
-            setCallerName(message);
-            setShowRingingModal(true);
-            // initAudio()
+    // useEffect(() => {
+    //     const socket = io("http://localhost:3005", { transports: ["websocket"] });
+    //     // Listen for doctor's notification
+    //     socket.on("doctorOnlineNotification", (message) => {
+    //         console.log("message", message)
+    //         toast.success(message);
+    //         setCallerName(message);
+    //         setShowRingingModal(true);
+    //         // initAudio()
 
-        });
+    //     });
 
-        // return () => socket.disconnect();
-    }, []);
+    //     // return () => socket.disconnect();
+    // }, []);
 
     // if(isAudioPlaying){
     //     initAudio();
