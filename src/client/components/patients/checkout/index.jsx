@@ -332,7 +332,8 @@ const totalFees = payment.reduce((total, entry) => {
                       <div className="booking-doctor-left">
                         <div className="booking-doctor-img">
                           <Link to="/patient/doctor-profile">
-                            <img src={IMG01} alt="" />
+                            {/* <img src={IMG01} alt="" /> */}
+                            <img  src={`http://localhost:3005/${doctorDetail.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
                           </Link>
                         </div>
                         <div className="booking-doctor-info">

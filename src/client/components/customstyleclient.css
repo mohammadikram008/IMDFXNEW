@@ -496,7 +496,14 @@
     color: black;
     width: 10rem;
 }
-
+.schedule-cont{
+    overflow-y: auto;
+    height: 70vh;
+}
+.tab-content{
+    overflow-y: auto;
+    height: 50vh;
+}
 .slots-show-row{
     height: 8rem;
     overflow-y: auto;

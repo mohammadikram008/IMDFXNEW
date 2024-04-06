@@ -1,20 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 // import IMG01 from "../../../../assets/images/patient.jpg";
 import IMG01 from "../../../../assets/images/doc1.jpg";
 import patient from "../../../../assets/images/patient.jpg";
 // import nawazp from "../../../../assets/images/nazwazp.jpg";
 // import patient from "../../../../assets/images/patient.jpg";
+import axios from "axios";
 
-
-
+import { Offline, Online } from "react-detect-offline";
 export const DashboardSidebar = ({ props }) => {
   // const {patient}=props.patient;
-  console.log("patient", props);
+  // console.log("patientss", props);
   // localStorage.setItem("patientname", props.username);
   const pathname = window.location.pathname;
   // const username = localStorage.getItem('patientname');
-  
+  const userId = localStorage.getItem('token');
+  const [mypatient, setMyPatient] = useState([]);
+  const fetchProfile = async () => {
+
+    try {
+
+      const response = await axios.get(`http://localhost:3005/api/getpatient-profile/${userId}`);
+      setMyPatient(response.data);
+      console.log("PatientProfile", response.data);
+
+    } catch (error) {
+      console.error('Error fetching PatientProfile:', error);
+
+    }
+  };
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+
   return (
     <div style={{
       background: "none"
@@ -22,16 +41,50 @@ export const DashboardSidebar = ({ props }) => {
       <div style={{
         background: "none"
       }} className="widget-profile">
-        <div className="profile-info-widget">
-          <Link to="#0" className="booking-doc-img ">
-            <img style={{
-              border: "2px solid gray"
-            }} src={patient} alt="User" className="object-fit-cover " />
-          </Link>
-          <h3 style={{
-            fontSize: "20px"
-          }} className="fw-bold text-center w-80 text-black ">{props.username}</h3>
-        </div>
+        {
+          mypatient && mypatient.length > 0 ? mypatient.map((item, index) => (
+            <div className="profile-info-widget">
+              <Link to="#0" className="booking-doc-img ">
+                {/* <img style={{ border: "2px solid gray" }} src={patient} alt="User" className="object-fit-cover " /> */}
+                <img style={{ border: "2px solid gray" }} src={`http://localhost:3005/${item.image}`} className="img-fluid" alt="User" />
+              </Link>
+              <h3 style={{
+                fontSize: "20px"
+              }} className="fw-bold text-center w-80 text-black ">
+                {props.username}</h3>
+              <div className="patient-details">
+                <h5 className="text-success">
+                  <Online>Active</Online>
+                  <Offline>Offline</Offline>
+                </h5>
+                {/* <h5 className="mb-0">
+                  <i className="fas fa-map-marker-alt"></i> Newyork, USA
+                </h5> */}
+              </div>
+            </div>
+          ))
+            : <div className="profile-info-widget">
+              <Link to="#0" className="booking-doc-img ">
+                <img style={{ border: "2px solid gray" }} src={patient} alt="User" className="object-fit-cover " />
+                {/* <img style={{ border: "2px solid gray" }} src={`http://localhost:3005/${item.image}`} className="img-fluid" alt="User" /> */}
+              </Link>
+              <h3 style={{
+                fontSize: "20px"
+              }} className="fw-bold text-center w-80 text-black ">
+                {props.username}</h3>
+              <div className="patient-details">
+                <h5 className="text-success">
+                  <Online>Active</Online>
+                  <Offline>Offline</Offline>
+                </h5>
+                {/* <h5 className="mb-0">
+              <i className="fas fa-map-marker-alt"></i> Newyork, USA
+            </h5> */}
+              </div>
+            </div>
+        }
+
+
       </div>
       <div className="dashboard-widget">
         <style>

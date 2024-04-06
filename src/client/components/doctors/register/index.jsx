@@ -134,8 +134,10 @@ import FacebookLogin from "react-facebook-login";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { TypeAnimation } from 'react-type-animation';
+import io from "socket.io-client";
 import Header from "../../header";
 const DoctorRegister = (props) => {
+  const backend_base = "http://localhost:3005"
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -174,14 +176,21 @@ const DoctorRegister = (props) => {
         toast.success("Login successful!");
         localStorage.setItem("token", token);
         localStorage.setItem("doctorlogin", "doctorlogin");
+
+        // const socket = io(backend_base);
+
+        // // Emit socketId to the backend
+        // socket.emit("OnlineDoctorStatus", { docId: token });
+
+
         history.push("/");
-      } else if (response.status === 201) { 
+      } else if (response.status === 201) {
         const token = response.data;
         toast.success("Login successful!");
         localStorage.setItem("token", token);
         localStorage.setItem("officelogin", "officelogin");
         history.push("/office/office-dashboard");
-      }else{
+      } else {
         console.error("Doctor login failed");
         toast.error("Login failed. Please try again.");
 
@@ -245,7 +254,7 @@ const DoctorRegister = (props) => {
                         </h3>
                       </div>
                       <form onSubmit={handleLogin}>
-                      <div className="my-2">
+                        <div className="my-2">
                           <label className="focus-label">Account Type</label>
                           <div className="form-check form-check-inline">
                             <input
@@ -310,7 +319,7 @@ const DoctorRegister = (props) => {
                             {showPassword ? <IoEye /> : <IoIosEyeOff />}
                           </span>
                         </div>
-                        
+
                         <div className="text-end my-1">
                           <Link
                             className="forgot-link text-black "

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { doctor_thumb_02, doc_01, doc_02, doc_03 } from "../../imagepath";
 import doc1 from '../../../assets/images/doc1.jpg'
+import { Offline, Online } from "react-detect-offline";
 const DoctorSidebar = ({ props }) => {
   let pathnames = window.location.pathname;
   console.log("proDoc", props);
@@ -15,6 +16,7 @@ const DoctorSidebar = ({ props }) => {
       // const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/gettodayappointments/${userId}`);
       const res = await axios.get(`http://localhost:3005/api/check-doctor-office/${doc_id}`);
       setDoctor(response.data);
+    
 
     } catch (error) {
       console.error('Error fetching appointments:', error);
@@ -35,7 +37,8 @@ const DoctorSidebar = ({ props }) => {
         <div className="widget-profile pro-widget-content">
           <div className="profile-info-widget">
             <Link to="#" className="booking-doc-img">
-              <img src={doc1} alt="User Image" />
+              {/* <img src={doc1} alt="User Image" /> */}
+              <img  src={`http://localhost:3005/${props.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
               {/* {props.image && <img src={imageUrl} alt="User Image" />} */}
             </Link>
             <div className="profile-det-info">
@@ -43,7 +46,8 @@ const DoctorSidebar = ({ props }) => {
               {/* John Creister */}
               <div className="patient-details">
                 <h5 className="text-success">
-                  active
+                  <Online>Active</Online>
+                  <Offline>Offline</Offline>
                 </h5>
                 {/* <h5 className="mb-0">
                 <i className="fas fa-map-marker-alt"></i> Newyork, USA

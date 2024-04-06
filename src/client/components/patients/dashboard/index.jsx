@@ -49,7 +49,7 @@ const Dashboard = (props) => {
   const [selectedCard, setSelectedCard] = useState(null);
   const [selectedAmount, setSelectedAmount] = useState(null);
   const [medicalrecords, setMedicalRecord] = useState([]);
-  
+
   const handleCardClick = (index, price) => {
     setSelectedCard(index);
     setSelectedAmount(price);
@@ -94,7 +94,7 @@ const Dashboard = (props) => {
       setLoading(true);
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/appointments/${userId}`);
       setAppointments(response.data);
-      console.log("Appointment", response.data);
+      console.log("Appointmentsss", response.data);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching appointments:', error);
@@ -606,7 +606,7 @@ const Dashboard = (props) => {
 
                           <div className="tab-content pt-0">
                             <div
-                              id="pat_appointments"
+                              id="pat_appointments "
                               className="tab-pane fade show active"
                             >
                               <div className="card card-table mb-0">
@@ -641,12 +641,14 @@ const Dashboard = (props) => {
                                                     // to={`/patient/doctor-profile/${appointment.doctorDetails._id}`}
                                                     className="avatar avatar-sm me-2"
                                                   >
-                                                    <img
+                                                    <img src={`http://localhost:3005/${appointment.doctorDetails.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
+                                                    {/* <img
                                                       className="avatar-img rounded-circle"
-                                                      src={doc_1}
+                                                      // src={doc_1}
+                                                      
                                                     // src={`your-base-url/${appointment.doctorDetails.image}`} // Replace 'your-base-url' with the actual base URL for the images
                                                     // alt="Doctor"
-                                                    />
+                                                    /> */}
                                                   </Link>
                                                   <Link
                                                     to={{
@@ -656,7 +658,7 @@ const Dashboard = (props) => {
                                                       }
                                                     }}
                                                   >
-                                                    {appointment.doctorDetails.name}{' '}
+                                                  Dr.  {appointment.doctorDetails.name}{' '}
                                                     <span>{appointment.doctorDetails.specialization}</span>
                                                   </Link>
                                                 </h2>
@@ -668,7 +670,7 @@ const Dashboard = (props) => {
                                                 </span>
                                               </td>
                                               <td>{appointment.appointmentDetails.bookingDate}</td>
-                                              <td>$108</td>
+                                              <td>{appointment.appointmentDetails.Fees}</td>
                                               {/* <td>
                                         <span className={`badge rounded-pill ${appointment.status === 'Confirm' ? 'bg-success-light' : 'bg-danger-light'}`}>
                                         
@@ -738,11 +740,13 @@ const Dashboard = (props) => {
                                                     to="/patient/doctor-profile"
                                                     className="avatar avatar-sm me-2"
                                                   >
-                                                    <img
+                                                    {/* <img
                                                       className="avatar-img rounded-circle"
                                                       src={IMG06}
                                                       alt="User "
-                                                    />
+                                                    /> */}
+                                                    <img src={`http://localhost:3005/${item.doctorDetails.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
+
                                                   </Link>
                                                   <Link to="/patient/doctor-profile">
                                                     Dr. {item.doctorDetails.name}{" "}
@@ -790,7 +794,7 @@ const Dashboard = (props) => {
                         </div>
                       </div>
                       <div>
-                        <Transaction/>
+                        <Transaction />
                       </div>
                     </div>
                     <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>

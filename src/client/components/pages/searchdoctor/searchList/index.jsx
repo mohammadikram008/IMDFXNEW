@@ -4,6 +4,7 @@ import axios from "axios";
 import { Tooltip, OverlayTrigger } from "react-bootstrap";
 import { MdStars } from "react-icons/md";
 import MyComponent from "./mycomponent";
+import io from "socket.io-client";
 import { doc_1 ,doc_2,IMG01,doc_4} from "./img";
 import { FaHeart } from "react-icons/fa6"; import { AiOutlineCheckCircle } from "react-icons/ai";
 import TimeModel from "../../../patients/Model/TimeModel";
@@ -25,10 +26,11 @@ const SearchList = (props) => {
 
   const [doctorTimeDetail, setDoctorTimeDetail] = useState([]);
   const [combinedData, setCombinedData] = useState(props.props);
-
+  const [activeDoctors, setActiveDoctors] = useState({});
   const loginId = localStorage.getItem('token');
   const status = localStorage.getItem('status');
   console.log("status", status);
+
   const fetchDoctorAvaibleTimeDetail = async (docId) => {
     try {
       const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/get-doc_avaibletime/${docId}`);
@@ -59,11 +61,29 @@ const SearchList = (props) => {
     }
   };
 
-
+   const backend_base = "http://localhost:3005"
   useEffect(() => {
+    // const socket = io(backend_base);
+
+    // // Handle incoming doctor status updates
+    // socket.on('DoctorisOnline', ({ docId }) => {
+    //   setActiveDoctors(prevState => ({ ...prevState, [docId]: "active" }));
+    // });
+
+    // Fetch combined data
     fetchCombinedData();
+
+    // Clean up function
+    // return () => {
+    //   socket.disconnect(); // Disconnect socket on component unmount
+    // };
     // fetchDoctorAvaibleTimeDetail();
   }, [doctorsApiData]);
+
+
+  // console.log("activeDoctors",activeDoctors)
+
+
 
   // useEffect(() => {
   //   // Combine doctorsApiData and officeDetails
@@ -197,8 +217,9 @@ const SearchList = (props) => {
                 <div className="doc-info-left">
                   <div className="doctor-img rounded-circle position-relative ">
                     {/* <img src={`https://imdfx-newserver-production.up.railway.app/uploads//dafb82ac1615a4fcec977ac6db88bb61`} className="img-fluid" alt="User" /> */}
-                    {/* <img src={`${imageUrl}/${doctor.image}`} className="img-fluid" alt="User" /> */}
-                    <img src={doc_4} className="img-fluid rounded-circle doc-profil-img" alt="User" />
+                    <img  src={`http://localhost:3005/${doctor.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
+                    {/* <h1>{doctor.image}</h1> */}
+                    {/* <img src={doc_4} className="img-fluid rounded-circle doc-profil-img" alt="User" /> */}
 
 
                   </div>
@@ -213,6 +234,8 @@ const SearchList = (props) => {
                        <div className="d-flex " style={{color:"#008000"}}>
                     <Online>Active</Online>
                     <Offline>Offline</Offline>
+                      {/* {activeDoctors[doctor._id] === 'active' ? <Online>Active</Online> : <Offline>Offline</Offline>} */}
+                  
                   </div>
                       <MdStars size={32} className="star" />
                       <div className="gold-gradient badge-bg">

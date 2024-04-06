@@ -309,12 +309,12 @@ const UpcomingTab = () => {
                               to={`/patient/doctor-profile/${appointment.PatietnDetails._id}`}
                               className="avatar avatar-sm me-2"
                             >
-                              <img
+                              {/* <img
                                 className="avatar-img rounded-circle"
                                 // src={doc_1}
                                 src={`https://imdfx-newserver-production.up.railway.app/api/${appointment.PatietnDetails.image}`}
                               // alt="Doctor"
-                              />
+                              /> */}
                             </Link>
                             <Link
                               to={`/patient/doctor-profile/${appointment.PatietnDetails._id}`}

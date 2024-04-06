@@ -19,7 +19,7 @@ const Profile = (props) => {
     state: "",
     zipCode: "",
     country: "",
-    image: null, // Add an image field to the form data
+    image: null, 
   });
 
   const handleInputChange = (e) => {
@@ -48,11 +48,7 @@ const Profile = (props) => {
 
     try {
       // Make API request using axios
-      const response = await axios.post(
-        `https://imdfx-newserver-production.up.railway.app/api/update-patient-profile/${userId}`, data,
-
-      );
-
+      const response = await axios.post(`http://localhost:3005/api/update-patient-profile/${userId}`, data );
       console.log("API response:", response.data);
       alert("updated")
       // Handle success, e.g., show a success message
@@ -145,7 +141,7 @@ const Profile = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="Richard"
+                            placeholder="Richard"
                             name="firstName" onChange={handleInputChange}
                           />
                         </div>
@@ -156,7 +152,7 @@ const Profile = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="Wilson"
+                            placeholder="Wilson"
                             name="lastName" onChange={handleInputChange}
                           />
                         </div>
@@ -168,7 +164,7 @@ const Profile = (props) => {
                             <input
                               type="text"
                               className="form-control datetimepicker"
-                              defaultValue="24-07-1983"
+                              placeholder="24-07-1983"
                               name="dateOfBirth" onChange={handleInputChange}
                             />
                           </div>
@@ -196,7 +192,7 @@ const Profile = (props) => {
                           <input
                             type="email"
                             className="form-control"
-                            defaultValue="richard@example.com"
+                            placeholder="richard@example.com"
                             name="email" onChange={handleInputChange}
                           />
                         </div>
@@ -206,7 +202,7 @@ const Profile = (props) => {
                           <label>Mobile</label>
                           <input
                             type="text"
-                            defaultValue="+1 202-555-0125"
+                            placeholder="+1 202-555-0125"
                             className="form-control"
                             name="mobile" onChange={handleInputChange}
                           />
@@ -218,7 +214,7 @@ const Profile = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="806 Twin Willow Lane"
+                            placeholder="806 Twin Willow Lane"
                             name="address" onChange={handleInputChange}
                           />
                         </div>
@@ -229,7 +225,7 @@ const Profile = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="Old Forge"
+                            placeholder="Old Forge"
                             name="city" onChange={handleInputChange}
                           />
                         </div>
@@ -240,7 +236,7 @@ const Profile = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="Newyork"
+                            placeholder="Newyork"
                             name="state" onChange={handleInputChange}
                           />
                         </div>
@@ -251,7 +247,7 @@ const Profile = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="13420"
+                            placeholder="13420"
                             name="zipCode" onChange={handleInputChange}
                           />
                         </div>
@@ -262,7 +258,7 @@ const Profile = (props) => {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="United States"
+                            placeholder="United States"
                             name="country" onChange={handleInputChange}
                           />
                         </div>

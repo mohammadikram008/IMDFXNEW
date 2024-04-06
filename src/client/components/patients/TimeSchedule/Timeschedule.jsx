@@ -319,11 +319,16 @@ const Timeschedule = (props) => {
                                                                         <p>Date: {item.appointmentDetails.selectedDate + "/ Time " + item.appointmentDetails.selectedTimeSlot}</p>
                                                                     </div>
                                                                     <div>
-                                                                        <img src={IMG01} style={{
+                                                                        {/* <img src={IMG01} style={{
                                                                             width: "200px",
                                                                             height: "150px",
                                                                             borderRadius: "10px"
-                                                                        }} />
+                                                                        }} /> */}
+                                                                        <img  src={`http://localhost:3005/${item.doctorDetails.image}`} style={{
+                                                                            width: "200px",
+                                                                            height: "150px",
+                                                                            borderRadius: "10px"
+                                                                        }} alt="User" />
                                                                     </div>
                                                                 </div>
                                                                 <div className="d-flex justify-content-between align-self-end  align-items-center gap-2 calling-btn">
