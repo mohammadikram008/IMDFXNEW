@@ -5,6 +5,7 @@ import axios from "axios";
 import { DashboardSidebar } from "./sidebar/sidebar.jsx";
 // import { Tab, Tabs } from "react-bootstrap";
 import StickyBox from "react-sticky-box";
+
 import { Icon01, Icon02, Icon03 } from "./img";
 import {
   IMG01,
@@ -641,7 +642,7 @@ const Dashboard = (props) => {
                                                     // to={`/patient/doctor-profile/${appointment.doctorDetails._id}`}
                                                     className="avatar avatar-sm me-2"
                                                   >
-                                                    <img src={`http://localhost:3005/${appointment.doctorDetails.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
+                                                    <img src={`https://imdfx-newserver-production.up.railway.app/${appointment.doctorDetails.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
                                                     {/* <img
                                                       className="avatar-img rounded-circle"
                                                       // src={doc_1}
@@ -745,7 +746,7 @@ const Dashboard = (props) => {
                                                       src={IMG06}
                                                       alt="User "
                                                     /> */}
-                                                    <img src={`http://localhost:3005/${item.doctorDetails.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
+                                                    <img src={`https://imdfx-newserver-production.up.railway.app/${item.doctorDetails.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
 
                                                   </Link>
                                                   <Link to="/patient/doctor-profile">

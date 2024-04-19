@@ -26,7 +26,7 @@ const Appointments = (props) => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const docId = localStorage.getItem('token');
-  
+  const [Doctor, setDoctor] = useState([]);
   const [count, setCount] = useState(1);
   const fetchAppointments = async () => {
     try {
@@ -41,9 +41,26 @@ const Appointments = (props) => {
       setLoading(false);
     }
   };
+
+  const fetchpatientdata = async () => {
+    try {
+     
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getDoctorDetail/${docId}`);
+      setDoctor(response.data);
+      const doctordata = response.data
+      setDoctorStatus(doctordata.status);
+      // console.log("status", doctordata.status);
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching getDoctorDetail:', error);
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     fetchAppointments();
-    // fetchpatientdata();
+    fetchpatientdata()
+  
   }, [count]);
   const handleAcceptChange = async (appoimentdetail) => {
     // console.log("appo",appoimentdetail)
@@ -109,7 +126,7 @@ const Appointments = (props) => {
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
               <StickyBox offsetTop={50} offsetBottom={20}>
                 <div className="appointments">
-                  <DoctorSidebar />
+                <DoctorSidebar props={Doctor} />
                 </div>
               </StickyBox>
             </div>

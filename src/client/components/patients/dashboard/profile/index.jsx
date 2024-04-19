@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import DashboardSidebar from "../sidebar/sidebar.jsx";
 import IMG01 from "../../../../assets/images/patient.jpg";
 import StickyBox from "react-sticky-box";
@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import Footer from "../../../footer.jsx";
 import Header from "../../../header.jsx";
 import axios from "axios";
+// import Avt from '../../../assets/images/avtr.jpg'
+import Avt from '../../../../assets/images/avtr.jpg'
 const Profile = (props) => {
   const userId = localStorage.getItem('token');
   const [formData, setFormData] = useState({
@@ -19,7 +21,7 @@ const Profile = (props) => {
     state: "",
     zipCode: "",
     country: "",
-    image: null, 
+    image: null,
   });
 
   const handleInputChange = (e) => {
@@ -48,7 +50,7 @@ const Profile = (props) => {
 
     try {
       // Make API request using axios
-      const response = await axios.post(`http://localhost:3005/api/update-patient-profile/${userId}`, data );
+      const response = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/update-patient-profile/${userId}`, data);
       console.log("API response:", response.data);
       alert("updated")
       // Handle success, e.g., show a success message
@@ -61,18 +63,19 @@ const Profile = (props) => {
   const [patient, setPatient] = useState([]);
   const fetchpatientdata = async () => {
 
-      try {
-  
-  
-        const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient/${userId}`);
-        setPatient(response.data);
-       
-      } catch (error) {
-        console.error('Error fetching appointments:', error);
-     
-      }
-    };
- ;
+    try {
+
+
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient/${userId}`);
+    
+      setPatient(response.data);
+
+    } catch (error) {
+      console.error('Error fetching appointments:', error);
+
+    }
+  };
+  ;
   useEffect(() => {
 
     fetchpatientdata()
@@ -106,7 +109,7 @@ const Profile = (props) => {
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5"></div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar mt-5">
               <StickyBox offsetTop={20} offsetBottom={20}>
-                <DashboardSidebar props={patient}/>
+                <DashboardSidebar props={patient} />
               </StickyBox>
             </div>
 
@@ -119,7 +122,7 @@ const Profile = (props) => {
                         <div className="form-group">
                           <div className="change-avatar">
                             <div className="profile-img">
-                              <img src={IMG01} alt="User" />
+                              <img src={Avt} alt="User" />
                             </div>
                             <div className="upload-img">
                               <div className="change-photo-btn">

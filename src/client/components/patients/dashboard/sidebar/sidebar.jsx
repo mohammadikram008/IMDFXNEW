@@ -20,7 +20,7 @@ export const DashboardSidebar = ({ props }) => {
 
     try {
 
-      const response = await axios.get(`http://localhost:3005/api/getpatient-profile/${userId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient-profile/${userId}`);
       setMyPatient(response.data);
       console.log("PatientProfile", response.data);
 
@@ -46,7 +46,7 @@ export const DashboardSidebar = ({ props }) => {
             <div className="profile-info-widget">
               <Link to="#0" className="booking-doc-img ">
                 {/* <img style={{ border: "2px solid gray" }} src={patient} alt="User" className="object-fit-cover " /> */}
-                <img style={{ border: "2px solid gray" }} src={`http://localhost:3005/${item.image}`} className="img-fluid" alt="User" />
+                <img style={{ border: "2px solid gray" }} src={`https://imdfx-newserver-production.up.railway.app/${item.image}`} className="img-fluid" alt="User" />
               </Link>
               <h3 style={{
                 fontSize: "20px"
@@ -66,7 +66,7 @@ export const DashboardSidebar = ({ props }) => {
             : <div className="profile-info-widget">
               <Link to="#0" className="booking-doc-img ">
                 <img style={{ border: "2px solid gray" }} src={patient} alt="User" className="object-fit-cover " />
-                {/* <img style={{ border: "2px solid gray" }} src={`http://localhost:3005/${item.image}`} className="img-fluid" alt="User" /> */}
+                {/* <img style={{ border: "2px solid gray" }} src={`https://imdfx-newserver-production.up.railway.app/${item.image}`} className="img-fluid" alt="User" /> */}
               </Link>
               <h3 style={{
                 fontSize: "20px"

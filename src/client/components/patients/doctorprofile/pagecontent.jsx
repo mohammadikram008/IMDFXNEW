@@ -131,7 +131,7 @@ const Pagecontent = ({ toggleModal, doctorDetail }) => {
                     {/* <img src={`https://imdfx-newserver-production.up.railway.app/uploads//dafb82ac1615a4fcec977ac6db88bb61`} className="img-fluid" alt="User" /> */}
                     {/* <img src={`${imageUrl}/${doctor.image}`} className="img-fluid" alt="User" /> */}
                     {/* <img src={IMG01} className="img-fluid rounded-circle doc-profil-img" alt="User" /> */}
-                    <img  src={`http://localhost:3005/${doctorDetail.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
+                    <img  src={`https://imdfx-newserver-production.up.railway.app/${doctorDetail.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
 
                   </div>
                   {/* <div className="doctor-img">

@@ -35,11 +35,27 @@ const MypPatient = (props) => {
       setLoading(false);
     }
   };
+  const [Doctor, setDoctor] = useState([]);
+  const fetchpatientdata = async () => {
+    try {
+     
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getDoctorDetail/${docId}`);
+      setDoctor(response.data);
+      const doctordata = response.data
+      setDoctorStatus(doctordata.status);
+      // console.log("status", doctordata.status);
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching getDoctorDetail:', error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-
-
+    fetchpatientdata()
     fetchAppointments();
-    // fetchpatientdata();
+
   }, []);
   return (
     <div>
@@ -74,7 +90,7 @@ const MypPatient = (props) => {
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
               <StickyBox offsetTop={20} offsetBottom={20}>
-                <DoctorSidebar />
+              <DoctorSidebar props={Doctor} />
               </StickyBox>
             </div>
             <div className="col-md-6 col-lg-6 col-xl-6">

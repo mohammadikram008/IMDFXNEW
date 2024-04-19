@@ -137,7 +137,7 @@ import { TypeAnimation } from 'react-type-animation';
 import io from "socket.io-client";
 import Header from "../../header";
 const DoctorRegister = (props) => {
-  const backend_base = "http://localhost:3005"
+  const backend_base = "https://imdfx-newserver-production.up.railway.app"
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);

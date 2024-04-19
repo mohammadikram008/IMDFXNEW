@@ -61,7 +61,7 @@ import Ringing from "./CallModals/Ringing.jsx";
 //  module.hot.accept();
 // }
 const root = ReactDOM.createRoot(document.getElementById("root"));
-export const backend_base = "http://localhost:3005"
+export const backend_base = "https://imdfx-newserver-production.up.railway.app"
 const App = () => {
   const { setShowCallComingModal, showCallComingModal, showRingingModal, setShowRingingModal, callerId, setCallerId, setPickerId, pickerId } = useCallModalStore()
   const userId = localStorage.getItem('token');
@@ -247,7 +247,7 @@ const App = () => {
   // }
   // const userId = localStorage.getItem('token');
   // // useEffect(() => {
-  // //   const socket = io("http://localhost:3005", { transports: ["websocket"] });
+  // //   const socket = io("https://imdfx-newserver-production.up.railway.app", { transports: ["websocket"] });
   // //   socket.on("doctorOnlineNotification", (message) => {
   // //     setCallerName(message);
   // //     setShowRingingModal(true);
@@ -256,7 +256,7 @@ const App = () => {
   // // }, [userId]);
   // useEffect(() => {
   //   console.log("Connecting to socket...");
-  //   const socket = io("http://localhost:3005", { transports: ["websocket"] });
+  //   const socket = io("https://imdfx-newserver-production.up.railway.app", { transports: ["websocket"] });
   //   socket.on("connect", () => {
   //     console.log("Socket connected successfully!");
   //   });
@@ -355,7 +355,7 @@ const App = () => {
   //     //     },
   //     // });
   //     stopAudio()
-  //     const socket = io("http://localhost:3005", { transports: ["websocket"] });
+  //     const socket = io("https://imdfx-newserver-production.up.railway.app", { transports: ["websocket"] });
   //     const res = socket.emit("patientrejectcall", roomId, userId);
   //     zp.destroy();
 

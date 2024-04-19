@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import DashboardSidebar from "../sidebar/index";
 import { Link } from "react-router-dom";
 import Header from "../../header";
@@ -39,7 +39,27 @@ const Password = (props) => {
       // Handle error, e.g., show an error message
     }
   };
+  const [Doctor, setDoctor] = useState([]);
+  const fetchpatientdata = async () => {
+    try {
+     
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getDoctorDetail/${docId}`);
+      setDoctor(response.data);
+      const doctordata = response.data
+      // setDoctorStatus(doctordata.status);
+      // console.log("status", doctordata.status);
 
+    } catch (error) {
+      console.error('Error fetching getDoctorDetail:', error);
+  
+    }
+  };
+
+  useEffect(() => {
+    fetchpatientdata()
+
+
+  }, []);
   return (
     <div>
       <Header {...props} />
@@ -49,7 +69,7 @@ const Password = (props) => {
           <div className="row mt-5">
             <div className="col-md-2 col-lg-2 col-xl-2"></div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
-              <DashboardSidebar />
+              <DashboardSidebar props={Doctor} />
             </div>
 
             <div className="col-md-6 col-lg-6 col-xl-6 mt-5">

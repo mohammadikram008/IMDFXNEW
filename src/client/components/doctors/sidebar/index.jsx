@@ -14,7 +14,7 @@ const DoctorSidebar = ({ props }) => {
     try {
       setLoading(true);
       // const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/gettodayappointments/${userId}`);
-      const res = await axios.get(`http://localhost:3005/api/check-doctor-office/${doc_id}`);
+      const res = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/check-doctor-office/${doc_id}`);
       setDoctor(response.data);
     
 
@@ -38,7 +38,7 @@ const DoctorSidebar = ({ props }) => {
           <div className="profile-info-widget">
             <Link to="#" className="booking-doc-img">
               {/* <img src={doc1} alt="User Image" /> */}
-              <img  src={`http://localhost:3005/${props.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
+              <img  src={`https://imdfx-newserver-production.up.railway.app/${props.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
               {/* {props.image && <img src={imageUrl} alt="User Image" />} */}
             </Link>
             <div className="profile-det-info">

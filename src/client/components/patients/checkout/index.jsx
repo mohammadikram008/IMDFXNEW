@@ -142,7 +142,7 @@ const totalFees = payment.reduce((total, entry) => {
       
     
       const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/bookappointment', modelform);
-      const resp = await axios.post(`http://localhost:3005/api/addpaymentwallet/${userId}/${doc_id}`,{Amount});
+      const resp = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/addpaymentwallet/${userId}/${doc_id}`,{Amount});
       const notify = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/usertransectionnotification/${userId}`, { message });
      
       // Add any further logic here based on the API response
@@ -333,7 +333,7 @@ const totalFees = payment.reduce((total, entry) => {
                         <div className="booking-doctor-img">
                           <Link to="/patient/doctor-profile">
                             {/* <img src={IMG01} alt="" /> */}
-                            <img  src={`http://localhost:3005/${doctorDetail.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
+                            <img  src={`https://imdfx-newserver-production.up.railway.app/${doctorDetail.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
                           </Link>
                         </div>
                         <div className="booking-doctor-info">

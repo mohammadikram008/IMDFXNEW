@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import DoctorSidebar from "../sidebar";
@@ -6,9 +6,6 @@ import Header from "../../header";
 import Footer from "../../footer";
 import { Link } from "react-router-dom";
 const AvailableTiming = (props) => {
-
-
-
   const docId = localStorage.getItem('token');
   /////new code 
   const [once, setonce] = useState({ date: "", timefrom: "", timetill: "" });
@@ -21,7 +18,7 @@ const AvailableTiming = (props) => {
     console.log("Saving Once data:", once);
     // Example API call
     try {
-      const response = await axios.put(`http://localhost:3005/api/updatedoctortimeslot/${docId}`, {once});
+      const response = await axios.put(`https://imdfx-newserver-production.up.railway.app/api/updatedoctortimeslot/${docId}`, {once});
       console.log("Once data saved successfully:", response.data);
       toast.success("Once data saved successfully");
     } catch (error) {
@@ -35,7 +32,7 @@ const AvailableTiming = (props) => {
     console.log("Saving Daily data:", daily);
     // Example API call
     try {
-      const response = await axios.put(`http://localhost:3005/api/updatedoctortimeslot/${docId}`, {daily});
+      const response = await axios.put(`https://imdfx-newserver-production.up.railway.app/api/updatedoctortimeslot/${docId}`, {daily});
       console.log("Daily data saved successfully:", response.data);
       toast.success("Daily data saved successfully");
     } catch (error) {
@@ -89,13 +86,28 @@ const AvailableTiming = (props) => {
         toast.error("Error saving Weekly data");
     }
 };
-
-
   /////
+  const [Doctor, setDoctor] = useState([]);
+  const fetchpatientdata = async () => {
+    try {
+     
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getDoctorDetail/${docId}`);
+      setDoctor(response.data);
+      const doctordata = response.data
+      // setDoctorStatus(doctordata.status);
+      // console.log("status", doctordata.status);
+
+    } catch (error) {
+      console.error('Error fetching getDoctorDetail:', error);
+  
+    }
+  };
+
+  useEffect(() => {
+    fetchpatientdata()
 
 
-
-
+  }, []);
 
   return (
     <>
@@ -105,7 +117,7 @@ const AvailableTiming = (props) => {
           <div className="row mt-5">
             <div className="col-md-2 col-lg-2 col-xl-2 "></div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar ">
-              <DoctorSidebar />
+            <DoctorSidebar props={Doctor} />
             </div>
             <div className="col-md-6 col-lg-6 col-xl-6 ">
               <div className="row">

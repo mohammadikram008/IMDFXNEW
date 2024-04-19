@@ -5,8 +5,9 @@ import { FormCheck } from "react-bootstrap";
 import boold from '../../../assets/images/icons/Blood.png'
 import CTScan from '../../../assets/images/icons/Ctscan.png'
 import MRI from '../../../assets/images/icons/mri.png'
-const Tablerecords = () => {
+const Tablerecords = ({ reports }) => {
   const userId = localStorage.getItem('token');
+  console.log("reports", reports);
   const [formData, setFormData] = useState({
     BloodReport: {
       selectedFile: null,
@@ -54,9 +55,9 @@ const Tablerecords = () => {
         }
       });
 
-      console.log("formData",formData);
+      console.log("formData", formData);
       // Send form data to the backend
-      const response = await axios.post(`http://localhost:3005/api/medicalreport/${userId}`, allData);
+      const response = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/medicalreport/${userId}`, allData);
 
       console.log(response.data);
 
@@ -163,10 +164,10 @@ const Tablerecords = () => {
         </div>
       </div>
       <div className="col-md-12">
-        
-          <p>Your Reports will share automatically with doctor's at the time of appointments</p>
-   
-      
+
+        <p>Your Reports will share automatically with doctor's at the time of appointments</p>
+
+
       </div>
 
       {/* Submit button */}
@@ -174,6 +175,16 @@ const Tablerecords = () => {
         <button className="btn btn-primary mr-2" onClick={handleFormSubmit}>Save</button>
         {/* <button className="btn btn-secondary" onClick={() => setFormData({ ...formData })}>Clear</button> */}
       </div>
+
+      {/* {
+        reports && reports.map((item, index) => (
+          <div>
+            <img style={{ border: "2px solid gray" }} src={`https://imdfx-newserver-production.up.railway.app/${item.BloodReport}`} className="img-fluid" alt="User" />
+            <img style={{ border: "2px solid gray" }} src={`https://imdfx-newserver-production.up.railway.app/${item.MRI}`} className="img-fluid" alt="User" />
+            <img style={{ border: "2px solid gray" }} src={`https://imdfx-newserver-production.up.railway.app/${item.STscan}`} className="img-fluid" alt="User" />
+          </div>
+        ))
+      } */}
     </div>
   );
 };

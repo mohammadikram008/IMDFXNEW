@@ -59,7 +59,7 @@ const DoctorProfile = (props) => {
   };
   const fetchDoctorAvaibleTimeDetail = async () => {
     try {
-      const response = await axios.get(`http://localhost:3005/api/doctorAvailableTimings/${docId}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doctorAvailableTimings/${docId}`);
       setDoctorTimeDetail(response.data);
       console.log("Time", response.data);
     } catch (error) {

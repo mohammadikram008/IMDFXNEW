@@ -46,7 +46,7 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
       const dayname = getDayName(today);
       setSelectedDate(currentDay);
      
-      const response = await axios.get(`http://localhost:3005/api/check-doctor-availability/${docId}/${dayname}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/check-doctor-availability/${docId}/${dayname}`);
      
       setSelectTime(response.data)
     } catch (error) {
@@ -130,7 +130,7 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
   const fetchDoctorBookingTime = async (dayname) => {
   
     try {
-      const response = await axios.get(`http://localhost:3005/api/check-doctor-availability/${docId}/${dayname}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/check-doctor-availability/${docId}/${dayname}`);
       setSelectTime(response.data)
       //  isProceedBtnEnabled = selectedDate !== null && selectedTimeSlot !== null;
       // const available = response.data.available;
@@ -150,7 +150,7 @@ const TimeModel = ({ TimePop, setTimePop, handleModalClose, doctorDetail, doctor
   const fetchCheckBookingTime = async (timeSlot) => {
 
     try {
-      const response = await axios.get(`http://localhost:3005/api/check-booking-availability/${docId}/${timeSlot}/${selectedDateData}`);
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/check-booking-availability/${docId}/${timeSlot}/${selectedDateData}`);
       // console.log("RES",response);
       // setSelectTime(response.data)
       const available = response.data.available;

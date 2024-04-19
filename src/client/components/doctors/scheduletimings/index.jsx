@@ -38,11 +38,27 @@ const ScheduleTiming = (props) => {
       setLoading(false);
     }
   };
+  const [Doctor, setDoctor] = useState([]);
+  const fetchpatientdata = async () => {
+    try {
+     
+      const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getDoctorDetail/${docId}`);
+      setDoctor(response.data);
+      const doctordata = response.data
+      setDoctorStatus(doctordata.status);
+      // console.log("status", doctordata.status);
+
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching getDoctorDetail:', error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-
-
+    fetchpatientdata()
     fetchAppointments();
-    // fetchpatientdata();
+
   }, []);
   // useEffect(() => {
   //   const socket = socketIOClient(ENDPOINT);
@@ -86,7 +102,7 @@ const ScheduleTiming = (props) => {
     } else {
       const userId = id;
       console.log("userId", id);
-      const socket = io("http://localhost:3005", { transports: ["websocket"] });
+      const socket = io("https://imdfx-newserver-production.up.railway.app", { transports: ["websocket"] });
       const res = socket.emit("doctorJoinRoom", docId, userId);
       console.log("RES", res);
 
@@ -94,7 +110,7 @@ const ScheduleTiming = (props) => {
     }
   };
   useEffect(() => {
-    const socket = io("http://localhost:3005", { transports: ["websocket"] });
+    const socket = io("https://imdfx-newserver-production.up.railway.app", { transports: ["websocket"] });
     // Listen for doctor's notification
     // const res = socket.emit("storeSocketId", {docId});
     socket.on("patientnotAvaible", (message) => {
@@ -204,7 +220,7 @@ const ScheduleTiming = (props) => {
           <div className="row mt-5">
             <div className="col-md-2 col-lg-2 col-xl-2 "></div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar">
-              <DoctorSidebar />
+            <DoctorSidebar props={Doctor} />
             </div>
 
             <div className="col-md-6 col-lg-6 col-xl-6">

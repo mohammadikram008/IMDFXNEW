@@ -24,7 +24,7 @@ function Generalhome(props) {
   const ID = localStorage.getItem('token');
   useEffect(() => {
     // window.location.reload();
-    const socket = io("http://localhost:3005", { transports: ["websocket"] });
+    const socket = io("https://imdfx-newserver-production.up.railway.app", { transports: ["websocket"] });
     // Listen for doctor's notification
     const res = socket.emit("storeSocketId", { ID });
   }, []);

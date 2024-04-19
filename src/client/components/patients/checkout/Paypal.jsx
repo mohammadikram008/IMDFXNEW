@@ -31,7 +31,7 @@ const ButtonWrapper = ({ showSpinner, setIsModalOpen, formdata }) => {
             const message = "Your Transaction is Successfull.Wait for confirmation"
             // Make your API request using Axios
             const response = await axios.post('https://imdfx-newserver-production.up.railway.app/api/bookappointment', formdata);
-            const resp = await axios.post(`http://localhost:3005/api/addpaymentwallet/${userId}/${doc_id}`,{Amount});
+            const resp = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/addpaymentwallet/${userId}/${doc_id}`,{Amount});
             const notify = await axios.post(`https://imdfx-newserver-production.up.railway.app/api/usertransectionnotification/${userId}`, { message });
             
          

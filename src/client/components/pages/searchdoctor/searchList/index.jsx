@@ -61,7 +61,7 @@ const SearchList = (props) => {
     }
   };
 
-   const backend_base = "http://localhost:3005"
+   const backend_base = "https://imdfx-newserver-production.up.railway.app"
   useEffect(() => {
     // const socket = io(backend_base);
 
@@ -217,7 +217,7 @@ const SearchList = (props) => {
                 <div className="doc-info-left">
                   <div className="doctor-img rounded-circle position-relative ">
                     {/* <img src={`https://imdfx-newserver-production.up.railway.app/uploads//dafb82ac1615a4fcec977ac6db88bb61`} className="img-fluid" alt="User" /> */}
-                    <img  src={`http://localhost:3005/${doctor.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
+                    <img  src={`https://imdfx-newserver-production.up.railway.app/${doctor.image}`} className="img-fluid rounded-circle doc-profil-img" alt="User" />
                     {/* <h1>{doctor.image}</h1> */}
                     {/* <img src={doc_4} className="img-fluid rounded-circle doc-profil-img" alt="User" /> */}
 

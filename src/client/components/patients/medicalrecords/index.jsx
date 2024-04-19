@@ -15,6 +15,7 @@ const MedicalRecords = (props) => {
   // }
   const userId = localStorage.getItem('token');
   const [patient, setPatient] = useState([]);
+  const [reports, setReports] = useState([]);
   const fetchpatientdata = async () => {
 
       try {
@@ -22,7 +23,9 @@ const MedicalRecords = (props) => {
   
         const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getpatient/${userId}`);
         setPatient(response.data);
-       
+        // const res = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/getmedicalreport/${userId}`);
+        // setReports(res.data)
+        console.log("DATA",res.data);
       } catch (error) {
         console.error('Error fetching appointments:', error);
      
@@ -49,7 +52,8 @@ const MedicalRecords = (props) => {
               </StickyBox>
             </div>
             <div className="col-md-6 col-lg-6 col-xl-6">
-              <Tablerecords />
+              {/* <Tablerecords reports={reports.data} /> */}
+              <Tablerecords  />
             </div>
             <div className="col-md-2 col-lg-2 col-xl-2 theiaStickySidebar "></div>
           </div>

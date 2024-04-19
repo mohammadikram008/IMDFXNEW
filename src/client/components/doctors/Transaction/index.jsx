@@ -10,7 +10,7 @@ const Transaction = () => {
     const doc_id = localStorage.getItem('token');
     const fetchpaymet = async () => {
         try {
-          const response = await axios.get(`http://localhost:3005/api/doctorTransactions/${doc_id}`);
+          const response = await axios.get(`https://imdfx-newserver-production.up.railway.app/api/doctorTransactions/${doc_id}`);
           setPayments(response.data);
           console.log("doctorpayments:",response.data);
      

@@ -69,12 +69,12 @@ const Timeschedule = (props) => {
     const ID = localStorage.getItem('token');
     useEffect(() => {
         // window.location.reload();
-        const socket = io("http://localhost:3005", { transports: ["websocket"] });
+        const socket = io("https://imdfx-newserver-production.up.railway.app", { transports: ["websocket"] });
         // Listen for doctor's notification
         //   const res = socket.emit("storeSocketId", {ID});
     }, []);
     // useEffect(() => {
-    //     const socket = io("http://localhost:3005", { transports: ["websocket"] });
+    //     const socket = io("https://imdfx-newserver-production.up.railway.app", { transports: ["websocket"] });
     //     // Listen for doctor's notification
     //     socket.on("doctorOnlineNotification", (message) => {
     //         console.log("message", message)
@@ -246,7 +246,7 @@ const Timeschedule = (props) => {
             //     },
             // });
             stopAudio()
-            const socket = io("http://localhost:3005", { transports: ["websocket"] });
+            const socket = io("https://imdfx-newserver-production.up.railway.app", { transports: ["websocket"] });
             const res = socket.emit("patientrejectcall", roomId, userId);
             zp.destroy();
 
@@ -324,7 +324,7 @@ const Timeschedule = (props) => {
                                                                             height: "150px",
                                                                             borderRadius: "10px"
                                                                         }} /> */}
-                                                                        <img  src={`http://localhost:3005/${item.doctorDetails.image}`} style={{
+                                                                        <img  src={`https://imdfx-newserver-production.up.railway.app/${item.doctorDetails.image}`} style={{
                                                                             width: "200px",
                                                                             height: "150px",
                                                                             borderRadius: "10px"
